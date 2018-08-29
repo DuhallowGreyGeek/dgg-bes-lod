@@ -1,0 +1,29 @@
+Public Function getThePersonStatus(personID As String) As Collection
+    Dim statusColl As New Collection
+    Dim sUrl As String = "https://api.THE.com/api/stuffage/" & personID & "/status?apiKey=" & My.Settings.TheAPIKey
+    Dim doc As Xml.XmlDocument = getCurlXML(sUrl)
+    Dim statusElemList As XmlNodeList = doc.GetElementsByTagName("hos-status")
+    For Each thisNode As XmlNode In statusElemList
+      If (thisNode.Name = "hos-status") Then
+          statusColl.Add(thisNode.Attributes("as-of").Value.ToString, "hos-as-of")
+          statusColl.Add(thisNode("duty-status").InnerText.ToString, "duty-status")
+          Dim availElem As XmlNode = thisNode("availability")
+          statusColl.Add(availElem("drive").InnerText.ToString, "drive")
+          statusColl.Add(availElem("shift").InnerText.ToString, "shift")
+          statusColl.Add(availElem("cycle").InnerText.ToString, "cycle")
+      End If
+    Next
+    Dim locationElemList As XmlNodeList = doc.GetElementsByTagName("location")
+    For Each thisNode As XmlNode In locationElemList
+      statusColl.Add(thisNode.Attributes("as-of").Value.ToString, "loc-as-of")
+      statusColl.Add(thisNode("speed").InnerText.ToString, "speed")
+      statusColl.Add(thisNode("bearing").InnerText.ToString, "bearing")
+      statusColl.Add(thisNode("position").Attributes("lat").Value.ToString, "lat")
+      statusColl.Add(thisNode("position").Attributes("lon").Value.ToString, "lon")
+      statusColl.Add(thisNode("position").Attributes("accuracy").Value.ToString, "gps-accuracy")
+    Next
+    getThePersonStatus = statusColl
+End Function
+
+Basically I create an XML document from the response then I search for an element that I am interested in and then loop through that element looking for sub nodes that I am interested in.
+

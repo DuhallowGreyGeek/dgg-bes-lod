@@ -1,0 +1,15 @@
+https://stackoverflow.com/questions/16126468/how-to-define-a-sql-server-connection-string-to-use-in-vb-net
+
+<connectionStrings>
+    <add name="ConnString"
+         connectionString="Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|\gadgetDatabase.mdf;Integrated Security=True" />
+</connectionStrings>
+
+https://support.microsoft.com/en-ie/help/308656/how-to-open-a-sql-server-database-by-using-the-sql-server-net-data-pro
+
+LENOVOUSER\SQLEXPRESS
+LENOVOUSER\SQLEXPRESS (SQL Server 14.0.2002 - LENOVOUSER\user)
+
+https://stackoverflow.com/questions/2157143/using-sqldatareader-instead-of-recordset
+
+

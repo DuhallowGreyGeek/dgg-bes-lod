@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!-- Parmeter file for the Bunter family applications -->
+<!-- Not expected to be edited by users -->
+<!-- The elements have to be in EXACTLY the right order and have EXACTLY the right contents!! -->
+    <parameters>
+	<applicationVersion>appVersion</applicationVersion>
+        <databaseVersion>databaseVersion</databaseVersion>
+	<usePhrases>False</usePhrases>
+	<maxPhraseSize>99</maxPhraseSize>
+	<respectClausePunc>True</respectClausePunc>
+    </parameters>
+    
+
+    

@@ -1,0 +1,16 @@
+Dim xDoc as XMLDocument
+xDoc.Load("C:\temp\file.xml")
+
+Dim s as string = xDoc.SelectSingleNode("person/hos-status/availability/Shift").InnerText
+
+-------------------------------------------------------------------------
+
+You should be able to use something like this:
+
+doc.DocumentElement.Item("hos-status").Item("availability").Item("shift").InnerText
+However, one of the nice things about VB.NET is it's native support for XML, using the System.Xml.Linq classes, such as XElement. This would allow you to do something like this, which to me is much more readable (you'll need to work out how to integrate into your code):
+
+Dim xml = XElement.Load(wResponse.GetResponseStream())
+Dim shift = x.<hos-status>.<availability>.<shift>.Value
+
+https://docs.microsoft.com/en-us/dotnet/visual-basic/programming-guide/language-features/xml/how-to-load-xml-from-a-file-string-or-stream

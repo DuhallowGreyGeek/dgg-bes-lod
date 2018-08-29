@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<!-- Sample batch of documents for loading to the database -->
+<!-- Not expected to be edited by users. Ideally created by a program. -->
+<!-- The elements have to be in EXACTLY the right order and have EXACTLY the right contents!! -->
+<!-- Dates in YYYY/MM/DD format with slash separators -->
+
+    <doc_batch>
+        <batch_header>
+            <batch_filename>batch_filename.xml</batch_filename>
+            <created_date>2018/12/31</created_date>
+        </batch_header>
+
+	<doc_list>      <!-- Start of the list of documents -->
+            <doc_body>
+                <doc_filename>this one.pdf</doc_filename>
+                <doc_date>2018/12/31</doc_date>
+                <doc_title>One The title of the document</doc_title>
+		
+		<doc_rev>
+			<rev_num>1</rev_num>
+			<reviewer>Joe Soap</reviewer>
+			<rev_date>2018/12/31</rev_date>
+			<rev_score>High</rev_score>
+		</doc_rev>
+
+		<doc_rev>
+			<rev_num>2</rev_num>
+			<reviewer>Mickey Mouse</reviewer>
+			<rev_date>2018/12/31</rev_date>
+			<rev_score>Low</rev_score>
+		</doc_rev>
+
+            </doc_body>
+
+            <doc_body>
+                <doc_filename>this two.pdf</doc_filename>
+                <doc_date>2018/12/31</doc_date>
+                <doc_title>Two The title of the document</doc_title>
+
+		<doc_rev>
+			<rev_num>1</rev_num>
+			<reviewer>Adam Ant</reviewer>
+			<rev_date>2018/01/01</rev_date>
+			<rev_score>1</rev_score>
+		</doc_rev>
+
+		<doc_rev>
+			<rev_num>2</rev_num>
+			<reviewer>Brian Blessed</reviewer>
+			<rev_date>2018/02/02</rev_date>
+			<rev_score>Low</rev_score>
+		</doc_rev>
+
+            </doc_body>
+
+            <doc_body>
+                <doc_filename>this three.pdf</doc_filename>
+                <doc_date>2018/12/31</doc_date>
+                <doc_title>Three The title of the document</doc_title>
+            </doc_body>
+
+	    <doc_body>
+                <doc_filename>this four.pdf</doc_filename>
+                <doc_date>2018/12/31</doc_date>
+                <doc_title>Four The title of the document</doc_title>
+            </doc_body>
+	</doc_list>     <!-- End of the list of documents -->
+        
+    </doc_batch>
+    
+
+    
