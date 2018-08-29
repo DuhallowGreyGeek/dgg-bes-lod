@@ -3,17 +3,15 @@ Imports System.IO
 Imports System.Text
 Imports System.Xml
 
-Public Class BuntParam
-    Protected Friend Const THISCLASS As String = "BuntParam"
+Public Class BesParam
+    Protected Friend Const THISCLASS As String = "BesParam"
 
     Private mstrApplicationVersion As String
     Private mstrDatabaseVersion As String
-    Private mstrUsePhrases As String
-    Private mblnUsePhrases As Boolean
-    Private mstrMaxPhraseSize As String
-    Private mintMaxPhraseSize As Integer
-    Private mstrRespectClausePunc As String
-    Private mblnRespectClausePunc As Boolean
+    Private mstrSQLDataSource As String
+    Private mstrSQLIntegratedSecurity As String
+    Private mblnSQLIntegratedSecurity As Boolean
+    Private mstrSQLInitCatalogDB As String
 
     Public Sub New()
         Const METHOD As String = "New"
@@ -28,7 +26,7 @@ Public Class BuntParam
         settings.IgnoreComments = True
 
         'Dim path As String = "C:\Users\Tom\Documents\Bunter_20170601\BunterApp\BuntWun\BuntParms.xml"
-        Dim path As String = "BuntParms.xml"        'Use the parameters file with the executable
+        Dim path As String = "BesParms.xml"        'Use the parameters file with the executable
         Dim reader As XmlReader = XmlReader.Create(path, settings)
 
         Try
@@ -51,39 +49,36 @@ Public Class BuntParam
                 'Console.WriteLine(mstrDatabaseVersion)
                 reader.ReadEndElement()
                 '
-                reader.ReadStartElement("usePhrases")
-                mstrUsePhrases = reader.ReadString()
-                If mstrUsePhrases.ToUpper = "TRUE" Then
-                    mblnUsePhrases = True
-                ElseIf mstrUsePhrases.ToUpper = "FALSE" Then
-                    mblnUsePhrases = False
-                Else
-                    MsgBox("Invalid usePhrases parm: " & mstrUsePhrases)
-                End If
-                'Console.Write("The content of the usePhrases element:  ")
-                'Console.WriteLine(mstrUsePhrases)
+                reader.ReadStartElement("SQLDataSource")
+                mstrSQLDataSource = reader.ReadString()
+                'Console.Write("The content of the SQLDataSource element:  ")
+                'Console.WriteLine(mstrSQLDataSource)
                 reader.ReadEndElement()
                 '
-                reader.ReadStartElement("maxPhraseSize")
-                mstrMaxPhraseSize = reader.ReadString()
-                'Console.Write("The content of the maxPhraseSize element:  ")
-                'Console.WriteLine(mstrMaxPhraseSize)
-                reader.ReadEndElement()
-                mintMaxPhraseSize = Int(mstrMaxPhraseSize)
+                reader.ReadStartElement("SQLIntegratedSecurity")
+                mstrSQLIntegratedSecurity = reader.ReadString()
                 '
-                reader.ReadStartElement("respectClausePunc")
-                mstrRespectClausePunc = reader.ReadString()
-                If mstrRespectClausePunc.ToUpper = "TRUE" Then
-                    mblnRespectClausePunc = True
-                ElseIf mstrRespectClausePunc.ToUpper = "FALSE" Then
-                    mblnRespectClausePunc = False
+                If mstrSQLIntegratedSecurity.ToUpper.Trim = "TRUE" Then
+                    mblnSQLIntegratedSecurity = True
+                ElseIf mstrSQLIntegratedSecurity.ToUpper.Trim = "FALSE" Then
+                    mblnSQLIntegratedSecurity = False
                 Else
-                    MsgBox("Invalid respectClausePunc parm: " & mstrRespectClausePunc)
-                End If
+                    'Console.Write("SQLIntegratedSecurity Invalid: " & mstrSQLIntegratedSecurity)
+                    MsgBox("SQLIntegratedSecurity Invalid: " & mstrSQLIntegratedSecurity)
 
-                'Console.Write("The content of the respectClausePunc element:  ")
-                'Console.WriteLine(mstrRespectClausePunc)
+                End If
+                '
+                'Console.Write("The content of the SQLIntegratedSecurity element:  ")
+                'Console.WriteLine(mstrSQLIntegratedSecurity)
                 reader.ReadEndElement()
+                '
+                reader.ReadStartElement("SQLInitCatalogDB")
+                mstrSQLInitCatalogDB = reader.ReadString()
+                'Console.Write("The content of the SQLSQLInitCatalogDB element:  ")
+                'Console.WriteLine(mstrSQLInitCatalogDB)
+                reader.ReadEndElement()
+                '
+                
                 '
                 reader.ReadEndElement()     'Read the end of the <parameters>
             End Using
@@ -105,21 +100,21 @@ Public Class BuntParam
         End Get
     End Property
 
-    Public ReadOnly Property UsePhrases As Boolean
+    Public ReadOnly Property SQLDataSource As String
         Get
-            Return mblnUsePhrases
+            Return mstrSQLDataSource
         End Get
     End Property
 
-    Public ReadOnly Property MaxPhraseSize As Integer
+    Public ReadOnly Property SQLIntegratedSecurity As Boolean
         Get
-            Return mintMaxPhraseSize
+            Return mblnSQLIntegratedSecurity
         End Get
     End Property
 
-    Public ReadOnly Property RespectClausePunc As Boolean
+    Public ReadOnly Property SQLInitCatalogDB As String
         Get
-            Return mblnRespectClausePunc
+            Return mstrSQLInitCatalogDB
         End Get
 
     End Property
@@ -128,9 +123,9 @@ Public Class BuntParam
         Console.WriteLine("__Dump Parameters:__")
         Console.WriteLine("__.appVersion --->" & Me.ApplicationVersion)
         Console.WriteLine("__.dbVersion ---->" & Me.DatabaseVersion)
-        Console.WriteLine("__.UsePhrases --->" & Me.UsePhrases)
-        Console.WriteLine("__.MaxPhraseSize->" & Me.MaxPhraseSize)
-        Console.WriteLine("__.respectPunc -->" & Me.RespectClausePunc)
+        Console.WriteLine("__.SQLDataSource --->" & Me.SQLDataSource)
+        Console.WriteLine("__.SQLIntegratedSecurity->" & Me.SQLIntegratedSecurity)
+        Console.WriteLine("__.SQLInitCatalogDB -->" & Me.SQLInitCatalogDB)
     End Sub
 
 

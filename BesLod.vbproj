@@ -94,7 +94,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="objBuntParam.vb" />
+    <Compile Include="BesParam.vb" />
     <Compile Include="objDocBatch.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -120,7 +120,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="BuntParms.xml">
+    <Content Include="BesParms.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

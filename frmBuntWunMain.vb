@@ -11,7 +11,7 @@ Imports System.Data.SqlTypes
 
 Public Class frmBuntWunMain
 
-    Friend mParams As New BuntParam 'Declare the parameters object
+    Public mParams As New BesParam 'Declare the parameters object
     Friend mFileName As String 'The name of the file of documents we are loading
     Friend mDocBatch As Object
 
@@ -57,9 +57,10 @@ Public Class frmBuntWunMain
         'Temporarilly using this to run an INSERT or an UPDATE
         Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
 
-        conString.DataSource = "LENOVOUSER\SQLEXPRESS"
-        conString.IntegratedSecurity = True
-        conString.InitialCatalog = "AugustDB"
+        'Get Connection string data
+        conString.DataSource = mParams.SQLDataSource
+        conString.IntegratedSecurity = mParams.SQLIntegratedSecurity
+        conString.InitialCatalog = mParams.SQLInitCatalogDB
 
         Console.WriteLine(conString.ConnectionString)
 
@@ -180,9 +181,13 @@ Public Class frmBuntWunMain
     Private Sub cmdSQLTest_Click(sender As Object, e As EventArgs) Handles cmdSQLTest.Click
         Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
 
-        conString.DataSource = "LENOVOUSER\SQLEXPRESS"
-        conString.IntegratedSecurity = True
-        conString.InitialCatalog = "AugustDB"
+        'conString.DataSource = "LENOVOUSER\SQLEXPRESS"
+        'conString.IntegratedSecurity = True
+        'conString.InitialCatalog = "AugustDB"
+        'Get Connection string data
+        conString.DataSource = mParams.SQLDataSource
+        conString.IntegratedSecurity = mParams.SQLIntegratedSecurity
+        conString.InitialCatalog = mParams.SQLInitCatalogDB
 
         Console.WriteLine(conString.ConnectionString)
 
@@ -219,9 +224,10 @@ Public Class frmBuntWunMain
 
         Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
 
-        conString.DataSource = "LENOVOUSER\SQLEXPRESS"
-        conString.IntegratedSecurity = True
-        conString.InitialCatalog = "AugustDB"
+        'Get Connection string data
+        conString.DataSource = mParams.SQLDataSource
+        conString.IntegratedSecurity = mParams.SQLIntegratedSecurity
+        conString.InitialCatalog = mParams.SQLInitCatalogDB
 
         Try
             Using Con As New SqlConnection(conString.ConnectionString)
