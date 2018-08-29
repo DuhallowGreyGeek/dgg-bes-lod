@@ -11,12 +11,14 @@ Imports System.Data.SqlTypes
 
 Public Class frmBuntWunMain
 
-    Public mParams As New BesParam 'Declare the parameters object
+    'Public mParams As New BesParam 'Declare the parameters object
+    'Friend mLodSQL As New BesLodSQL 'Declare the SQL functions object
+
     Friend mFileName As String 'The name of the file of documents we are loading
     Friend mDocBatch As Object
 
     Private Sub DumpToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DumpToolStripMenuItem.Click
-        mParams.Dump()
+        params.Dump()
         MsgBox("Arghhh!")
         Console.WriteLine("Write to the console")
     End Sub
@@ -55,42 +57,8 @@ Public Class frmBuntWunMain
     Private Sub cmdClear_Click(sender As Object, e As EventArgs) Handles cmdClear.Click
         'Clear the status window
         'Temporarilly using this to run an INSERT or an UPDATE
-        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
 
-        'Get Connection string data
-        conString.DataSource = mParams.SQLDataSource
-        conString.IntegratedSecurity = mParams.SQLIntegratedSecurity
-        conString.InitialCatalog = mParams.SQLInitCatalogDB
-
-        Console.WriteLine(conString.ConnectionString)
-
-        Dim dbConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
-
-        'Dim comBuilder As New System.Data.SqlClient.SqlCommandBuilder
-
-
-        Const QUOT As String = "'"                              'SQL is expecting literals enclosed in single quotes - I predict confusion!
-        Dim dateString As String = QUOT & Now.ToString & QUOT   'Using a string purely to get an updating string
-
-        Dim queryString As String = "INSERT INTO dbo.AugTable (AugId, DateTimeString) VALUES(9999," & dateString & " )"
-        'Dim queryString As String = "INSERT INTO dbo.AugTable (AugId) VALUES(9999)"
-
-        Dim mySqlCommand = New SqlCommand(queryString, dbConnection)
-
-        Try
-            Dim numRows As Integer = 0
-
-            mySqlCommand.Connection.Open()
-            MsgBox("Number rows affected = " & mySqlCommand.ExecuteNonQuery().ToString)
-
-        Catch ex As SqlException
-            Dim i As Integer = 0
-            For i = 0 To ex.Errors.Count - 1
-                Console.WriteLine("Index#: " & i.ToString & vbNewLine & "Error: " & ex.Errors(i).ToString & vbNewLine)
-            Next
-            MsgBox("SQL Exception trapped - Look at the console")
-        End Try
-
+        Call mLodSQL.augTable_insert()
 
     End Sub
 
@@ -179,87 +147,55 @@ Public Class frmBuntWunMain
     End Sub
 
     Private Sub cmdSQLTest_Click(sender As Object, e As EventArgs) Handles cmdSQLTest.Click
-        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+        'Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
 
-        'conString.DataSource = "LENOVOUSER\SQLEXPRESS"
-        'conString.IntegratedSecurity = True
-        'conString.InitialCatalog = "AugustDB"
-        'Get Connection string data
-        conString.DataSource = mParams.SQLDataSource
-        conString.IntegratedSecurity = mParams.SQLIntegratedSecurity
-        conString.InitialCatalog = mParams.SQLInitCatalogDB
+        Call mLodSQL.augTable_fail()
 
-        Console.WriteLine(conString.ConnectionString)
-
-        Dim dbConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
-
-        'Dim comBuilder As New System.Data.SqlClient.SqlCommandBuilder
-
-        Dim queryString As String = "EXECUTE NonExistantStoredProcedure"
-
-        Dim mySqlCommand = New SqlCommand(queryString, dbConnection)
-
-        Try
-            Dim numRows As Integer = 0
-
-            mySqlCommand.Connection.Open()
-            MsgBox("Number rows affected = " & mySqlCommand.ExecuteNonQuery().ToString)
-
-        Catch ex As SqlException
-            Dim i As Integer = 0
-            For i = 0 To ex.Errors.Count - 1
-                Console.WriteLine("Index#: " & i.ToString & vbNewLine & "Error: " & ex.Errors(i).ToString & vbNewLine)
-            Next
-            MsgBox("SQL Exception trapped - Look at the console")
-        End Try
-
-
-
-
-
+        
     End Sub
 
     Private Sub cmdTempSelect_Click(sender As Object, e As EventArgs) Handles cmdTempSelect.Click
         'Temporary function to test "SELECT" from the database
+        Call mLodSQL.augTable_select()
 
-        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
-
+        '        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+        '
         'Get Connection string data
-        conString.DataSource = mParams.SQLDataSource
-        conString.IntegratedSecurity = mParams.SQLIntegratedSecurity
-        conString.InitialCatalog = mParams.SQLInitCatalogDB
+        'conString.DataSource = mParams.SQLDataSource
+        'conString.IntegratedSecurity = mParams.SQLIntegratedSecurity
+        'conString.InitialCatalog = mParams.SQLInitCatalogDB
 
-        Try
-            Using Con As New SqlConnection(conString.ConnectionString)
-                Con.Open()
-                Using Com As New SqlCommand("Select * From dbo.AugTable", Con)
-                    Using RDR = Com.ExecuteReader()
-                        If RDR.HasRows Then
-                            Do While RDR.Read
+        'Try
+        'Using Con As New SqlConnection(conString.ConnectionString)
+        'Con.Open()
+        'Using Com As New SqlCommand("Select * From dbo.AugTable", Con)
+        'Using RDR = Com.ExecuteReader()
+        'If RDR.HasRows Then
+        'Do While RDR.Read
 
-                                lstLoadProgress.Items.Add("--- " & RDR.Item("AugId").ToString() & " --- " & RDR.Item("DatetimeString").ToString())
+        'lstLoadProgress.Items.Add("--- " & RDR.Item("AugId").ToString() & " --- " & RDR.Item("DatetimeString").ToString())
 
-                            Loop
-                        End If
-                    End Using
-                End Using
-                Con.Close()
-            End Using
+        'Loop
+        'End If
+        'End Using
+        'End Using
+        'Con.Close()
+        'End Using
 
-        Catch ex As SqlException
-            Dim i As Integer = 0
-            For i = 0 To ex.Errors.Count - 1
-                Console.WriteLine("Index#: " & i.ToString & vbNewLine & "Error: " & ex.Errors(i).ToString & vbNewLine)
-            Next
-            MsgBox("SQL Exception trapped - Look at the console")
+        'Catch ex As SqlException
+        ' Dim i As Integer = 0
+        'For i = 0 To ex.Errors.Count - 1
+        'Console.WriteLine("Index#: " & i.ToString & vbNewLine & "Error: " & ex.Errors(i).ToString & vbNewLine)
+        'Next
+        'MsgBox("SQL Exception trapped - Look at the console")
 
-        Catch ex As Exception
+        'Catch ex As Exception
 
-            Console.WriteLine("Error: " & ex.Message.ToString & " is not a valid column" & vbNewLine)
-            Console.WriteLine(ex.ToString & vbNewLine)
+        'Console.WriteLine("Error: " & ex.Message.ToString & " is not a valid column" & vbNewLine)
+        'Console.WriteLine(ex.ToString & vbNewLine)
 
-            MsgBox("Non-SQL exception - Look at the console")
-        End Try
+        'MsgBox("Non-SQL exception - Look at the console")
+        'End Try
 
     End Sub
 End Class
