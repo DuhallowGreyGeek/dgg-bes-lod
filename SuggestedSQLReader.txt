@@ -1,0 +1,14 @@
+   Dim sConnection As String = "server=(local);uid=sa;pwd=PassWord;database=DatabaseName"
+    Using Con As New SqlConnection(sConnection)
+        Con.Open()
+        Using Com As New SqlCommand("Select * From tablename", Con)
+            Using RDR = Com.ExecuteReader()
+                If RDR.HasRows Then
+                    Do While RDR.Read
+                        txtName.Text = RDR.Item("Name").ToString()
+                    Loop
+                End If
+            End Using
+        End Using
+        Con.Close()
+    End Using

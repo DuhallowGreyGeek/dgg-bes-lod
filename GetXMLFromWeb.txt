@@ -1,0 +1,15 @@
+Public Function getCurlXML(theURL As String) As Xml.XmlDocument
+    getCurlXML = New Xml.XmlDocument
+    Dim wHeader As WebHeaderCollection = New WebHeaderCollection()
+    wHeader.Clear()
+    Dim wRequest As HttpWebRequest = DirectCast(System.Net.HttpWebRequest.Create(theURL), HttpWebRequest)
+    wRequest.ContentType = "text/xml"
+    wRequest.Headers = wHeader
+    wRequest.Method = "GET"
+    Dim wResponse As HttpWebResponse = DirectCast(wRequest.GetResponse(), HttpWebResponse)
+    Dim sResponse As String = ""
+    Using srRead As New StreamReader(wResponse.GetResponseStream())
+        sResponse = srRead.ReadToEnd()
+    End Using
+    getCurlXML.LoadXml(sResponse)
+End Function
