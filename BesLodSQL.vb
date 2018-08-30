@@ -10,8 +10,8 @@ Imports System.Data.SqlClient
 Imports System.Data.SqlTypes
 
 Public Class BesLodSQL
+    'Object bringing together all the function Bessie Load uses to access the SQL database.
     Public Sub New()
-        'Dim mParams As New BesParam 'Will declaring the parameters object locally fix my problem?
 
     End Sub
     'Object bringing together all the function Bessie Load uses to access the SQL database.
@@ -28,20 +28,20 @@ Public Class BesLodSQL
 
         Console.WriteLine(conString.ConnectionString)
 
-        Dim dbConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
+        Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
 
         Dim dateString As String = QUOT & Now.ToString & QUOT   'Using a string purely to get an updating string
 
-        Dim queryString As String = "INSERT INTO dbo.AugTable (AugId, DateTimeString) VALUES(9999," & dateString & " )"
-        'Dim queryString As String = "INSERT INTO dbo.AugTable (AugId) VALUES(9999)"
+        Dim queryString As String = "INSERT INTO dbo.TestAugTable (AugId, DateTimeString) VALUES(9999," & dateString & " )"
+        'Dim queryString As String = "INSERT INTO dbo.TestAugTable (AugId) VALUES(9999)"
 
-        Dim mySqlCommand = New SqlCommand(queryString, dbConnection)
+        Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
 
         Try
             Dim numRows As Integer = 0
 
-            mySqlCommand.Connection.Open()
-            MsgBox("Number rows affected = " & mySqlCommand.ExecuteNonQuery().ToString)
+            sqlCommand.Connection.Open()
+            MsgBox("Number rows affected = " & sqlCommand.ExecuteNonQuery().ToString)
 
         Catch ex As SqlException
             Dim i As Integer = 0
@@ -65,20 +65,20 @@ Public Class BesLodSQL
         conString.InitialCatalog = params.SQLInitCatalogDB
 
         Try
-            Using Con As New SqlConnection(conString.ConnectionString)
-                Con.Open()
-                Using Com As New SqlCommand("Select * From dbo.AugTable", Con)
-                    Using RDR = Com.ExecuteReader()
-                        If RDR.HasRows Then
-                            Do While RDR.Read
+            Using sqlConnection As New SqlConnection(conString.ConnectionString)
+                sqlConnection.Open()
+                Using sqlCommand As New SqlCommand("Select * From dbo.TestAugTable", sqlConnection)
+                    Using reader = sqlCommand.ExecuteReader()
+                        If reader.HasRows Then
+                            Do While reader.Read
 
-                                frmMain.lstLoadProgress.Items.Add("--- " & RDR.Item("AugId").ToString() & " --- " & RDR.Item("DatetimeString").ToString())
+                                frmMain.lstLoadProgress.Items.Add("--- " & reader.Item("AugId").ToString() & " --- " & reader.Item("DatetimeString").ToString())
 
                             Loop
                         End If
                     End Using
                 End Using
-                Con.Close()
+                sqlConnection.Close()
             End Using
 
         Catch ex As SqlException
@@ -108,11 +108,11 @@ Public Class BesLodSQL
         conString.InitialCatalog = params.SQLInitCatalogDB
 
         Console.WriteLine(conString.ConnectionString)
-        Dim dbConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
+        Dim connection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
 
         Dim queryString As String = "EXECUTE NonExistantStoredProcedure"
 
-        Dim mySqlCommand = New SqlCommand(queryString, dbConnection)
+        Dim mySqlCommand = New SqlCommand(queryString, connection)
 
         Try
             Dim numRows As Integer = 0
