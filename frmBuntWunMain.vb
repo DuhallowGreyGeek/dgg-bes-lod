@@ -61,78 +61,80 @@ Public Class frmBuntWunMain
         'This is a temporary function and button for testing fragments of code.
         lstLoadProgress.Items.Add("Test Button clicked")
 
+        gLodXML.loadDocBatch()
+
         'Process the XML document - will this approach be acceptable with a large XML file?
-        Dim xDoc As New XmlDocument
-        xDoc.Load("C:\Users\user\Documents\Bessie_20180824\BesTestLoad.xml")
+        'Dim xDoc As New XmlDocument
+        'xDoc.Load("C:\Users\user\Documents\Bessie_20180824\BesTestLoad.xml")
 
-        Dim s1 As String = xDoc.SelectSingleNode("doc_batch/batch_header/batch_filename").InnerText
-        lstLoadProgress.Items.Add("_filename---> " & s1)
+        'Dim s1 As String = xDoc.SelectSingleNode("doc_batch/batch_header/batch_filename").InnerText
+        'lstLoadProgress.Items.Add("_filename---> " & s1)
 
-        Dim s2 As String = xDoc.SelectSingleNode("doc_batch/batch_header/created_date").InnerText
-        lstLoadProgress.Items.Add("_created_date---> " & s2)
+        'Dim s2 As String = xDoc.SelectSingleNode("doc_batch/batch_header/created_date").InnerText
+        'lstLoadProgress.Items.Add("_created_date---> " & s2)
 
-        lstLoadProgress.Items.Add("---now loop through the **documents** --- ")
+        'lstLoadProgress.Items.Add("---now loop through the **documents** --- ")
 
-        Dim documentList As XmlNodeList = xDoc.GetElementsByTagName("doc_body")
-        Dim nodeText As String
-        Dim nodeName As String
+        'Dim documentList As XmlNodeList = xDoc.GetElementsByTagName("doc_body")
+        'Dim nodeText As String
+        'Dim nodeName As String
 
-        For Each thisNode As XmlNode In documentList
-            If (thisNode.Name = "doc_body") Then
-                lstLoadProgress.Items.Add("--New Document--")
+        'For Each thisNode As XmlNode In documentList
+        'If (thisNode.Name = "doc_body") Then
+        'lstLoadProgress.Items.Add("--New Document--")
 
-                'Note the FirstChild and LastChild properties and the ItemOf index is 0 based
+        'Note the FirstChild and LastChild properties and the ItemOf index is 0 based
 
-                nodeText = thisNode.ChildNodes.ItemOf(0).InnerText.ToString
-                lstLoadProgress.Items.Add("    --_/doc_filename --> " & nodeText)
+        'nodeText = thisNode.ChildNodes.ItemOf(0).InnerText.ToString
+        'lstLoadProgress.Items.Add("    --_/doc_filename --> " & nodeText)
 
-                nodeName = thisNode.ChildNodes.ItemOf(1).Name.ToString
-                nodeText = thisNode.ChildNodes.ItemOf(1).InnerText.ToString
-                lstLoadProgress.Items.Add("    --_/" & nodeName & " --> " & nodeText)
-
-
-                nodeText = thisNode.ChildNodes.ItemOf(2).InnerText.ToString
-                lstLoadProgress.Items.Add("    --_/doc_title --> " & nodeText)
+        'nodeName = thisNode.ChildNodes.ItemOf(1).Name.ToString
+        'nodeText = thisNode.ChildNodes.ItemOf(1).InnerText.ToString
+        'lstLoadProgress.Items.Add("    --_/" & nodeName & " --> " & nodeText)
 
 
-                Console.Write(thisNode.LastChild.InnerText.ToString)
-                'Now get the review or revision data
-                Dim revList As XmlNodeList = xDoc.GetElementsByTagName("doc_rev")
-                For Each thisReview As XmlNode In revList
-                    lstLoadProgress.Items.Add("     --New Review--")
-                    'Note the FirstChild and LastChild properties and the ItemOf index is 0 based
-                    Dim j As Integer
+        'nodeText = thisNode.ChildNodes.ItemOf(2).InnerText.ToString
+        'lstLoadProgress.Items.Add("    --_/doc_title --> " & nodeText)
 
-                    For j = 0 To thisReview.ChildNodes.Count - 1
-                        nodeName = thisReview.ChildNodes.ItemOf(j).Name.ToString
-                        nodeText = thisReview.ChildNodes.ItemOf(j).InnerText.ToString
-                        lstLoadProgress.Items.Add("         --_/" & nodeName & " --> " & nodeText)
-                    Next
 
-                Next
+        'Console.Write(thisNode.LastChild.InnerText.ToString)
+        'Now get the review or revision data
+        'Dim revList As XmlNodeList = xDoc.GetElementsByTagName("doc_rev")
+        'For Each thisReview As XmlNode In revList
+        'lstLoadProgress.Items.Add("     --New Review--")
+        'Note the FirstChild and LastChild properties and the ItemOf index is 0 based
+        'Dim j As Integer
 
-                'nodeText = thisNode.FirstChild.InnerText.ToString
-                'nodeText = thisNode.LastChild.InnerText.ToString
+        'For j = 0 To thisReview.ChildNodes.Count - 1
+        'nodeName = thisReview.ChildNodes.ItemOf(j).Name.ToString
+        'nodeText = thisReview.ChildNodes.ItemOf(j).InnerText.ToString
+        'lstLoadProgress.Items.Add("         --_/" & nodeName & " --> " & nodeText)
+        'Next
 
-            End If
-            If (thisNode.Name = "doc_rev") Then
-                lstLoadProgress.Items.Add("     --New Review--")
+        'Next
 
-                'Note the FirstChild and LastChild properties and the ItemOf index is 0 based
-                Dim j As Integer
+        'nodeText = thisNode.FirstChild.InnerText.ToString
+        'nodeText = thisNode.LastChild.InnerText.ToString
 
-                For j = 0 To thisNode.ChildNodes.Count
-                    nodeName = thisNode.ChildNodes.ItemOf(1).Name.ToString
-                    nodeText = thisNode.ChildNodes.ItemOf(1).InnerText.ToString
-                    lstLoadProgress.Items.Add("         --_/" & nodeName & " --> " & nodeText)
-                Next
+        'End If
+        'If (thisNode.Name = "doc_rev") Then
+        'lstLoadProgress.Items.Add("     --New Review--")
 
-            End If
-            lstLoadProgress.Items.Add(" ")
-        Next
+        'Note the FirstChild and LastChild properties and the ItemOf index is 0 based
+        'Dim j As Integer
 
-        lstLoadProgress.Items.Add(" ")
-        lstLoadProgress.Items.Add("--Number of documents found ---> " & documentList.Count.ToString)
+        'For j = 0 To thisNode.ChildNodes.Count
+        'nodeName = thisNode.ChildNodes.ItemOf(1).Name.ToString
+        'nodeText = thisNode.ChildNodes.ItemOf(1).InnerText.ToString
+        'lstLoadProgress.Items.Add("         --_/" & nodeName & " --> " & nodeText)
+        'Next
+
+        'End If
+        'lstLoadProgress.Items.Add(" ")
+        'Next
+
+        'lstLoadProgress.Items.Add(" ")
+        'lstLoadProgress.Items.Add("--Number of documents found ---> " & documentList.Count.ToString)
 
     End Sub
 

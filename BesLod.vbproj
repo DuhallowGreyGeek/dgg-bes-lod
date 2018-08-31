@@ -89,6 +89,7 @@
   <ItemGroup>
     <Compile Include="BesLodMain.vb" />
     <Compile Include="BesLodSQL.vb" />
+    <Compile Include="BesLodXml.vb" />
     <Compile Include="frmBuntWunMain.vb">
       <SubType>Form</SubType>
     </Compile>
