@@ -30,7 +30,7 @@ Public Class BesLodSQL
 
         Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
 
-        Dim dateString As String = QUOT & Now.ToString & QUOT   'Using a string purely to get an updating string
+        Dim dateString As String = QUOT & Now.ToString("yyyy/MM/dd HH:mm:ss.fff") & QUOT   'Using a string purely to get an updating string
 
         Dim queryString As String = "INSERT INTO dbo.TestAugTable (AugId, DateTimeString) VALUES(9999," & dateString & " )"
         'Dim queryString As String = "INSERT INTO dbo.TestAugTable (AugId) VALUES(9999)"
@@ -44,14 +44,9 @@ Public Class BesLodSQL
             MsgBox("Number rows affected = " & sqlCommand.ExecuteNonQuery().ToString)
 
         Catch ex As SqlException
-            Dim i As Integer = 0
-            For i = 0 To ex.Errors.Count - 1
-                Console.WriteLine("Index#: " & i.ToString & vbNewLine & "Error: " & ex.Errors(i).ToString & vbNewLine)
-            Next
-            MsgBox("SQL Exception trapped - Look at the console")
+            Call Me.handleSQLException(ex)
+            
         End Try
-
-
 
     End Sub
     Public Sub augTable_select()
@@ -82,18 +77,11 @@ Public Class BesLodSQL
             End Using
 
         Catch ex As SqlException
-            Dim i As Integer = 0
-            For i = 0 To ex.Errors.Count - 1
-                Console.WriteLine("Index#: " & i.ToString & vbNewLine & "Error: " & ex.Errors(i).ToString & vbNewLine)
-            Next
-            MsgBox("SQL Exception trapped - Look at the console")
+            Call Me.handleSQLException(ex)
 
         Catch ex As Exception
+            Call Me.handleGeneralException(ex)
 
-            Console.WriteLine("Error: " & ex.Message.ToString & " is not a valid column" & vbNewLine)
-            Console.WriteLine(ex.ToString & vbNewLine)
-
-            MsgBox("Non-SQL exception - Look at the console")
         End Try
 
 
@@ -121,13 +109,26 @@ Public Class BesLodSQL
             MsgBox("Number rows affected = " & mySqlCommand.ExecuteNonQuery().ToString)
 
         Catch ex As SqlException
-            Dim i As Integer = 0
-            For i = 0 To ex.Errors.Count - 1
-                Console.WriteLine("Index#: " & i.ToString & vbNewLine & "Error: " & ex.Errors(i).ToString & vbNewLine)
-            Next
-            MsgBox("SQL Exception trapped - Look at the console")
+            Call Me.handleSQLException(ex)
         End Try
 
     End Sub
+    Private Sub handleSQLException(ex As SqlException)
+        Dim i As Integer = 0
+        For i = 0 To ex.Errors.Count - 1
+            Console.WriteLine("Index#: " & i.ToString & vbNewLine & "Error: " & ex.Errors(i).ToString & vbNewLine)
+        Next
+        MsgBox("SQL Exception trapped - Look at the console")
+    End Sub
+
+    Private Sub handleGeneralException(ex As Exception)
+        Console.WriteLine("Error: " & ex.Message.ToString & " is not a valid column" & vbNewLine)
+        Console.WriteLine(ex.ToString & vbNewLine)
+
+        MsgBox("Non-SQL exception - Look at the console")
+
+    End Sub
+
+
 
 End Class

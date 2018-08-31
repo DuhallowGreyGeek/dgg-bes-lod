@@ -1,19 +1,9 @@
-﻿Imports System          'is this needed?
-Imports System.IO
+﻿Imports System.IO
 'Following only required while I am testing XML stuff in here
 Imports System.Text
 Imports System.Xml
-'Following only required while I am testing SQL stuff here
-Imports Microsoft.SqlServer
-Imports System.Data.Sql
-Imports System.Data.SqlClient
-Imports System.Data.SqlTypes
 
 Public Class frmBuntWunMain
-
-    'Public mParams As New BesParam 'Declare the parameters object
-    'Friend mLodSQL As New BesLodSQL 'Declare the SQL functions object
-
     Friend mFileName As String 'The name of the file of documents we are loading
     Friend mDocBatch As Object
 
