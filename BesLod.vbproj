@@ -90,7 +90,6 @@
     <Compile Include="BatchHeader.vb" />
     <Compile Include="BesLodMain.vb" />
     <Compile Include="BesLodSQL.vb" />
-    <Compile Include="BesLodXml.vb" />
     <Compile Include="DocBatch.vb" />
     <Compile Include="DocBody.vb" />
     <Compile Include="DocList.vb" />
@@ -117,7 +116,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="BesParam.vb" />
-    <Compile Include="objDocBatch.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="frmBuntWunMain.resx">
