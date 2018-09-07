@@ -34,6 +34,7 @@ Partial Class frmBuntWunMain
         Me.dlgOutputFile = New System.Windows.Forms.SaveFileDialog()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.lstLoadProgress = New System.Windows.Forms.ListBox()
+        Me.cmdTempSelect = New System.Windows.Forms.Button()
         Me.cmdSQLTest = New System.Windows.Forms.Button()
         Me.cmdTest = New System.Windows.Forms.Button()
         Me.cmdClose = New System.Windows.Forms.Button()
@@ -41,7 +42,7 @@ Partial Class frmBuntWunMain
         Me.cmdLoadDocs = New System.Windows.Forms.Button()
         Me.cmdShowFileHeader = New System.Windows.Forms.Button()
         Me.HelpProvider1 = New System.Windows.Forms.HelpProvider()
-        Me.cmdTempSelect = New System.Windows.Forms.Button()
+        Me.cmdLoadXML = New System.Windows.Forms.Button()
         Me.mnuMenu.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -121,6 +122,7 @@ Partial Class frmBuntWunMain
         '
         'SplitContainer1.Panel2
         '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.cmdLoadXML)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdTempSelect)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdSQLTest)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdTest)
@@ -141,9 +143,18 @@ Partial Class frmBuntWunMain
         Me.lstLoadProgress.Size = New System.Drawing.Size(538, 149)
         Me.lstLoadProgress.TabIndex = 0
         '
+        'cmdTempSelect
+        '
+        Me.cmdTempSelect.Location = New System.Drawing.Point(81, 33)
+        Me.cmdTempSelect.Name = "cmdTempSelect"
+        Me.cmdTempSelect.Size = New System.Drawing.Size(75, 23)
+        Me.cmdTempSelect.TabIndex = 6
+        Me.cmdTempSelect.Text = "Select 2"
+        Me.cmdTempSelect.UseVisualStyleBackColor = True
+        '
         'cmdSQLTest
         '
-        Me.cmdSQLTest.Location = New System.Drawing.Point(451, 34)
+        Me.cmdSQLTest.Location = New System.Drawing.Point(324, 33)
         Me.cmdSQLTest.Name = "cmdSQLTest"
         Me.cmdSQLTest.Size = New System.Drawing.Size(75, 23)
         Me.cmdSQLTest.TabIndex = 5
@@ -152,7 +163,7 @@ Partial Class frmBuntWunMain
         '
         'cmdTest
         '
-        Me.cmdTest.Location = New System.Drawing.Point(451, 4)
+        Me.cmdTest.Location = New System.Drawing.Point(324, 4)
         Me.cmdTest.Name = "cmdTest"
         Me.cmdTest.Size = New System.Drawing.Size(75, 23)
         Me.cmdTest.TabIndex = 4
@@ -161,7 +172,7 @@ Partial Class frmBuntWunMain
         '
         'cmdClose
         '
-        Me.cmdClose.Location = New System.Drawing.Point(359, 3)
+        Me.cmdClose.Location = New System.Drawing.Point(243, 4)
         Me.cmdClose.Name = "cmdClose"
         Me.cmdClose.Size = New System.Drawing.Size(75, 40)
         Me.cmdClose.TabIndex = 3
@@ -170,7 +181,7 @@ Partial Class frmBuntWunMain
         '
         'cmdClear
         '
-        Me.cmdClear.Location = New System.Drawing.Point(252, 3)
+        Me.cmdClear.Location = New System.Drawing.Point(162, 2)
         Me.cmdClear.Name = "cmdClear"
         Me.cmdClear.Size = New System.Drawing.Size(75, 40)
         Me.cmdClear.TabIndex = 2
@@ -179,7 +190,7 @@ Partial Class frmBuntWunMain
         '
         'cmdLoadDocs
         '
-        Me.cmdLoadDocs.Location = New System.Drawing.Point(140, 4)
+        Me.cmdLoadDocs.Location = New System.Drawing.Point(81, 4)
         Me.cmdLoadDocs.Name = "cmdLoadDocs"
         Me.cmdLoadDocs.Size = New System.Drawing.Size(75, 23)
         Me.cmdLoadDocs.TabIndex = 1
@@ -188,21 +199,21 @@ Partial Class frmBuntWunMain
         '
         'cmdShowFileHeader
         '
-        Me.cmdShowFileHeader.Location = New System.Drawing.Point(30, 4)
+        Me.cmdShowFileHeader.Location = New System.Drawing.Point(0, 4)
         Me.cmdShowFileHeader.Name = "cmdShowFileHeader"
         Me.cmdShowFileHeader.Size = New System.Drawing.Size(75, 39)
         Me.cmdShowFileHeader.TabIndex = 0
         Me.cmdShowFileHeader.Text = "Show Header"
         Me.cmdShowFileHeader.UseVisualStyleBackColor = True
         '
-        'cmdTempSelect
+        'cmdLoadXML
         '
-        Me.cmdTempSelect.Location = New System.Drawing.Point(140, 33)
-        Me.cmdTempSelect.Name = "cmdTempSelect"
-        Me.cmdTempSelect.Size = New System.Drawing.Size(75, 23)
-        Me.cmdTempSelect.TabIndex = 6
-        Me.cmdTempSelect.Text = "Select 2"
-        Me.cmdTempSelect.UseVisualStyleBackColor = True
+        Me.cmdLoadXML.Location = New System.Drawing.Point(406, 4)
+        Me.cmdLoadXML.Name = "cmdLoadXML"
+        Me.cmdLoadXML.Size = New System.Drawing.Size(75, 23)
+        Me.cmdLoadXML.TabIndex = 7
+        Me.cmdLoadXML.Text = "LoadXML"
+        Me.cmdLoadXML.UseVisualStyleBackColor = True
         '
         'frmBuntWunMain
         '
@@ -245,5 +256,6 @@ Partial Class frmBuntWunMain
     Friend WithEvents HelpProvider1 As System.Windows.Forms.HelpProvider
     Friend WithEvents cmdSQLTest As System.Windows.Forms.Button
     Friend WithEvents cmdTempSelect As System.Windows.Forms.Button
+    Friend WithEvents cmdLoadXML As System.Windows.Forms.Button
 
 End Class

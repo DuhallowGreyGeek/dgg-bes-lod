@@ -87,9 +87,13 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BatchHeader.vb" />
     <Compile Include="BesLodMain.vb" />
     <Compile Include="BesLodSQL.vb" />
     <Compile Include="BesLodXml.vb" />
+    <Compile Include="DocBatch.vb" />
+    <Compile Include="DocBody.vb" />
+    <Compile Include="DocList.vb" />
     <Compile Include="frmBuntWunMain.vb">
       <SubType>Form</SubType>
     </Compile>

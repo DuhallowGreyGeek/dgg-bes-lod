@@ -3,7 +3,7 @@ Imports System.IO
 Imports System.Text
 Imports System.Xml
 
-Public Class DocBatch
+Public Class OldDocBatch
     Protected Friend Const THISCLASS As String = "DocBatch"
 
     Public Sub New()

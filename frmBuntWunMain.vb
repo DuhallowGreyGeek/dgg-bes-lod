@@ -34,7 +34,7 @@ Public Class frmBuntWunMain
 
     Private Sub cmdShowFileHeader_Click(sender As Object, e As EventArgs) Handles cmdShowFileHeader.Click
         'Create the DocBatch object (there can only ever be one) and display the header into
-        mDocBatch = New DocBatch
+        mDocBatch = New OldDocBatch
 
     End Sub
 
@@ -189,5 +189,13 @@ Public Class frmBuntWunMain
         'MsgBox("Non-SQL exception - Look at the console")
         'End Try
 
+    End Sub
+
+    Private Sub cmdLoadXML_Click(sender As Object, e As EventArgs) Handles cmdLoadXML.Click
+        Dim batchFileName As String = "C:\Users\user\Documents\Bessie_20180824\BesTestLoad_02.xml"
+
+        Dim docBatch As New DocBatch(batchFileName)
+
+        'Then clean up ready for the next file
     End Sub
 End Class
