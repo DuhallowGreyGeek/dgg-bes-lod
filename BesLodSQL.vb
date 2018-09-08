@@ -1,20 +1,14 @@
-﻿Imports System          'is this needed?
-Imports System.IO
-'Following only required while I am testing XML stuff in here
-Imports System.Text
-Imports System.Xml
-'Following only required while I am testing SQL stuff here
-Imports Microsoft.SqlServer
-Imports System.Data.Sql
+﻿'Following required for SQL functions
+'Imports Microsoft.SqlServer
+'Imports System.Data.Sql
 Imports System.Data.SqlClient
-Imports System.Data.SqlTypes
+'Imports System.Data.SqlTypes
 
 Public Class BesLodSQL
     'Object bringing together all the function Bessie Load uses to access the SQL database.
     Public Sub New()
 
     End Sub
-    'Object bringing together all the function Bessie Load uses to access the SQL database.
 
     Public Sub augTable_insert()
         Const QUOT As String = "'"                              'SQL is expecting literals enclosed in single quotes - I predict confusion!
