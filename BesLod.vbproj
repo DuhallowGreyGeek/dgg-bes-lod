@@ -90,6 +90,9 @@
     <Compile Include="BatchHeader.vb" />
     <Compile Include="BesLodMain.vb" />
     <Compile Include="BesLodSQL.vb" />
+    <Compile Include="BodyHeader.vb" />
+    <Compile Include="PartList.vb" />
+    <Compile Include="DocPart.vb" />
     <Compile Include="DocBatch.vb" />
     <Compile Include="DocBody.vb" />
     <Compile Include="DocList.vb" />

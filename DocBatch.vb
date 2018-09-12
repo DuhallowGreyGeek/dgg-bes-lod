@@ -1,51 +1,64 @@
 ﻿Imports System.Xml
 
 Public Class DocBatch
+    Private mNumDocs As Integer = 0                 'Number of documents in this batch
+    Private mCurDocNum As Integer = 0               'Number of document currently being processed
+
     Public Sub New(docBatchFname As String)
-        Console.WriteLine("Processing file: " & docBatchFname)
 
         Dim xDocBatch As New XmlDocument
         xDocBatch.Load(docBatchFname) 'Load the document
-        Console.WriteLine("--Loaded the document--")
 
-        Dim xDocHeader As New BatchHeader(xDocBatch)
-        Console.WriteLine("--Processed the Batch Header--")
+        Dim xBatHeader As New BatchHeader(xDocBatch)
 
         Dim xDocList As New DocList(xDocBatch)
-        Console.WriteLine("--Loaded the DocList--")
 
         'Process each document
+        mNumDocs = xDocList.DocBodyList.Count
         Console.WriteLine("number of documents ---> " & xDocList.DocBodyList.Count)
-        '*** I expected this to work with a For Each. Instead it seems that I have to Dim the object here
+        '*** I expected this to work with a For Each, but I have to Dim the object here
         '*** to get it understood properly here.
-        '
-        'For Each xDocBody In xDocList.DocBodyList
-        'For Each DocBody In xDocList.DocBodyList
-        'Console.WriteLine("     ----> A document Body")
-        'Console.Write(xDocBody.Name & " Value: ")
-        'Console.WriteLine(xDocBody.InnerXml)
-
-        'Console.WriteLine("     filename ---------> " & DocBody.ToString)
-        'Console.WriteLine("     date     ---------> ")
-        'Console.WriteLine("     title    ---------> ")
-
-        'Next
 
         Dim i As Integer
         For i = 1 To xDocList.DocBodyList.Count
-            Console.WriteLine("     ----> A document Body")
-            'Console.WriteLine("     filename ---------> " & xDocList.DocBodyList.Item(i).filename)
-            'Console.WriteLine("     date     ---------> " & xDocList.DocBodyList.Item(i).docdate)
-            'Console.WriteLine("     title    ---------> " & xDocList.DocBodyList.Item(i).doctitle)
+            Console.WriteLine(" -------------> A document Body")
 
             Dim currentBody As DocBody = xDocList.DocBodyList.Item(i)
-            Console.WriteLine("     filename ---------> " & currentBody.FileName)
-            Console.WriteLine("     date     ---------> " & currentBody.DocDate)
-            Console.WriteLine("     title    ---------> " & currentBody.DocTitle)
-            'currentBody.
+            Console.WriteLine("       filename ---------> " & currentBody.FileName)
+            Console.WriteLine("       filepath ---------> " & currentBody.FilePath)
+            Console.WriteLine("       date     ---------> " & currentBody.DocDate)
+            Console.WriteLine("       title    ---------> " & currentBody.DocTitle)
 
-            Console.WriteLine(" ")
+            Console.WriteLine("  ------Now the parts---")
+
+            Dim j As Integer
+            For j = 1 To currentBody.Parts.Count
+                Console.WriteLine("     ---- Part --- j= " & j.ToString)
+                Dim curPart As DocPart = currentBody.Parts.Item(j)
+                Console.WriteLine("       --Subj---> " & curPart.Subject)
+                Console.WriteLine("       --From---> " & curPart.DocFrom)
+                Console.WriteLine("       --To-----> " & curPart.DocTo)
+                Console.WriteLine("       --Synop--> " & curPart.Synopsis)
+            Next
+            Console.WriteLine()
+
+            'For Each curDocPart As DocPart In currentBody.Parts
+            'Console.WriteLine("        ----> " & curDocPart.Subject)
+            'Next
+
         Next
+        Console.WriteLine()
+        Console.WriteLine("--------- All Documents Processed ----------")
 
     End Sub
+    Public ReadOnly Property NumDocs As Integer
+        Get
+            Return mNumDocs
+        End Get
+    End Property
+    Public ReadOnly Property CurrentDocNum As Integer
+        Get
+            Return CurrentDocNum
+        End Get
+    End Property
 End Class

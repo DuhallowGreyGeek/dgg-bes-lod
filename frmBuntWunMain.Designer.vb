@@ -44,6 +44,7 @@ Partial Class frmBuntWunMain
         Me.cmdTest = New System.Windows.Forms.Button()
         Me.cmdClose = New System.Windows.Forms.Button()
         Me.HelpProvider1 = New System.Windows.Forms.HelpProvider()
+        Me.prgLoadProgress = New System.Windows.Forms.ProgressBar()
         Me.mnuMenu.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -108,19 +109,19 @@ Partial Class frmBuntWunMain
         'SelectToolStripMenuItem
         '
         Me.SelectToolStripMenuItem.Name = "SelectToolStripMenuItem"
-        Me.SelectToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.SelectToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
         Me.SelectToolStripMenuItem.Text = "Select"
         '
         'InsertToolStripMenuItem
         '
         Me.InsertToolStripMenuItem.Name = "InsertToolStripMenuItem"
-        Me.InsertToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.InsertToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
         Me.InsertToolStripMenuItem.Text = "Insert"
         '
         'ExceptionToolStripMenuItem
         '
         Me.ExceptionToolStripMenuItem.Name = "ExceptionToolStripMenuItem"
-        Me.ExceptionToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.ExceptionToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
         Me.ExceptionToolStripMenuItem.Text = "Exception"
         '
         'TestXMLToolStripMenuItem
@@ -161,6 +162,7 @@ Partial Class frmBuntWunMain
         '
         'SplitContainer1.Panel2
         '
+        Me.SplitContainer1.Panel2.Controls.Add(Me.prgLoadProgress)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdLoadXML)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdTest)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdClose)
@@ -203,6 +205,14 @@ Partial Class frmBuntWunMain
         Me.cmdClose.TabIndex = 3
         Me.cmdClose.Text = "Close"
         Me.cmdClose.UseVisualStyleBackColor = True
+        '
+        'prgLoadProgress
+        '
+        Me.prgLoadProgress.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.prgLoadProgress.Location = New System.Drawing.Point(0, 40)
+        Me.prgLoadProgress.Name = "prgLoadProgress"
+        Me.prgLoadProgress.Size = New System.Drawing.Size(538, 23)
+        Me.prgLoadProgress.TabIndex = 8
         '
         'frmBuntWunMain
         '
@@ -247,5 +257,6 @@ Partial Class frmBuntWunMain
     Friend WithEvents ExceptionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents TestXMLToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents LoadXMLfileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents prgLoadProgress As System.Windows.Forms.ProgressBar
 
 End Class

@@ -47,9 +47,13 @@ Public Class frmBuntWunMain
     Private Sub cmdLoadXML_Click(sender As Object, e As EventArgs) Handles cmdLoadXML.Click
         'Load and process an xml file containing several documents
 
-        Dim batchFileName As String = "C:\Users\user\Documents\Bessie_20180824\BesTestLoad_02.xml"
+        Dim batchFileName As String = "C:\Users\user\Documents\Bessie_20180824\BesTestLoad_03.xml"
+        Me.statStatusStrip.Text = "Processing: " & batchFileName
 
         Dim docBatch As New DocBatch(batchFileName)
+        prgLoadProgress.Minimum = 0
+        prgLoadProgress.Maximum = docBatch.NumDocs() + 1
+
 
         'Then clean up ready for the next file
     End Sub

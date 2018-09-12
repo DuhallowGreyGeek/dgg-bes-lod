@@ -1,36 +1,31 @@
 ﻿Imports System.Xml
 
 Public Class BatchHeader
+    Private mFileName As String
+    Private mCreatedDate As Date
+
     Public Sub New(xDocBatch As XmlDocument)
 
         If xDocBatch.DocumentElement.HasChildNodes Then
-            Console.WriteLine(xDocBatch.GetElementsByTagName("batch_header").ToString())
 
-            Dim xBatchHeader As XmlElement = xDocBatch.GetElementsByTagName("batch_header").Item(0)
+            Dim xBatHeader As XmlElement = xDocBatch.GetElementsByTagName("bat_header").Item(0)
 
-            If xBatchHeader.HasChildNodes Then
+            If xBatHeader.HasChildNodes Then
                 Dim i As Integer
-                For i = 0 To xBatchHeader.ChildNodes.Count - 1
+                For i = 0 To xBatHeader.ChildNodes.Count - 1
 
-                    If xBatchHeader.ChildNodes.Item(i).NodeType = XmlNodeType.Element Then 'Skip comments
-                        Dim xHdrProp As XmlElement = xBatchHeader.ChildNodes.Item(i)
+                    If xBatHeader.ChildNodes.Item(i).NodeType = XmlNodeType.Element Then 'Skip comments
 
-                        Console.Write(xHdrProp.Name & " Value: ")
-                        Console.Write(xHdrProp.InnerText)
+                        Dim xBatHdrProp As XmlElement = xBatHeader.ChildNodes.Item(i)
 
-                        If xHdrProp.Attributes.Count > 0 Then
-                            Console.WriteLine(" has: " & xHdrProp.Attributes.Count.ToString & " attributes: ")
+                        Select Case xBatHdrProp.Name
+                            Case "bat_filename"
+                                mFileName = xBatHdrProp.InnerText
 
-                            Dim j As Integer
-                            For j = 0 To xHdrProp.Attributes.Count - 1
-                                Console.Write("    attribute: " & j.ToString & ": ")
-                                Console.Write(xHdrProp.Attributes.Item(j).Name.ToString)
-                                Console.WriteLine(" = " & xHdrProp.Attributes.Item(j).Value.ToString)
-                            Next
+                            Case "created_date"
+                                mCreatedDate = Date.ParseExact(xBatHdrProp.InnerText, "yyyy-MM-dd", System.Globalization.DateTimeFormatInfo.InvariantInfo)
 
-                        End If
-
-                        Console.WriteLine(xHdrProp.Value)
+                        End Select
                     End If
                 Next
 
@@ -39,4 +34,16 @@ Public Class BatchHeader
         End If
 
     End Sub
+
+    Public ReadOnly Property FileName As String
+        Get
+            Return mFileName
+        End Get
+    End Property
+
+    Public ReadOnly Property CreatedDate As Date
+        Get
+            Return mCreatedDate
+        End Get
+    End Property
 End Class
