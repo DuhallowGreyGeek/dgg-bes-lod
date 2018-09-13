@@ -3,7 +3,7 @@
 'Imports System.Text
 'Imports System.Xml
 
-Public Class frmBuntWunMain
+Public Class frmBesLodMain
     Friend mFileName As String 'The name of the file of documents we are loading
     Friend mDocBatch As Object
 
@@ -41,6 +41,8 @@ Public Class frmBuntWunMain
         'This is a temporary function and button for testing fragments of code.
         lstLoadProgress.Items.Add("Test Button clicked")
 
+        Call Me.prgLoadProgress.PerformStep()
+
         '
     End Sub
 
@@ -50,7 +52,7 @@ Public Class frmBuntWunMain
         Dim batchFileName As String = "C:\Users\user\Documents\Bessie_20180824\BesTestLoad_03.xml"
         Me.statStatusStrip.Text = "Processing: " & batchFileName
 
-        Dim docBatch As New DocBatch(batchFileName)
+        Dim docBatch As New Batch(batchFileName)
         prgLoadProgress.Minimum = 0
         prgLoadProgress.Maximum = docBatch.NumDocs() + 1
 

@@ -1,6 +1,10 @@
 ﻿Imports System.Xml
 
-Public Class BodyHeader
+Public Class DocHeader
+    'The information and processing for the document as a whole.
+    'Most of this data is stuff "applied from the outside" to identify or describe the document,
+    'rather than the content of the document itself, which is in the (doc_)Parts..
+
     Private mFilename As String
     Private mDate As Date
     Private mFilePath As String

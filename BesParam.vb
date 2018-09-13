@@ -4,6 +4,8 @@ Imports System.Text
 Imports System.Xml
 
 Public Class BesParam
+    'Loads the application level parameter file.
+
     Protected Friend Const THISCLASS As String = "BesParam"
 
     Private mstrApplicationVersion As String
@@ -78,7 +80,7 @@ Public Class BesParam
                 'Console.WriteLine(mstrSQLInitCatalogDB)
                 reader.ReadEndElement()
                 '
-                
+
                 '
                 reader.ReadEndElement()     'Read the end of the <parameters>
             End Using

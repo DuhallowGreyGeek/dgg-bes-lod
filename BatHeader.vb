@@ -1,6 +1,10 @@
 ﻿Imports System.Xml
 
-Public Class BatchHeader
+Public Class BatHeader
+    'Information and function relating to the header of the batch of documents.
+    'This is all "administrative stuff". It's of interest to the people loading the 
+    'documents and maintaining the database, but not usually to people searching the documents.
+
     Private mFileName As String
     Private mCreatedDate As Date
 

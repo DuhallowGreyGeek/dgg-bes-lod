@@ -16,7 +16,7 @@ Public Class DocList
                     For i = 0 To xDocBatchList.ChildNodes.Count - 1
                         If xDocBatchList.ChildNodes.Item(i).NodeType = XmlNodeType.Element Then 'Skip comments
                             Dim xDocBody As XmlElement = xDocBatchList.ChildNodes.Item(i)
-                            Dim objDocBody As New DocBody(xDocBody)
+                            Dim objDocBody As New Doc(xDocBody)
                             mDocBodyList.Add(objDocBody)
 
                         End If

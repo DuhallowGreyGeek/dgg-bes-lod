@@ -87,20 +87,20 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BatchHeader.vb" />
+    <Compile Include="BatHeader.vb" />
     <Compile Include="BesLodMain.vb" />
     <Compile Include="BesLodSQL.vb" />
-    <Compile Include="BodyHeader.vb" />
+    <Compile Include="DocHeader.vb" />
     <Compile Include="PartList.vb" />
-    <Compile Include="DocPart.vb" />
-    <Compile Include="DocBatch.vb" />
-    <Compile Include="DocBody.vb" />
+    <Compile Include="Part.vb" />
+    <Compile Include="Batch.vb" />
+    <Compile Include="Doc.vb" />
     <Compile Include="DocList.vb" />
-    <Compile Include="frmBuntWunMain.vb">
+    <Compile Include="frmBesLodMain.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmBuntWunMain.Designer.vb">
-      <DependentUpon>frmBuntWunMain.vb</DependentUpon>
+    <Compile Include="frmBesLodMain.Designer.vb">
+      <DependentUpon>frmBesLodMain.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -121,8 +121,8 @@
     <Compile Include="BesParam.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmBuntWunMain.resx">
-      <DependentUpon>frmBuntWunMain.vb</DependentUpon>
+    <EmbeddedResource Include="frmBesLodMain.resx">
+      <DependentUpon>frmBesLodMain.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>

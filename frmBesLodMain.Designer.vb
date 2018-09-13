@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmBuntWunMain
+Partial Class frmBesLodMain
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -40,11 +40,11 @@ Partial Class frmBuntWunMain
         Me.dlgOutputFile = New System.Windows.Forms.SaveFileDialog()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.lstLoadProgress = New System.Windows.Forms.ListBox()
+        Me.prgLoadProgress = New System.Windows.Forms.ProgressBar()
         Me.cmdLoadXML = New System.Windows.Forms.Button()
         Me.cmdTest = New System.Windows.Forms.Button()
         Me.cmdClose = New System.Windows.Forms.Button()
         Me.HelpProvider1 = New System.Windows.Forms.HelpProvider()
-        Me.prgLoadProgress = New System.Windows.Forms.ProgressBar()
         Me.mnuMenu.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -179,6 +179,14 @@ Partial Class frmBuntWunMain
         Me.lstLoadProgress.Size = New System.Drawing.Size(538, 149)
         Me.lstLoadProgress.TabIndex = 0
         '
+        'prgLoadProgress
+        '
+        Me.prgLoadProgress.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.prgLoadProgress.Location = New System.Drawing.Point(0, 40)
+        Me.prgLoadProgress.Name = "prgLoadProgress"
+        Me.prgLoadProgress.Size = New System.Drawing.Size(538, 23)
+        Me.prgLoadProgress.TabIndex = 8
+        '
         'cmdLoadXML
         '
         Me.cmdLoadXML.Location = New System.Drawing.Point(3, 4)
@@ -205,14 +213,6 @@ Partial Class frmBuntWunMain
         Me.cmdClose.TabIndex = 3
         Me.cmdClose.Text = "Close"
         Me.cmdClose.UseVisualStyleBackColor = True
-        '
-        'prgLoadProgress
-        '
-        Me.prgLoadProgress.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.prgLoadProgress.Location = New System.Drawing.Point(0, 40)
-        Me.prgLoadProgress.Name = "prgLoadProgress"
-        Me.prgLoadProgress.Size = New System.Drawing.Size(538, 23)
-        Me.prgLoadProgress.TabIndex = 8
         '
         'frmBuntWunMain
         '

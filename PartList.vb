@@ -1,6 +1,8 @@
 ﻿Imports System.Xml
 
 Public Class PartList
+    'Loads the list of Parts and then works through the list processing each part.
+
     Protected Friend mPartList As New Collection 'Collection to hold the Document Parts
 
     Public Sub New(xPartList As XmlElement)
@@ -13,12 +15,12 @@ Public Class PartList
                     'Console.WriteLine("Document Part")
                     If xCurPart.NodeType = XmlNodeType.Element Then 'Skip comments
 
-                        Dim objCurPart As New DocPart(xCurPart)
+                        Dim objCurPart As New Part(xCurPart)
                         'Console.Write(" CurPart.Subject ---> " & objCurPart.Subject)
                         mPartList.Add(objCurPart)
                     End If
                 Next
-                
+
             End If
         End If
 

@@ -1,12 +1,11 @@
 ﻿Imports System.Xml
 Imports System.Text.RegularExpressions
 
-Public Class DocPart
-    Private mSubject As String
+Public Class Doc
+    Private mFilename As String
+    Private mPath As String
     Private mDate As Date
-    Private mFrom As String
-    Private mTo As String
-    Private mSynopsis As String
+    Private mTitle As String
 
     Private mPartList As Collection
 
@@ -17,54 +16,45 @@ Public Class DocPart
             For i = 0 To xDocBody.ChildNodes.Count - 1
 
                 If xDocBody.ChildNodes.Item(i).NodeType = XmlNodeType.Element Then 'Skip comments
-                    Dim xBodyProp As XmlElement = xDocBody.ChildNodes.Item(i)
 
-                    Select Case xBodyProp.Name
-                        Case "subject"
-                            mSubject = xBodyProp.InnerText
+                    Dim xBodyPart As XmlElement = xDocBody.ChildNodes.Item(i)
 
-                        Case "part_date"
-                            mDate = xBodyProp.InnerText
+                    Select Case xBodyPart.Name
+                        Case "body_header"
+                            Dim xBodyHeader As XmlElement = xDocBody.GetElementsByTagName("body_header").Item(i)
+                            Dim curBodyHeader As New DocHeader(xBodyHeader)
 
-                        Case "from"
-                            mFrom = xBodyProp.InnerText
+                            mFilename = curBodyHeader.FileName
+                            mPath = curBodyHeader.FilePath
+                            mDate = curBodyHeader.DocDate
+                            mTitle = curBodyHeader.ExternalName
 
-                        Case "to"
-                            mTo = xBodyProp.InnerText
+                        Case "part_list"
+                            'Console.Write("--- part_list ---> ")
 
-                        Case "synopsis"
-                            mSynopsis = xBodyProp.InnerText
+                            'Console.Write("----BodyPart.Name = " & xBodyPart.Name)
+                            'Console.Write(" .Value = " & xBodyPart.InnerXml)
+                            'Console.WriteLine()
+
+                            Dim xPartList As XmlElement = xBodyPart
+                            Dim curPartList As New PartList(xPartList)
+                            mPartList = curPartList.mPartList
+                            'Console.WriteLine()
 
                     End Select
 
-                    If xBodyProp.Attributes.Count > 0 Then
-                        Console.WriteLine(" has: " & xBodyProp.Attributes.Count.ToString & " attributes: ")
+                    If xBodyPart.Attributes.Count > 0 Then
+                        Console.WriteLine(" has: " & xBodyPart.Attributes.Count.ToString & " attributes: ")
 
                         Dim j As Integer
-                        For j = 0 To xBodyProp.Attributes.Count - 1
+                        For j = 0 To xBodyPart.Attributes.Count - 1
                             Console.Write("    attribute: " & j.ToString & ": ")
-                            Console.Write(xBodyProp.Attributes.Item(j).Name.ToString)
-                            Console.WriteLine(" = " & xBodyProp.Attributes.Item(j).Value.ToString)
+                            Console.Write(xBodyPart.Attributes.Item(j).Name.ToString)
+                            Console.WriteLine(" = " & xBodyPart.Attributes.Item(j).Value.ToString)
                         Next
 
                     End If
 
-                    '*** Temporary invoke the ParseString function
-                    Dim word As String
-
-                    'Data used for testing
-                    Const APST As String = "'"
-                    Dim myString = "Richard of York gave battle in vain!" + vbCrLf + "Peter Piper picked a peck of pickled pepper."
-                    myString = myString & ", , , and here is some??? more text after some empty words! "
-                    myString = myString & "The dreaded O" & APST & "Brien and O" & APST & "Toole should be handled! "
-                    myString = myString & "Of course McTavish, MacDonald will be handled, but Mac Donald and Mc Donald will be split. "
-                    myString = myString & " ... ...... filename.txt and ...filename.txt... "
-
-                    For Each word In ParseString(myString)
-                        '    Console.WriteLine("----------word--------> " & word)
-                    Next
-
-                    'Console.WriteLine(xBodyProp.Value)
                 End If
             Next
 
@@ -72,10 +62,17 @@ Public Class DocPart
 
     End Sub
 
-    Public ReadOnly Property Subject As String
+    Public ReadOnly Property FileName As String
         Get
-            mSubject = mSubject
-            Return mSubject
+            FileName = mFilename
+            Return mFilename
+        End Get
+    End Property
+
+    Public ReadOnly Property FilePath As String
+        Get
+            FilePath = mPath
+            Return mPath
         End Get
     End Property
 
@@ -86,24 +83,16 @@ Public Class DocPart
         End Get
     End Property
 
-    Public ReadOnly Property DocFrom As String
+    Public ReadOnly Property DocTitle As String
         Get
-            DocFrom = mFrom
-            Return mFrom
+            DocTitle = mTitle
+            Return mTitle
         End Get
     End Property
 
-    Public ReadOnly Property DocTo As String
+    Public ReadOnly Property Parts As Collection
         Get
-            DocTo = mTo
-            Return mTo
-        End Get
-    End Property
-
-    Public ReadOnly Property Synopsis As String
-        Get
-            Synopsis = mSynopsis
-            Return mSynopsis
+            Return mPartList
         End Get
     End Property
 
@@ -141,7 +130,7 @@ Public Class DocPart
             For Each candidateWord In words
                 candidateWord = Regex.Replace(candidateWord, "[^A-Za-z.']+", String.Empty)
 
-                Dim trimChars As String = ". " 'Characters to remove from the beginning and end (but not the middle) of the candidate
+                Dim trimChars As String = ". " 'Characters to remove from the beginning and end of the candidate
 
                 candidateWord = candidateWord.Trim(trimChars.ToCharArray)
 

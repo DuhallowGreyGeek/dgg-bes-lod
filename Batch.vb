@@ -1,6 +1,6 @@
 ﻿Imports System.Xml
 
-Public Class DocBatch
+Public Class Batch
     Private mNumDocs As Integer = 0                 'Number of documents in this batch
     Private mCurDocNum As Integer = 0               'Number of document currently being processed
 
@@ -9,7 +9,7 @@ Public Class DocBatch
         Dim xDocBatch As New XmlDocument
         xDocBatch.Load(docBatchFname) 'Load the document
 
-        Dim xBatHeader As New BatchHeader(xDocBatch)
+        Dim xBatHeader As New BatHeader(xDocBatch)
 
         Dim xDocList As New DocList(xDocBatch)
 
@@ -23,7 +23,7 @@ Public Class DocBatch
         For i = 1 To xDocList.DocBodyList.Count
             Console.WriteLine(" -------------> A document Body")
 
-            Dim currentBody As DocBody = xDocList.DocBodyList.Item(i)
+            Dim currentBody As Doc = xDocList.DocBodyList.Item(i)
             Console.WriteLine("       filename ---------> " & currentBody.FileName)
             Console.WriteLine("       filepath ---------> " & currentBody.FilePath)
             Console.WriteLine("       date     ---------> " & currentBody.DocDate)
@@ -34,7 +34,7 @@ Public Class DocBatch
             Dim j As Integer
             For j = 1 To currentBody.Parts.Count
                 Console.WriteLine("     ---- Part --- j= " & j.ToString)
-                Dim curPart As DocPart = currentBody.Parts.Item(j)
+                Dim curPart As Part = currentBody.Parts.Item(j)
                 Console.WriteLine("       --Subj---> " & curPart.Subject)
                 Console.WriteLine("       --From---> " & curPart.DocFrom)
                 Console.WriteLine("       --To-----> " & curPart.DocTo)
