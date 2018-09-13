@@ -1,7 +1,7 @@
 ﻿Imports System.Xml
 
 Public Class DocList
-    Protected Friend mDocBodyList As New Collection 'Collection to hold the Document Bodies
+    Protected Friend mDocList As New Collection 'Collection to hold the Document Bodies
 
     Public Sub New(xDocBatch As XmlDocument)
         If xDocBatch.DocumentElement.HasChildNodes Then
@@ -17,7 +17,7 @@ Public Class DocList
                         If xDocBatchList.ChildNodes.Item(i).NodeType = XmlNodeType.Element Then 'Skip comments
                             Dim xDocBody As XmlElement = xDocBatchList.ChildNodes.Item(i)
                             Dim objDocBody As New Doc(xDocBody)
-                            mDocBodyList.Add(objDocBody)
+                            mDocList.Add(objDocBody)
 
                         End If
                     Next
@@ -28,11 +28,26 @@ Public Class DocList
             End If
         End If
 
+        Call Me.Dump() 'Dump contents to the Console
+
     End Sub
 
-    Public ReadOnly Property DocBodyList As Collection
+    Public ReadOnly Property DocList As Collection
         Get
-            Return mDocBodyList
+            Return mDocList
         End Get
     End Property
+
+    Public Sub Dump()
+        'Dump the contents of the Doc *(Document) List to the console
+
+        Console.WriteLine("    ---- Contents of DocList ----- ")
+        Console.WriteLine("    --- num Docs = " & Me.DocList.Count.ToString)
+
+        For Each Doc As Doc In Me.DocList
+            Call Doc.Dump() 'Dump the Doc to the Console
+        Next
+        Console.WriteLine()
+
+    End Sub
 End Class

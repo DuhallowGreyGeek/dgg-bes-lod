@@ -113,6 +113,15 @@ Public Class Part
         End Get
     End Property
 
+    Public Sub Dump()
+        Console.WriteLine("    ---- Contents of part. ----- ")
+        Console.WriteLine("        ---- .DocDate ----- " & Me.DocDate.ToString)
+        Console.WriteLine("        ---- .DocFrom ----- " & Me.DocFrom)
+        Console.WriteLine("        ---- .DocTo ------- " & Me.DocTo)
+        Console.WriteLine("        ---- .Subject ----- " & Me.Subject)
+        'Console.WriteLine("        ---- .Synopsis ---- " & Me.Synopsis)
+    End Sub
+
     Private ReadOnly Property ParseString(myString As String) As Collection
         Get
             'Function which returns a collection of all the words which we've identified,

@@ -60,6 +60,8 @@ Public Class Doc
 
         End If
 
+        'Call Me.Dump() 'Dump the contents to the console
+
     End Sub
 
     Public ReadOnly Property FileName As String
@@ -95,6 +97,29 @@ Public Class Doc
             Return mPartList
         End Get
     End Property
+
+    Public Sub Dump()
+        'Dump the contents of the Doc (Document) to the console
+
+        Console.WriteLine("    ---- Contents of Doc. ----- ")
+
+        Console.WriteLine("        --- .DocDate ----- " & Me.DocDate)
+        Console.WriteLine("        --- .FileName ---- " & Me.FileName)
+        Console.WriteLine("        --- .FilePath ---- " & Me.FilePath)
+        Console.WriteLine("        --- .ExternalName- " & Me.DocTitle)
+        Console.WriteLine("      ---- parts -------------- ")
+        Console.WriteLine("        --- Num Parts = " & Me.Parts.Count.ToString)
+
+        For Each Part As Part In Me.Parts
+            Call Part.Dump() 'Dump contents of the part to the Console
+        Next
+
+
+
+        Console.WriteLine()
+
+
+    End Sub
 
     Private ReadOnly Property ParseString(myString As String) As Collection
         Get

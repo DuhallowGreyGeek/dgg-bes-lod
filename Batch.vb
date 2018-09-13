@@ -14,20 +14,17 @@ Public Class Batch
         Dim xDocList As New DocList(xDocBatch)
 
         'Process each document
-        mNumDocs = xDocList.DocBodyList.Count
-        Console.WriteLine("number of documents ---> " & xDocList.DocBodyList.Count)
+        mNumDocs = xDocList.DocList.Count
+        Console.WriteLine("number of documents ---> " & xDocList.DocList.Count)
         '*** I expected this to work with a For Each, but I have to Dim the object here
         '*** to get it understood properly here.
 
         Dim i As Integer
-        For i = 1 To xDocList.DocBodyList.Count
-            Console.WriteLine(" -------------> A document Body")
+        For i = 1 To xDocList.DocList.Count
+            Console.WriteLine(" -------------> A document")
 
-            Dim currentBody As Doc = xDocList.DocBodyList.Item(i)
-            Console.WriteLine("       filename ---------> " & currentBody.FileName)
-            Console.WriteLine("       filepath ---------> " & currentBody.FilePath)
-            Console.WriteLine("       date     ---------> " & currentBody.DocDate)
-            Console.WriteLine("       title    ---------> " & currentBody.DocTitle)
+            Dim currentBody As Doc = xDocList.DocList.Item(i)
+            Call currentBody.Dump() 'Dump contents to the console
 
             Console.WriteLine("  ------Now the parts---")
 
@@ -35,16 +32,10 @@ Public Class Batch
             For j = 1 To currentBody.Parts.Count
                 Console.WriteLine("     ---- Part --- j= " & j.ToString)
                 Dim curPart As Part = currentBody.Parts.Item(j)
-                Console.WriteLine("       --Subj---> " & curPart.Subject)
-                Console.WriteLine("       --From---> " & curPart.DocFrom)
-                Console.WriteLine("       --To-----> " & curPart.DocTo)
-                Console.WriteLine("       --Synop--> " & curPart.Synopsis)
+
+                Call curPart.Dump() 'Dump contents to the console
             Next
             Console.WriteLine()
-
-            'For Each curDocPart As DocPart In currentBody.Parts
-            'Console.WriteLine("        ----> " & curDocPart.Subject)
-            'Next
 
         Next
         Console.WriteLine()
@@ -61,4 +52,11 @@ Public Class Batch
             Return CurrentDocNum
         End Get
     End Property
+    Public Sub Dump()
+        'Dump Contents to Console
+        Console.WriteLine(" ************* The Batch Itself **************** ")
+        Console.WriteLine("           Nothing to Dump Directly             ")
+        Console.WriteLine(" ************* Now all the Documents **************** ")
+        Console.WriteLine("           Nothing to Dump Directly             ")
+    End Sub
 End Class

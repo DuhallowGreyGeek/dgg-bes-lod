@@ -23,7 +23,7 @@ Public Class PartList
 
             End If
         End If
-
+        'Call Me.Dump() 'Dump the contents of the PartList to the Console
     End Sub
 
     Public ReadOnly Property DocPartList As Collection
@@ -31,4 +31,17 @@ Public Class PartList
             Return mPartList
         End Get
     End Property
+
+    Public Sub Dump()
+        'Dump the contents of the Part List to the console
+
+        Console.WriteLine("    ---- Contents of PartList ----- ")
+        Console.WriteLine("    --- num parts = " & Me.DocPartList.Count.ToString)
+
+        For Each Part As Part In Me.DocPartList
+            Call Part.Dump() 'Dump the part to the Console
+        Next
+        Console.WriteLine()
+
+    End Sub
 End Class

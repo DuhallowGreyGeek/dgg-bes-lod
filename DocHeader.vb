@@ -47,6 +47,8 @@ Public Class DocHeader
                 End If
             Next
         End If
+
+        'Call Me.Dump() 'Dump contents to the console
     End Sub
 
     Public ReadOnly Property FileName As String
@@ -72,5 +74,19 @@ Public Class DocHeader
             Return mTitle
         End Get
     End Property
+
+    Public Sub Dump()
+        'Dump the contents of the DocHeader to the console
+
+        Console.WriteLine("    ---- Contents of DocHeader. ----- ")
+
+        Console.WriteLine("        --- .DocDate ----- " & Me.DocDate.ToString)
+        Console.WriteLine("        --- .FileName ---- " & Me.FileName)
+        Console.WriteLine("        --- .FilePath ---- " & Me.FilePath)
+        Console.WriteLine("        --- .ExternalName- " & Me.ExternalName)
+
+        Console.WriteLine()
+
+    End Sub
 
 End Class

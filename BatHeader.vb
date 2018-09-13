@@ -37,6 +37,8 @@ Public Class BatHeader
 
         End If
 
+        'Call Me.Dump() 'Dump contents to the console
+
     End Sub
 
     Public ReadOnly Property FileName As String
@@ -50,4 +52,16 @@ Public Class BatHeader
             Return mCreatedDate
         End Get
     End Property
+
+    Public Sub Dump()
+        'Dump the contents of the BatHeader to the console
+
+        Console.WriteLine("----- Contents of BatHeader. ----- ")
+
+        Console.WriteLine("    --- .CreatedDate ----- " & Me.CreatedDate)
+        Console.WriteLine("    --- .FileName -------- " & Me.FileName)
+       
+        Console.WriteLine()
+
+    End Sub
 End Class
