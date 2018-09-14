@@ -19,96 +19,92 @@ Public Class Part
     Public Sub New(xDocBody As XmlElement)
 
         If xDocBody.HasChildNodes Then
-            Dim i As Integer
-            For i = 0 To xDocBody.ChildNodes.Count - 1
-
-                If xDocBody.ChildNodes.Item(i).NodeType = XmlNodeType.Element Then 'Skip comments
-                    Dim xBodyProp As XmlElement = xDocBody.ChildNodes.Item(i)
-
-                    Select Case xBodyProp.Name
+            
+            For Each node As XmlNode In xDocBody.ChildNodes
+                If node.NodeType = XmlNodeType.Element Then 'Skip comments
+                    Select Case node.Name
                         Case "subject"
-                            mSubject = xBodyProp.InnerText
+                            mSubject = node.InnerText
 
                         Case "part_date"
-                            mDate = xBodyProp.InnerText
+                            mDate = node.InnerText
 
                         Case "from"
-                            mFrom = xBodyProp.InnerText
+                            mFrom = node.InnerText
 
                         Case "to"
-                            mTo = xBodyProp.InnerText
+                            mTo = node.InnerText
 
                         Case "synopsis"
-                            mSynopsis = xBodyProp.InnerText
+                            mSynopsis = node.InnerText
 
                     End Select
 
-                    If xBodyProp.Attributes.Count > 0 Then
-                        Console.WriteLine(" has: " & xBodyProp.Attributes.Count.ToString & " attributes: ")
-
-                        Dim j As Integer
-                        For j = 0 To xBodyProp.Attributes.Count - 1
-                            Console.Write("    attribute: " & j.ToString & ": ")
-                            Console.Write(xBodyProp.Attributes.Item(j).Name.ToString)
-                            Console.WriteLine(" = " & xBodyProp.Attributes.Item(j).Value.ToString)
-                        Next
-
-                    End If
-
-                    '*** Temporary invoke the ParseString function
-                    Dim word As String
-
-                    'Data used for testing
-                    Const APST As String = "'"
-                    Dim myString = "Richard of York gave battle in vain!" + vbCrLf + "Peter Piper picked a peck of pickled pepper."
-                    myString = myString & ", , , and here is some??? more text after some empty words! "
-                    myString = myString & "The dreaded O" & APST & "Brien and O" & APST & "Toole should be handled! "
-                    myString = myString & "Of course McTavish, MacDonald will be handled, but Mac Donald and Mc Donald will be split. "
-                    myString = myString & " ... ...... filename.txt and ...filename.txt... "
-
-                    For Each word In ParseString(myString)
-                        '    Console.WriteLine("----------word--------> " & word)
-                    Next
-
-                    'Console.WriteLine(xBodyProp.Value)
                 End If
             Next
 
+
+            'If xBodyProp.Attributes.Count > 0 Then
+            'Console.WriteLine(" has: " & xBodyProp.Attributes.Count.ToString & " attributes: ")
+
+            'Dim j As Integer
+            'For j = 0 To xBodyProp.Attributes.Count - 1
+            'Console.Write("    attribute: " & j.ToString & ": ")
+            'Console.Write(xBodyProp.Attributes.Item(j).Name.ToString)
+            'Console.WriteLine(" = " & xBodyProp.Attributes.Item(j).Value.ToString)
+            'Next
+
         End If
+
+        '*** Temporary invoke the ParseString function
+        Dim word As String
+
+        'Data used for testing
+        Const APST As String = "'"
+        Dim myString = "Richard of York gave battle in vain!" + vbCrLf + "Peter Piper picked a peck of pickled pepper."
+        myString = myString & ", , , and here is some??? more text after some empty words! "
+        myString = myString & "The dreaded O" & APST & "Brien and O" & APST & "Toole should be handled! "
+        myString = myString & "Of course McTavish, MacDonald will be handled, but Mac Donald and Mc Donald will be split. "
+        myString = myString & " ... ...... filename.txt and ...filename.txt... "
+
+        For Each word In ParseString(myString)
+            '    Console.WriteLine("----------word--------> " & word)
+        Next
+
+        'Console.WriteLine(xBodyProp.Value)
+        'End If
+        '   Next
+
+        'End If
 
     End Sub
 
     Public ReadOnly Property Subject As String
         Get
-            mSubject = mSubject
             Return mSubject
         End Get
     End Property
 
     Public ReadOnly Property DocDate As Date
         Get
-            DocDate = mDate
             Return mDate
         End Get
     End Property
 
     Public ReadOnly Property DocFrom As String
         Get
-            DocFrom = mFrom
             Return mFrom
         End Get
     End Property
 
     Public ReadOnly Property DocTo As String
         Get
-            DocTo = mTo
             Return mTo
         End Get
     End Property
 
     Public ReadOnly Property Synopsis As String
         Get
-            Synopsis = mSynopsis
             Return mSynopsis
         End Get
     End Property

@@ -1,7 +1,9 @@
 ﻿Imports System.Xml
 
 Public Class DocList
-    Protected Friend mDocList As New Collection 'Collection to hold the Document Bodies
+    'List of all the documents in the batch
+
+    Protected Friend mDocList As New Collection 'Collection to hold the Document bodies
 
     Public Sub New(xDocBatch As XmlDocument)
         If xDocBatch.DocumentElement.HasChildNodes Then
@@ -12,15 +14,14 @@ Public Class DocList
                 Dim xDocBatchList As XmlElement = xDocBatch.GetElementsByTagName("doc_list").Item(0)
 
                 If xDocBatchList.HasChildNodes Then
-                    Dim i As Integer
-                    For i = 0 To xDocBatchList.ChildNodes.Count - 1
-                        If xDocBatchList.ChildNodes.Item(i).NodeType = XmlNodeType.Element Then 'Skip comments
-                            Dim xDocBody As XmlElement = xDocBatchList.ChildNodes.Item(i)
-                            Dim objDocBody As New Doc(xDocBody)
-                            mDocList.Add(objDocBody)
 
+                    For Each node As XmlNode In xDocBatchList.ChildNodes
+                        If node.NodeType = XmlNodeType.Element Then 'skip comments
+                            Dim objDoc As New Doc(node)
+                            mDocList.Add(objDoc)
                         End If
                     Next
+
                 Else
                     MsgBox("malformed XML file")
                 End If

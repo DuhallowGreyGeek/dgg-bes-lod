@@ -20,8 +20,8 @@ Public Class Doc
                     Dim xBodyPart As XmlElement = xDocBody.ChildNodes.Item(i)
 
                     Select Case xBodyPart.Name
-                        Case "body_header"
-                            Dim xBodyHeader As XmlElement = xDocBody.GetElementsByTagName("body_header").Item(i)
+                        Case "doc_header"
+                            Dim xBodyHeader As XmlElement = xDocBody.GetElementsByTagName("doc_header").Item(i)
                             Dim curBodyHeader As New DocHeader(xBodyHeader)
 
                             mFilename = curBodyHeader.FileName
@@ -30,30 +30,24 @@ Public Class Doc
                             mTitle = curBodyHeader.ExternalName
 
                         Case "part_list"
-                            'Console.Write("--- part_list ---> ")
-
-                            'Console.Write("----BodyPart.Name = " & xBodyPart.Name)
-                            'Console.Write(" .Value = " & xBodyPart.InnerXml)
-                            'Console.WriteLine()
 
                             Dim xPartList As XmlElement = xBodyPart
                             Dim curPartList As New PartList(xPartList)
                             mPartList = curPartList.mPartList
-                            'Console.WriteLine()
 
                     End Select
 
-                    If xBodyPart.Attributes.Count > 0 Then
-                        Console.WriteLine(" has: " & xBodyPart.Attributes.Count.ToString & " attributes: ")
+                    'If xBodyPart.Attributes.Count > 0 Then
+                    'Console.WriteLine(" has: " & xBodyPart.Attributes.Count.ToString & " attributes: ")
 
-                        Dim j As Integer
-                        For j = 0 To xBodyPart.Attributes.Count - 1
-                            Console.Write("    attribute: " & j.ToString & ": ")
-                            Console.Write(xBodyPart.Attributes.Item(j).Name.ToString)
-                            Console.WriteLine(" = " & xBodyPart.Attributes.Item(j).Value.ToString)
-                        Next
+                    'Dim j As Integer
+                    'For j = 0 To xBodyPart.Attributes.Count - 1
+                    'Console.Write("    attribute: " & j.ToString & ": ")
+                    'Console.Write(xBodyPart.Attributes.Item(j).Name.ToString)
+                    'Console.WriteLine(" = " & xBodyPart.Attributes.Item(j).Value.ToString)
+                    'Next
 
-                    End If
+                    'End If
 
                 End If
             Next

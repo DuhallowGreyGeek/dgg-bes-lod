@@ -16,24 +16,19 @@ Public Class Batch
         'Process each document
         mNumDocs = xDocList.DocList.Count
         Console.WriteLine("number of documents ---> " & xDocList.DocList.Count)
-        '*** I expected this to work with a For Each, but I have to Dim the object here
-        '*** to get it understood properly here.
 
-        Dim i As Integer
-        For i = 1 To xDocList.DocList.Count
+        'Dim i As Integer
+        For Each currentbody As Doc In xDocList.DocList
+
             Console.WriteLine(" -------------> A document")
 
-            Dim currentBody As Doc = xDocList.DocList.Item(i)
-            Call currentBody.Dump() 'Dump contents to the console
+            Call currentbody.Dump() 'Dump contents to the console
 
             Console.WriteLine("  ------Now the parts---")
 
-            Dim j As Integer
-            For j = 1 To currentBody.Parts.Count
-                Console.WriteLine("     ---- Part --- j= " & j.ToString)
-                Dim curPart As Part = currentBody.Parts.Item(j)
-
-                Call curPart.Dump() 'Dump contents to the console
+            For Each curPart As Part In currentbody.Parts
+                'j = j + 1
+                Call curPart.Dump() 'Dump contents to console
             Next
             Console.WriteLine()
 

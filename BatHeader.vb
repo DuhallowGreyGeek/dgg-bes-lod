@@ -15,21 +15,19 @@ Public Class BatHeader
             Dim xBatHeader As XmlElement = xDocBatch.GetElementsByTagName("bat_header").Item(0)
 
             If xBatHeader.HasChildNodes Then
-                Dim i As Integer
-                For i = 0 To xBatHeader.ChildNodes.Count - 1
 
-                    If xBatHeader.ChildNodes.Item(i).NodeType = XmlNodeType.Element Then 'Skip comments
+                For Each node As XmlNode In xBatHeader.ChildNodes
+                    If node.NodeType = XmlNodeType.Element Then 'Skip comments
 
-                        Dim xBatHdrProp As XmlElement = xBatHeader.ChildNodes.Item(i)
-
-                        Select Case xBatHdrProp.Name
+                        Select Case node.Name
                             Case "bat_filename"
-                                mFileName = xBatHdrProp.InnerText
+                                mFileName = node.InnerText
 
                             Case "created_date"
-                                mCreatedDate = Date.ParseExact(xBatHdrProp.InnerText, "yyyy-MM-dd", System.Globalization.DateTimeFormatInfo.InvariantInfo)
+                                mCreatedDate = Date.ParseExact(node.InnerText, "yyyy-MM-dd", System.Globalization.DateTimeFormatInfo.InvariantInfo)
 
                         End Select
+
                     End If
                 Next
 

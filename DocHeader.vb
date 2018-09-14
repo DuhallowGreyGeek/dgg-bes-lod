@@ -10,42 +10,41 @@ Public Class DocHeader
     Private mFilePath As String
     Private mTitle As String
 
-    Public Sub New(xBodyHeader As XmlElement)
-        If xBodyHeader.HasChildNodes Then
-            Dim i As Integer
-            For i = 0 To xBodyHeader.ChildNodes.Count - 1
+    Public Sub New(xDocHeader As XmlElement)
 
-                If xBodyHeader.ChildNodes.Item(i).NodeType = XmlNodeType.Element Then 'Skip comments
-                    Dim xDocHeaderProp As XmlElement = xBodyHeader.ChildNodes.Item(i)
+        If xDocHeader.HasChildNodes Then
 
-                    Select Case xDocHeaderProp.Name
+            For Each node As XmlNode In xDocHeader.ChildNodes
+                If node.NodeType = XmlNodeType.Element Then ' Skip comments
+                    Select Case node.Name
                         Case "doc_filename"
-                            mFilename = xDocHeaderProp.InnerText
+                            mFilename = node.InnerText
 
                         Case "doc_date"
-                            mDate = Date.ParseExact(xDocHeaderProp.InnerText, "yyyy-MM-dd", System.Globalization.DateTimeFormatInfo.InvariantInfo)
+                            mDate = Date.ParseExact(node.InnerText, "yyyy-MM-dd", System.Globalization.DateTimeFormatInfo.InvariantInfo)
 
                         Case "doc_path"
-                            mFilePath = xDocHeaderProp.InnerText
+                            mFilePath = node.InnerText
 
                         Case "ext_name"
-                            mTitle = xDocHeaderProp.InnerText
-
+                            mTitle = node.InnerText
+                            '
                     End Select
 
-                    If xDocHeaderProp.Attributes.Count > 0 Then
-                        Console.WriteLine(" has: " & xDocHeaderProp.Attributes.Count.ToString & " attributes: ")
-
-                        Dim j As Integer
-                        For j = 0 To xDocHeaderProp.Attributes.Count - 1
-                            Console.Write("    attribute: " & j.ToString & ": ")
-                            Console.Write(xDocHeaderProp.Attributes.Item(j).Name.ToString)
-                            Console.WriteLine(" = " & xDocHeaderProp.Attributes.Item(j).Value.ToString)
-                        Next
-
-                    End If
                 End If
             Next
+
+
+            'If xDocHeaderProp.Attributes.Count > 0 Then
+            'Console.WriteLine(" has: " & xDocHeaderProp.Attributes.Count.ToString & " attributes: ")
+
+            'Dim j As Integer
+            'For j = 0 To xDocHeaderProp.Attributes.Count - 1
+            'Console.Write("    attribute: " & j.ToString & ": ")
+            'Console.Write(xDocHeaderProp.Attributes.Item(j).Name.ToString)
+            'Console.WriteLine(" = " & xDocHeaderProp.Attributes.Item(j).Value.ToString)
+            'Next
+
         End If
 
         'Call Me.Dump() 'Dump contents to the console

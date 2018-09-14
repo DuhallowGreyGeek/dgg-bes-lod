@@ -7,17 +7,19 @@ Public Class PartList
 
     Public Sub New(xPartList As XmlElement)
         'Console.WriteLine("    --- Content of the PartList ---> " & xPartList.InnerXml)
+
         If xPartList.HasChildNodes Then
 
-            If xPartList.GetElementsByTagName("doc_part").Count > 0 Then 'Otherwise empty part_list
+            If xPartList.GetElementsByTagName("part").Count > 0 Then 'Otherwise empty part_list
 
-                For Each xCurPart As XmlElement In xPartList.ChildNodes     'Process each doc_part
-                    'Console.WriteLine("Document Part")
-                    If xCurPart.NodeType = XmlNodeType.Element Then 'Skip comments
+                For Each part As XmlElement In xPartList.ChildNodes     'Process each document part
 
-                        Dim objCurPart As New Part(xCurPart)
-                        'Console.Write(" CurPart.Subject ---> " & objCurPart.Subject)
-                        mPartList.Add(objCurPart)
+                    If part.NodeType = XmlNodeType.Element Then 'Skip comments
+
+                        'Create a Part object from the xml and add it to the PartList
+                        Dim objPart As New Part(part)
+                        mPartList.Add(objPart)
+
                     End If
                 Next
 
