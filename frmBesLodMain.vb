@@ -77,4 +77,14 @@ Public Class frmBesLodMain
         Call mlodSQL.augTable_fail()
     End Sub
 
+    Private Sub TestConnectionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestConnectionToolStripMenuItem.Click
+        'Function to test the connection to the - Simplest thing which could possibly work!
+        If mlodSQL.SysStateVals_Select_OK() Then
+            'Connection made so do whatever necessary
+            Call MsgBox("Database connection OK", MsgBoxStyle.Information, "Bessie - DB Connection")
+        Else
+            'Connection failed so do whatever required
+            Call MsgBox("Database connection failed!", MsgBoxStyle.Critical, "Bessie - DB Connection")
+        End If
+    End Sub
 End Class

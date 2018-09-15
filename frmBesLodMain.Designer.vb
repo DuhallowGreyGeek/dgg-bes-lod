@@ -45,6 +45,7 @@ Partial Class frmBesLodMain
         Me.cmdTest = New System.Windows.Forms.Button()
         Me.cmdClose = New System.Windows.Forms.Button()
         Me.HelpProvider1 = New System.Windows.Forms.HelpProvider()
+        Me.TestConnectionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuMenu.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -101,7 +102,7 @@ Partial Class frmBesLodMain
         '
         'TestSQLToolStripMenuItem
         '
-        Me.TestSQLToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SelectToolStripMenuItem, Me.InsertToolStripMenuItem, Me.ExceptionToolStripMenuItem})
+        Me.TestSQLToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TestConnectionToolStripMenuItem, Me.SelectToolStripMenuItem, Me.InsertToolStripMenuItem, Me.ExceptionToolStripMenuItem})
         Me.TestSQLToolStripMenuItem.Name = "TestSQLToolStripMenuItem"
         Me.TestSQLToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
         Me.TestSQLToolStripMenuItem.Text = "TestSQL"
@@ -109,19 +110,19 @@ Partial Class frmBesLodMain
         'SelectToolStripMenuItem
         '
         Me.SelectToolStripMenuItem.Name = "SelectToolStripMenuItem"
-        Me.SelectToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
+        Me.SelectToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
         Me.SelectToolStripMenuItem.Text = "Select"
         '
         'InsertToolStripMenuItem
         '
         Me.InsertToolStripMenuItem.Name = "InsertToolStripMenuItem"
-        Me.InsertToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
+        Me.InsertToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
         Me.InsertToolStripMenuItem.Text = "Insert"
         '
         'ExceptionToolStripMenuItem
         '
         Me.ExceptionToolStripMenuItem.Name = "ExceptionToolStripMenuItem"
-        Me.ExceptionToolStripMenuItem.Size = New System.Drawing.Size(125, 22)
+        Me.ExceptionToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
         Me.ExceptionToolStripMenuItem.Text = "Exception"
         '
         'TestXMLToolStripMenuItem
@@ -214,7 +215,13 @@ Partial Class frmBesLodMain
         Me.cmdClose.Text = "Close"
         Me.cmdClose.UseVisualStyleBackColor = True
         '
-        'frmBuntWunMain
+        'TestConnectionToolStripMenuItem
+        '
+        Me.TestConnectionToolStripMenuItem.Name = "TestConnectionToolStripMenuItem"
+        Me.TestConnectionToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.TestConnectionToolStripMenuItem.Text = "Test Connection"
+        '
+        'frmBesLodMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -223,7 +230,7 @@ Partial Class frmBesLodMain
         Me.Controls.Add(Me.statStatusStrip)
         Me.Controls.Add(Me.mnuMenu)
         Me.MainMenuStrip = Me.mnuMenu
-        Me.Name = "frmBuntWunMain"
+        Me.Name = "frmBesLodMain"
         Me.Text = "Bessie - Load Document Database"
         Me.mnuMenu.ResumeLayout(False)
         Me.mnuMenu.PerformLayout()
@@ -258,5 +265,6 @@ Partial Class frmBesLodMain
     Friend WithEvents TestXMLToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents LoadXMLfileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents prgLoadProgress As System.Windows.Forms.ProgressBar
+    Friend WithEvents TestConnectionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class
