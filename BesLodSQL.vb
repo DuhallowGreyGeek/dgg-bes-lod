@@ -183,7 +183,7 @@ Public Class BesLodSQL
         Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
 
         'The *parameters* for the row being added
-        Dim tmpFileName As String = "MyFileName.pdf"                        '--- FileName, 
+        Dim tmpFileName As String = "MyFileName.xml"                        '--- FileName, 
         Dim tmpDateCreated As String = QUOT & "1900-12-31" & QUOT           '--- BatchDateCreated, 
         '--- DateLoaded -- Not required 
         Dim tmpDescription As String = "Long rambling description"         '--- Description
@@ -220,9 +220,10 @@ Public Class BesLodSQL
 
     End Sub
 
-    Public Sub DocBatch_Existing()
-        '
-        'Dim mParams As New BesParam 'Will declaring the parameters object locally fix my problem?
+    Public Function DocBatch_IsThereExisting(FileName As String) As Boolean
+        'Return True if there is an existing row and False if there isn't
+        'There is a unique index on DocBatch.Filename so there will only ever be zero or 1 rows
+        Const QUOT As String = "'"
 
         Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
 
@@ -231,32 +232,92 @@ Public Class BesLodSQL
         conString.IntegratedSecurity = params.SQLIntegratedSecurity
         conString.InitialCatalog = params.SQLInitCatalogDB
 
+        'Construct the query string
+        Dim queryString As String = "Select * From dbo.DocBatch as bat WHERE "
+        queryString = queryString & "bat.FileName =" & QUOT & FileName & QUOT
+
+        'Console.WriteLine(queryString)
+
         Try
             Using sqlConnection As New SqlConnection(conString.ConnectionString)
                 sqlConnection.Open()
-                Using sqlCommand As New SqlCommand("Select * From dbo.TestAugTable", sqlConnection)
+                Using sqlCommand As New SqlCommand(queryString, sqlConnection)
                     Using reader = sqlCommand.ExecuteReader()
                         If reader.HasRows Then
-                            Do While reader.Read
-
-                                frmMain.lstLoadProgress.Items.Add("--- " & reader.Item("AugId").ToString() & " --- " & reader.Item("DatetimeString").ToString())
-
-                            Loop
+                            Return True
+                        Else
+                            Return False
                         End If
                     End Using
                 End Using
                 sqlConnection.Close()
             End Using
 
+            'Should never reach this point!
+            Return True 'Which will stop anything bad happening!
+
         Catch ex As SqlException
             Call Me.handleSQLException(ex)
+            Return True
 
         Catch ex As Exception
             Call Me.handleGeneralException(ex)
-
+            Return True
         End Try
 
-    End Sub
+    End Function
+
+    Public Function DocBatch_IDofRecord(FileName As String) As Integer
+        'Return the integer DocBatchId matching the FileName
+        'There is a unique index on DocBatch.Filename so there will only ever be zero or 1 rows
+        Const QUOT As String = "'"
+
+        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+
+        'Get Connection string data
+        conString.DataSource = params.SQLDataSource
+        conString.IntegratedSecurity = params.SQLIntegratedSecurity
+        conString.InitialCatalog = params.SQLInitCatalogDB
+
+        'Construct the query string
+        Dim queryString As String = "Select bat.DocBatchId From dbo.DocBatch as bat WHERE "
+        queryString = queryString & "bat.FileName =" & QUOT & FileName & QUOT
+
+        'Console.WriteLine(queryString)
+
+        Try
+            Using sqlConnection As New SqlConnection(conString.ConnectionString)
+                sqlConnection.Open()
+                Using sqlCommand As New SqlCommand(queryString, sqlConnection)
+                    Using reader = sqlCommand.ExecuteReader()
+                        If reader.HasRows Then
+                            Do While reader.Read
+
+                                Return reader.Item("DocBatchId")
+
+                            Loop
+                        Else
+                            Return 0
+                        End If
+                    End Using
+                End Using
+                sqlConnection.Close()
+            End Using
+
+            'Should never reach this point!
+            Return 0 'Which will stop anything bad happening!
+
+        Catch ex As SqlException
+            Call Me.handleSQLException(ex)
+            Return 0
+
+        Catch ex As Exception
+            Call Me.handleGeneralException(ex)
+            Return 0
+        End Try
+
+    End Function
+
 
     Private Sub handleSQLException(ex As SqlException)
         Dim i As Integer = 0
