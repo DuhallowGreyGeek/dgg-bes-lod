@@ -169,6 +169,95 @@ Public Class BesLodSQL
 
     End Function
 
+    Public Sub DocBatch_Insert()
+        'Insert the row for the containing the BatchHeader information 
+
+        Const QUOT As String = "'"                              'SQL is expecting literals enclosed in single quotes - I predict confusion!
+        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+
+        'Get Connection string data
+        conString.DataSource = params.SQLDataSource
+        conString.IntegratedSecurity = params.SQLIntegratedSecurity
+        conString.InitialCatalog = params.SQLInitCatalogDB
+
+        Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
+
+        'The *parameters* for the row being added
+        Dim tmpFileName As String = "MyFileName.pdf"                        '--- FileName, 
+        Dim tmpDateCreated As String = QUOT & "1900-12-31" & QUOT           '--- BatchDateCreated, 
+        '--- DateLoaded -- Not required 
+        Dim tmpDescription As String = "Long rambling description"         '--- Description
+
+        Dim dateString As String = QUOT & Now.ToString("yyyy/MM/dd HH:mm:ss.fff") & QUOT   'Using a string purely to get an updating string
+
+        Dim queryString As String = "INSERT INTO dbo.DocBatch (FileName, DateCreated, DateLoaded, Description) VALUES( "
+        'queryString = queryString & QUOT & "FileName" & QUOT                  '--- FileName, 
+        'queryString = queryString & "," & dateString                          '--- BatchDateCreated, 
+        'queryString = queryString & "," & dateString                          '--- DateLoaded, 
+        'queryString = queryString & "," & QUOT & "Long rambling text" & QUOT  '--- Description
+
+        queryString = queryString & QUOT & tmpFileName & QUOT                  '--- FileName, 
+        queryString = queryString & "," & tmpDateCreated                       '--- BatchDateCreated, 
+        queryString = queryString & "," & dateString                          '--- DateLoaded, 
+        queryString = queryString & "," & QUOT & tmpDescription & QUOT  '--- Description
+
+        queryString = queryString & " )"
+
+        'Console.WriteLine(queryString)
+
+        Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
+
+        Try
+            Dim numRows As Integer = 0
+
+            sqlCommand.Connection.Open()
+            MsgBox("Number rows affected = " & sqlCommand.ExecuteNonQuery().ToString)
+
+        Catch ex As SqlException
+            Call Me.handleSQLException(ex)
+
+        End Try
+
+    End Sub
+
+    Public Sub DocBatch_Existing()
+        '
+        'Dim mParams As New BesParam 'Will declaring the parameters object locally fix my problem?
+
+        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+
+        'Get Connection string data
+        conString.DataSource = params.SQLDataSource
+        conString.IntegratedSecurity = params.SQLIntegratedSecurity
+        conString.InitialCatalog = params.SQLInitCatalogDB
+
+        Try
+            Using sqlConnection As New SqlConnection(conString.ConnectionString)
+                sqlConnection.Open()
+                Using sqlCommand As New SqlCommand("Select * From dbo.TestAugTable", sqlConnection)
+                    Using reader = sqlCommand.ExecuteReader()
+                        If reader.HasRows Then
+                            Do While reader.Read
+
+                                frmMain.lstLoadProgress.Items.Add("--- " & reader.Item("AugId").ToString() & " --- " & reader.Item("DatetimeString").ToString())
+
+                            Loop
+                        End If
+                    End Using
+                End Using
+                sqlConnection.Close()
+            End Using
+
+        Catch ex As SqlException
+            Call Me.handleSQLException(ex)
+
+        Catch ex As Exception
+            Call Me.handleGeneralException(ex)
+
+        End Try
+
+    End Sub
+
     Private Sub handleSQLException(ex As SqlException)
         Dim i As Integer = 0
         For i = 0 To ex.Errors.Count - 1

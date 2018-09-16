@@ -30,6 +30,7 @@ Partial Class frmBesLodMain
         Me.ParmsToStringToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DumpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TestSQLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TestConnectionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SelectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InsertToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExceptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -45,7 +46,7 @@ Partial Class frmBesLodMain
         Me.cmdTest = New System.Windows.Forms.Button()
         Me.cmdClose = New System.Windows.Forms.Button()
         Me.HelpProvider1 = New System.Windows.Forms.HelpProvider()
-        Me.TestConnectionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DocBatchInsertToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuMenu.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -102,10 +103,16 @@ Partial Class frmBesLodMain
         '
         'TestSQLToolStripMenuItem
         '
-        Me.TestSQLToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TestConnectionToolStripMenuItem, Me.SelectToolStripMenuItem, Me.InsertToolStripMenuItem, Me.ExceptionToolStripMenuItem})
+        Me.TestSQLToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TestConnectionToolStripMenuItem, Me.DocBatchInsertToolStripMenuItem, Me.SelectToolStripMenuItem, Me.InsertToolStripMenuItem, Me.ExceptionToolStripMenuItem})
         Me.TestSQLToolStripMenuItem.Name = "TestSQLToolStripMenuItem"
         Me.TestSQLToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
         Me.TestSQLToolStripMenuItem.Text = "TestSQL"
+        '
+        'TestConnectionToolStripMenuItem
+        '
+        Me.TestConnectionToolStripMenuItem.Name = "TestConnectionToolStripMenuItem"
+        Me.TestConnectionToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.TestConnectionToolStripMenuItem.Text = "Test Connection"
         '
         'SelectToolStripMenuItem
         '
@@ -215,11 +222,11 @@ Partial Class frmBesLodMain
         Me.cmdClose.Text = "Close"
         Me.cmdClose.UseVisualStyleBackColor = True
         '
-        'TestConnectionToolStripMenuItem
+        'DocBatchInsertToolStripMenuItem
         '
-        Me.TestConnectionToolStripMenuItem.Name = "TestConnectionToolStripMenuItem"
-        Me.TestConnectionToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
-        Me.TestConnectionToolStripMenuItem.Text = "Test Connection"
+        Me.DocBatchInsertToolStripMenuItem.Name = "DocBatchInsertToolStripMenuItem"
+        Me.DocBatchInsertToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.DocBatchInsertToolStripMenuItem.Text = "DocBatch_Insert"
         '
         'frmBesLodMain
         '
@@ -266,5 +273,6 @@ Partial Class frmBesLodMain
     Friend WithEvents LoadXMLfileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents prgLoadProgress As System.Windows.Forms.ProgressBar
     Friend WithEvents TestConnectionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DocBatchInsertToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class
