@@ -53,6 +53,7 @@ Public Class frmBesLodMain
         Me.statStatusStrip.Text = "Processing: " & batchFileName
 
         Dim docBatch As New Batch(batchFileName)
+
         prgLoadProgress.Minimum = 0
         prgLoadProgress.Maximum = docBatch.NumDocs() + 1
 
@@ -96,17 +97,4 @@ Public Class frmBesLodMain
         End If
     End Sub
 
-    Private Sub DocBatchInsertToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DocBatchInsertToolStripMenuItem.Click
-        'Function to Insert a row into DocBatch - Simplest thing which could possibly work!
-        Dim filename As String = "MyFileName.xml"
-        '
-        If mlodSQL.DocBatch_IsThereExisting(filename) Then
-            Call MsgBox("Duplicate Filename: " & filename)
-        Else
-            Call mlodSQL.DocBatch_Insert()
-
-            Call MsgBox("The id of the new row is: " & mlodSQL.DocBatch_IDofRecord(filename).ToString)
-        End If
-
-    End Sub
 End Class

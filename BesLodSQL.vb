@@ -13,7 +13,6 @@ Public Class BesLodSQL
     Public Sub augTable_insert()
         Const QUOT As String = "'"                              'SQL is expecting literals enclosed in single quotes - I predict confusion!
         Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
-        'Dim mParams As New BesParam 'Will declaring the parameters object locally fix my problem?
 
         'Get Connection string data
         conString.DataSource = params.SQLDataSource
@@ -169,7 +168,7 @@ Public Class BesLodSQL
 
     End Function
 
-    Public Sub DocBatch_Insert()
+    Public Sub DocBatch_Insert(BatHeader As BatHeader)
         'Insert the row for the containing the BatchHeader information 
 
         Const QUOT As String = "'"                              'SQL is expecting literals enclosed in single quotes - I predict confusion!
@@ -179,28 +178,21 @@ Public Class BesLodSQL
         conString.DataSource = params.SQLDataSource
         conString.IntegratedSecurity = params.SQLIntegratedSecurity
         conString.InitialCatalog = params.SQLInitCatalogDB
-
         Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
 
         'The *parameters* for the row being added
-        Dim tmpFileName As String = "MyFileName.xml"                        '--- FileName, 
-        Dim tmpDateCreated As String = QUOT & "1900-12-31" & QUOT           '--- BatchDateCreated, 
+        Dim tmpFileName As String = BatHeader.FileName                        '--- FileName, 
+        Dim tmpDateCreated As String = QUOT & BatHeader.CreatedDate.ToString("yyyy/MM/dd") & QUOT   '--- BatchDateCreated, 
         '--- DateLoaded -- Not required 
         Dim tmpDescription As String = "Long rambling description"         '--- Description
 
         Dim dateString As String = QUOT & Now.ToString("yyyy/MM/dd HH:mm:ss.fff") & QUOT   'Using a string purely to get an updating string
 
         Dim queryString As String = "INSERT INTO dbo.DocBatch (FileName, DateCreated, DateLoaded, Description) VALUES( "
-        'queryString = queryString & QUOT & "FileName" & QUOT                  '--- FileName, 
-        'queryString = queryString & "," & dateString                          '--- BatchDateCreated, 
-        'queryString = queryString & "," & dateString                          '--- DateLoaded, 
-        'queryString = queryString & "," & QUOT & "Long rambling text" & QUOT  '--- Description
-
         queryString = queryString & QUOT & tmpFileName & QUOT                  '--- FileName, 
         queryString = queryString & "," & tmpDateCreated                       '--- BatchDateCreated, 
         queryString = queryString & "," & dateString                          '--- DateLoaded, 
         queryString = queryString & "," & QUOT & tmpDescription & QUOT  '--- Description
-
         queryString = queryString & " )"
 
         'Console.WriteLine(queryString)

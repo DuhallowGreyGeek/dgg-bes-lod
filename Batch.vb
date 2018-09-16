@@ -1,40 +1,88 @@
 ﻿Imports System.Xml
+Imports System.IO
 
 Public Class Batch
     Private mNumDocs As Integer = 0                 'Number of documents in this batch
     Private mCurDocNum As Integer = 0               'Number of document currently being processed
 
     Public Sub New(docBatchFname As String)
+        'Process the xml file
 
-        Dim xDocBatch As New XmlDocument
-        xDocBatch.Load(docBatchFname) 'Load the document
+        'Check if we have loaded this document before
+        Dim fname As String = System.IO.Path.GetFileName(docBatchFname)
+        'Console.WriteLine("-----> " & fname)
 
-        Dim xBatHeader As New BatHeader(xDocBatch)
+        If mlodSQL.DocBatch_IsThereExisting(fname) = False Then 'Process the batch
+            Dim xDocBatch As New XmlDocument
+            xDocBatch.Load(docBatchFname) 'Load the document
+            Dim xBatHeader As New BatHeader(xDocBatch)
 
-        Dim xDocList As New DocList(xDocBatch)
+            Call mlodSQL.DocBatch_Insert(xBatHeader)    'Insert the DocBatch row
+            Dim docBatchId As Integer = mlodSQL.DocBatch_IDofRecord(fname)
 
-        'Process each document
-        mNumDocs = xDocList.DocList.Count
-        Console.WriteLine("number of documents ---> " & xDocList.DocList.Count)
+            Console.WriteLine("---- latest row .DocBatchId = " & docBatchId.ToString)
 
-        'Dim i As Integer
-        For Each currentbody As Doc In xDocList.DocList
 
-            Console.WriteLine(" -------------> A document")
+            Dim xDocList As New DocList(xDocBatch)
 
-            Call currentbody.Dump() 'Dump contents to the console
+            'Process each document
+            mNumDocs = xDocList.DocList.Count
+            Console.WriteLine("number of documents ---> " & xDocList.DocList.Count)
 
-            Console.WriteLine("  ------Now the parts---")
+            For Each currentbody As Doc In xDocList.DocList
 
-            For Each curPart As Part In currentbody.Parts
-                'j = j + 1
-                Call curPart.Dump() 'Dump contents to console
+                Console.WriteLine(" -------------> A document")
+
+                Call currentbody.Dump() 'Dump contents to the console
+
+                Console.WriteLine("  ------Now the parts---")
+
+                For Each curPart As Part In currentbody.Parts
+                    Call curPart.Dump() 'Dump contents to console
+                Next
+                Console.WriteLine()
+
             Next
             Console.WriteLine()
+            Console.WriteLine("--------- All Documents Processed ----------")
 
-        Next
-        Console.WriteLine()
-        Console.WriteLine("--------- All Documents Processed ----------")
+        Else
+            'Will eventually prompt giving the possibility of overwriting it but not yet
+            Call MsgBox("Duplicate Document (or other serious error)")
+        End If
+
+
+        'Dim xDocBatch As New XmlDocument
+        'xDocBatch.Load(docBatchFname) 'Load the document
+        'Dim xBatHeader As New BatHeader(xDocBatch)
+
+
+
+
+        'Dim xDocList As New DocList(xDocBatch)
+
+        'Process each document
+        'mNumDocs = xDocList.DocList.Count
+        'Console.WriteLine("number of documents ---> " & xDocList.DocList.Count)
+
+        'Dim i As Integer
+        'For Each currentbody As Doc In xDocList.DocList
+
+        'Console.WriteLine(" -------------> A document")
+
+        'Call currentbody.Dump() 'Dump contents to the console
+
+        'Console.WriteLine("  ------Now the parts---")
+
+        'For Each curPart As Part In currentbody.Parts
+        'j = j + 1
+        'Call curPart.Dump() 'Dump contents to console
+        'Next
+        'Console.WriteLine()
+
+        'Next
+        'Console.WriteLine()
+        'Console.WriteLine("--------- All Documents Processed ----------")
 
     End Sub
     Public ReadOnly Property NumDocs As Integer
