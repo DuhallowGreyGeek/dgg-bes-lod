@@ -40,6 +40,9 @@ Public Class Part
                         Case "to"
                             mTo = node.InnerText
 
+                        Case "subject"
+                            mSubject = node.InnerText
+
                         Case "synopsis"
                             mSynopsis = node.InnerText
 

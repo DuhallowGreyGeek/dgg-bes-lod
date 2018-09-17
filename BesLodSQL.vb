@@ -460,9 +460,9 @@ Public Class BesLodSQL
 
         'Build the query command structure
         Dim queryString As String = "INSERT INTO dbo.Part ("
-        queryString = queryString & "DocumentID, PartNum, DocDate, DocFrom, DocTo )"
+        queryString = queryString & "DocumentID, PartNum, DocDate, DocFrom, DocTo, DocSubject )"
         queryString = queryString & " VALUES( "
-        queryString = queryString & " @DocumentID, @PartNum, @DocDate, @DocFrom, @DocTo "
+        queryString = queryString & " @DocumentID, @PartNum, @DocDate, @DocFrom, @DocTo, @DocSubject "
         queryString = queryString & " )"
 
         'Console.WriteLine(queryString)
@@ -475,6 +475,7 @@ Public Class BesLodSQL
         sqlCommand.Parameters.AddWithValue("@DocDate", part.DocDate.ToString("yyyy/MM/dd"))
         sqlCommand.Parameters.AddWithValue("@DocFrom", part.DocFrom)
         sqlCommand.Parameters.AddWithValue("@DocTo", part.DocTo)
+        sqlCommand.Parameters.AddWithValue("@DocSubject", part.Subject)
 
         'Console.WriteLine("--sqlCommand--> " & sqlCommand.CommandText)
 
