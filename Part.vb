@@ -8,6 +8,11 @@ Public Class Part
     'or several chapters (another possibility I'm considering. 
     'A documents with zero parts would not be useful!
 
+    Const MODNAME As String = "Part"
+    Friend mRoutineName As String = ""      'To hold the name of the routine which generates an exception
+
+    Private mDocumentId As Integer 'Foreign key to the containing document
+    Private mPartNum As Integer     'Identifying sequence number within the document
     Private mSubject As String
     Private mDate As Date
     Private mFrom As String
@@ -110,13 +115,37 @@ Public Class Part
     End Property
 
     Public Sub Dump()
-        Console.WriteLine("    ---- Contents of part. ----- ")
+        Console.WriteLine("    --Dump-- Contents of part. ----- ")
+        Console.WriteLine("        ---- .DocumentId---- " & Me.DocumentId.ToString)
+        Console.WriteLine("        ---- .PartNum ----- " & Me.PartNum.ToString)
         Console.WriteLine("        ---- .DocDate ----- " & Me.DocDate.ToString)
         Console.WriteLine("        ---- .DocFrom ----- " & Me.DocFrom)
         Console.WriteLine("        ---- .DocTo ------- " & Me.DocTo)
         Console.WriteLine("        ---- .Subject ----- " & Me.Subject)
         'Console.WriteLine("        ---- .Synopsis ---- " & Me.Synopsis)
     End Sub
+
+    Public Property DocumentId As Integer
+        'Foreign key to the containing document
+        'Set as Document is being added to the database, NOT by the xml processing.
+        Get
+            Return mDocumentId
+        End Get
+        Set(value As Integer)
+            mDocumentId = value
+        End Set
+    End Property
+
+    Public Property PartNum As Integer
+        'Identifying sequence number within the document
+        'Set as Document is being added to the database, NOT by the xml processing.
+        Get
+            Return mPartNum
+        End Get
+        Set(value As Integer)
+            mPartNum = value
+        End Set
+    End Property
 
     Private ReadOnly Property ParseString(myString As String) As Collection
         Get

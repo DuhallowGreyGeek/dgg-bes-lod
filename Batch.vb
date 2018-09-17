@@ -29,7 +29,6 @@ Public Class Batch
             Console.WriteLine("number of documents ---> " & xDocList.DocList.Count)
 
             Dim iDocCount As Integer = 0
-
             For Each doc As Doc In xDocList.DocList
                 iDocCount = iDocCount + 1
                 Console.WriteLine(" --Document # --> " & iDocCount.ToString)
@@ -42,7 +41,14 @@ Public Class Batch
                 'Now write the Part to the database ---------------
                 Console.WriteLine("  ------Now the parts---")
 
+                Dim jPartNum As Integer = 0
                 For Each curPart As Part In doc.Parts
+                    'Set the Identifiers in Part
+                    jPartNum = jPartNum + 1
+                    curPart.DocumentId = DocId
+                    curPart.PartNum = jPartNum
+                    Call mlodSQL.Part_Insert(curPart)       'Insert into the database
+
                     'Call curPart.Dump() 'Dump contents to console
                 Next
                 Console.WriteLine()

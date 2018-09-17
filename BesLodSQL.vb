@@ -6,7 +6,7 @@ Imports System.Data.SqlClient
 
 Public Class BesLodSQL
     'Object bringing together all the function Bessie Load uses to access the SQL database.
-    Const MODNAME As String = "BesLod"
+    Const MODNAME As String = "BesLodSQL"
     Friend mRoutineName As String = ""      'To hold the name of the routine which generates an exception
 
     Public Sub New()
@@ -434,10 +434,62 @@ Public Class BesLodSQL
             Return ERRORKEY
         End Try
 
-
-
-
     End Function
+
+    Public Sub Part_Insert(part As Part)
+        'Return the DocID of the Document we have just added. Used by Doc_Insert
+        'Label (and FileName) is an external identifier. It will have a unique index.
+        mRoutineName = "Part_Insert(part As Part)"
+
+        part.Dump() 'Dump the contents to the console
+
+        Const QUOT As String = "'"                              'SQL is expecting literals enclosed in single quotes - I predict confusion!
+        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+
+        'Get Connection string data
+        conString.DataSource = params.SQLDataSource
+        conString.IntegratedSecurity = params.SQLIntegratedSecurity
+        conString.InitialCatalog = params.SQLInitCatalogDB
+        Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
+
+        'The *parameters* for the Document row being added
+        'Dim DateCreated As String = QUOT & BatHeader.CreatedDate.ToString("yyyy/MM/dd") & QUOT   '--- BatchDateCreated, 
+
+
+        Dim dateString As String = QUOT & Now.ToString("yyyy/MM/dd HH:mm:ss.fff") & QUOT   'Using a string purely to get an updating string
+
+        'Build the query command structure
+        Dim queryString As String = "INSERT INTO dbo.Part ("
+        queryString = queryString & "DocumentID, PartNum, DocDate, DocFrom, DocTo )"
+        queryString = queryString & " VALUES( "
+        queryString = queryString & " @DocumentID, @PartNum, @DocDate, @DocFrom, @DocTo "
+        queryString = queryString & " )"
+
+        'Console.WriteLine(queryString)
+
+        Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
+
+        'Now substitute the values into the command
+        sqlCommand.Parameters.AddWithValue("@DocumentID", part.DocumentId)
+        sqlCommand.Parameters.AddWithValue("@PartNum", part.PartNum)
+        sqlCommand.Parameters.AddWithValue("@DocDate", part.DocDate.ToString("yyyy/MM/dd"))
+        sqlCommand.Parameters.AddWithValue("@DocFrom", part.DocFrom)
+        sqlCommand.Parameters.AddWithValue("@DocTo", part.DocTo)
+
+        'Console.WriteLine("--sqlCommand--> " & sqlCommand.CommandText)
+
+        Try
+            Dim numRows As Integer = 0
+
+            sqlCommand.Connection.Open()
+            MsgBox("Number Part rows inserted = " & sqlCommand.ExecuteNonQuery().ToString)
+
+        Catch ex As SqlException
+            Call Me.handleSQLException(ex)
+
+        End Try
+
+    End Sub
 
     Private Sub handleSQLException(ex As SqlException)
         Console.WriteLine("*** Error *** in Module: " & MODNAME)
