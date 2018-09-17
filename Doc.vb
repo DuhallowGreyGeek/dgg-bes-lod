@@ -105,7 +105,7 @@ Public Class Doc
         Console.WriteLine("        --- Num Parts = " & Me.Parts.Count.ToString)
 
         For Each Part As Part In Me.Parts
-            Call Part.Dump() 'Dump contents of the part to the Console
+            'Call Part.Dump() 'Dump contents of the part to the Console
         Next
 
 
