@@ -485,10 +485,61 @@ Public Class BesLodSQL
             sqlCommand.Connection.Open()
             MsgBox("Number Part rows inserted = " & sqlCommand.ExecuteNonQuery().ToString)
 
+            If part.Synopsis.Length > 0 Then 'If there is a synopsis to write, then write it!
+                'Console.WriteLine("--Synopsis--- " & part.Synopsis.Length.ToString & " ----> " & part.Synopsis.ToString)
+                Call DocSynopsis_Insert(part.DocumentId, part.PartNum, part.Synopsis)
+            End If
+
         Catch ex As SqlException
             Call Me.handleSQLException(ex)
 
         End Try
+
+    End Sub
+
+    Private Sub DocSynopsis_Insert(documentId As Integer, partNum As Integer, synopsis As String)
+        'Insert the text into the DocSynopsis table
+        mRoutineName = "DocSynopsis_Insert(...)"
+
+        'Console.WriteLine("--Synopsis--- " & synopsis.Length.ToString & " ----> " & synopsis.ToString)
+
+        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+
+        'Get Connection string data
+        conString.DataSource = params.SQLDataSource
+        conString.IntegratedSecurity = params.SQLIntegratedSecurity
+        conString.InitialCatalog = params.SQLInitCatalogDB
+        Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
+
+        'Build the query command structure
+        Dim queryString As String = "INSERT INTO dbo.DocSynopsis ("
+        queryString = queryString & "DocumentID, PartNum, Synopsis )"
+        queryString = queryString & " VALUES( "
+        queryString = queryString & " @DocumentID, @PartNum, @Synopsis "
+        queryString = queryString & " )"
+
+        'Console.WriteLine(queryString)
+
+        Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
+
+        'Now substitute the values into the command
+        sqlCommand.Parameters.AddWithValue("@DocumentID", documentId)
+        sqlCommand.Parameters.AddWithValue("@PartNum", partNum)
+        sqlCommand.Parameters.AddWithValue("@Synopsis", synopsis)
+
+        'Console.WriteLine("--sqlCommand--> " & sqlCommand.CommandText)
+
+        Try
+            Dim numRows As Integer = 0
+
+            sqlCommand.Connection.Open()
+            MsgBox("Number Synopsis rows inserted = " & sqlCommand.ExecuteNonQuery().ToString)
+
+        Catch ex As SqlException
+            Call Me.handleSQLException(ex)
+
+        End Try
+
 
     End Sub
 
