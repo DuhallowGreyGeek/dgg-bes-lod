@@ -204,7 +204,8 @@ Public Class BesLodSQL
             Dim numRows As Integer = 0
 
             sqlCommand.Connection.Open()
-            MsgBox("Number DocBatch rows affected = " & sqlCommand.ExecuteNonQuery().ToString)
+            Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
+            'MsgBox("Number DocBatch rows affected = " & iRows.ToString)
 
         Catch ex As SqlException
             Call Me.handleSQLException(ex)
@@ -358,7 +359,9 @@ Public Class BesLodSQL
             Dim numRows As Integer = 0
 
             sqlCommand.Connection.Open()
-            MsgBox("Number Doc rows inserted = " & sqlCommand.ExecuteNonQuery().ToString)
+
+            Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
+            'MsgBox("Number Doc rows inserted = " & iRows.ToString)
 
             'Now get the DocId of the Document we just added Doc_Insert
             Return mlodSQL.Doc_IDofRecord(doc.FileName)
@@ -433,7 +436,7 @@ Public Class BesLodSQL
         'Label (and FileName) is an external identifier. It will have a unique index.
         mRoutineName = "Part_Insert(part As Part)"
 
-        part.Dump() 'Dump the contents to the console
+        'part.Dump() 'Dump the contents to the console
 
         Const QUOT As String = "'"                              'SQL is expecting literals enclosed in single quotes - I predict confusion!
         Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
@@ -475,7 +478,9 @@ Public Class BesLodSQL
             Dim numRows As Integer = 0
 
             sqlCommand.Connection.Open()
-            MsgBox("Number Part rows inserted = " & sqlCommand.ExecuteNonQuery().ToString)
+
+            Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
+            'MsgBox("Number Part rows inserted = " & iRows.ToString)
 
             If part.Synopsis.Length > 0 Then 'If there is a synopsis to write, then write it!
                 'Console.WriteLine("--Synopsis--- " & part.Synopsis.Length.ToString & " ----> " & part.Synopsis.ToString)
@@ -525,7 +530,8 @@ Public Class BesLodSQL
             Dim numRows As Integer = 0
 
             sqlCommand.Connection.Open()
-            MsgBox("Number Synopsis rows inserted = " & sqlCommand.ExecuteNonQuery().ToString)
+            Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
+            'MsgBox("Number Synopsis rows inserted = " & iRows.ToString)
 
         Catch ex As SqlException
             Call Me.handleSQLException(ex)

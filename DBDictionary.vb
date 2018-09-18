@@ -4,6 +4,8 @@ Public Class DBDictionary
     'Contains the dictionary of words which have been used in the vocabulary of the documents added to the DB.
     'Returns the WordId of a word
     'Also contains the function to parse a string into words according to rules.
+    Const MODNAME As String = "DBDictionary"
+    Friend mRoutineName As String = ""      'To hold the name of the routine which generates an exception
 
     Sub New()
         'Setup for the dictionary. May choose to load from the database at start-up.

@@ -8,11 +8,15 @@ Public Class Batch
     Public Sub New(docBatchFname As String)
         'Process the xml file
 
+
         'Check if we have loaded a DocBatch with this filename before
         Dim fname As String = System.IO.Path.GetFileName(docBatchFname)
         'Console.WriteLine("-----> " & fname)
+        Dim prgList As Object = frmMain.lstLoadProgress.Items
 
         If mlodSQL.DocBatch_IsThereExisting(fname) = False Then 'Process the batch
+            prgList.Add("---- Loading DocumentBatch file: " & fname)    'Status message ****
+
             Dim xDocBatch As New XmlDocument
             xDocBatch.Load(docBatchFname) 'Load the document
             Dim xBatHeader As New BatHeader(xDocBatch)
@@ -27,13 +31,15 @@ Public Class Batch
 
             mNumDocs = xDocList.DocList.Count
             Console.WriteLine("number of documents ---> " & xDocList.DocList.Count)
+            prgList.Add("    ---- contains: " & xDocList.DocList.Count & " documents")    'Status message ****
 
             Dim iDocCount As Integer = 0
             For Each doc As Doc In xDocList.DocList
                 iDocCount = iDocCount + 1
                 Console.WriteLine(" --Document # --> " & iDocCount.ToString)
+                prgList.Add("        ---- Processing document: " & iDocCount.ToString & " of " & xDocList.DocList.Count & " -------")    'Status message ****
 
-                Call doc.Dump() 'Dump contents to the console
+                'Call doc.Dump() 'Dump contents to the console
                 Console.WriteLine("---- Invoke the SQL Insert -----")
                 Dim DocId As Integer = mlodSQL.Doc_Insert(docBatchId, doc)
                 Console.WriteLine("--- Document.DocId = " & DocId.ToString)
@@ -56,9 +62,11 @@ Public Class Batch
             Next
             Console.WriteLine()
             Console.WriteLine("--------- All Documents Processed ----------")
+            prgList.Add("---- All: " & xDocList.DocList.Count & " documents processed ---- ")    'Status message ****
 
         Else
             'Will eventually prompt giving the possibility of overwriting it but not yet
+            prgList.Add("---- Loading DocumentBatch file: " & fname & " FAILED!")
             Call MsgBox("Duplicate Document (or other serious error)")
         End If
 
