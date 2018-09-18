@@ -177,7 +177,7 @@ Public Class BesLodSQL
     Public Sub DocBatch_Insert(BatHeader As BatHeader)
         'Insert the row for the containing the BatchHeader information 
         mRoutineName = "DocBatch_Insert(BatHeader As BatHeader)"
-        Const QUOT As String = "'"                              'SQL is expecting literals enclosed in single quotes - I predict confusion!
+
         Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
 
         'Get Connection string data
@@ -187,23 +187,21 @@ Public Class BesLodSQL
         Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
 
         'The *parameters* for the row being added
-        Dim tmpFileName As String = BatHeader.FileName                        '--- FileName, 
-        Dim tmpDateCreated As String = QUOT & BatHeader.CreatedDate.ToString("yyyy/MM/dd") & QUOT   '--- BatchDateCreated, 
-        '--- DateLoaded -- Not required 
         Dim tmpDescription As String = "Long rambling description"         '--- Description
 
-        Dim dateString As String = QUOT & Now.ToString("yyyy/MM/dd HH:mm:ss.fff") & QUOT   'Using a string purely to get an updating string
-
         Dim queryString As String = "INSERT INTO dbo.DocBatch (FileName, DateCreated, DateLoaded, Description) VALUES( "
-        queryString = queryString & QUOT & tmpFileName & QUOT                  '--- FileName, 
-        queryString = queryString & "," & tmpDateCreated                       '--- BatchDateCreated, 
-        queryString = queryString & "," & dateString                          '--- DateLoaded, 
-        queryString = queryString & "," & QUOT & tmpDescription & QUOT  '--- Description
+        queryString = queryString & "@FileName, @DateCreated, @dateString, @Description"
         queryString = queryString & " )"
 
         'Console.WriteLine(queryString)
 
         Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
+
+        'Now substitute the values into the command
+        sqlCommand.Parameters.AddWithValue("@FileName", BatHeader.FileName)
+        sqlCommand.Parameters.AddWithValue("@DateCreated", BatHeader.CreatedDate.ToString("yyyy/MM/dd"))
+        sqlCommand.Parameters.AddWithValue("@dateString", Now.ToString("yyyy/MM/dd HH:mm:ss.fff"))
+        sqlCommand.Parameters.AddWithValue("@Description", tmpDescription)
 
         Try
             Dim numRows As Integer = 0
@@ -338,8 +336,6 @@ Public Class BesLodSQL
         Dim FileName As String = doc.FileName                        '--- FileName
         'Dim DateCreated As String = QUOT & BatHeader.CreatedDate.ToString("yyyy/MM/dd") & QUOT   '--- BatchDateCreated, 
 
-
-        Dim dateString As String = QUOT & Now.ToString("yyyy/MM/dd HH:mm:ss.fff") & QUOT   'Using a string purely to get an updating string
 
         'Build the query command structure
         Dim queryString As String = "INSERT INTO dbo.Document ("
