@@ -90,6 +90,7 @@
     <Compile Include="BatHeader.vb" />
     <Compile Include="BesLodMain.vb" />
     <Compile Include="BesLodSQL.vb" />
+    <Compile Include="DBDictionary.vb" />
     <Compile Include="DocHeader.vb" />
     <Compile Include="PartList.vb" />
     <Compile Include="Part.vb" />

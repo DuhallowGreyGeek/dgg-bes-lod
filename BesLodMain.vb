@@ -1,8 +1,9 @@
 ﻿Module BesLodMain
     'Start  point for the BesLod application. Sets up things and launches the frmMain form.
 
-    Public params As New BesParam 'Declare the parameters object
+    Public params As New BesParam   'Declare the parameters object
     Public mlodSQL As New BesLodSQL 'The SQL function
+    Public dict As New DBDictionary 'The dictionary containing the "vocabulary"
 
     Public frmMain As New frmBesLodMain
 

@@ -41,7 +41,22 @@ Public Class frmBesLodMain
         'This is a temporary function and button for testing fragments of code.
         lstLoadProgress.Items.Add("Test Button clicked")
 
-        Call Me.prgLoadProgress.PerformStep()
+        '*** Temporary invoke the ParseString function
+        Dim word As String
+
+        'Data used for testing
+        Const APST As String = "'"
+        Dim myString = "Richard of York gave battle in vain!" + vbCrLf + "Peter Piper picked a peck of pickled pepper."
+        myString = myString & ", , , and here is some??? more text after some empty words! "
+        myString = myString & "The dreaded O" & APST & "Brien and O" & APST & "Toole should be handled! "
+        myString = myString & "Of course McTavish, MacDonald will be handled, but Mac Donald and Mc Donald will be split. "
+        myString = myString & " ... ...... filename.txt and ...filename.txt... "
+
+        For Each word In dict.ParseString(myString)
+            Console.WriteLine("----------word--------> " & word)
+        Next
+
+
 
         '
     End Sub
