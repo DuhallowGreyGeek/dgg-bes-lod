@@ -186,9 +186,6 @@ Public Class BesLodSQL
         conString.InitialCatalog = params.SQLInitCatalogDB
         Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
 
-        'The *parameters* for the row being added
-        Dim tmpDescription As String = "Long rambling description"         '--- Description
-
         Dim queryString As String = "INSERT INTO dbo.DocBatch (FileName, DateCreated, DateLoaded, Description) VALUES( "
         queryString = queryString & "@FileName, @DateCreated, @dateString, @Description"
         queryString = queryString & " )"
@@ -201,7 +198,7 @@ Public Class BesLodSQL
         sqlCommand.Parameters.AddWithValue("@FileName", BatHeader.FileName)
         sqlCommand.Parameters.AddWithValue("@DateCreated", BatHeader.CreatedDate.ToString("yyyy/MM/dd"))
         sqlCommand.Parameters.AddWithValue("@dateString", Now.ToString("yyyy/MM/dd HH:mm:ss.fff"))
-        sqlCommand.Parameters.AddWithValue("@Description", tmpDescription)
+        sqlCommand.Parameters.AddWithValue("@Description", BatHeader.Description)
 
         Try
             Dim numRows As Integer = 0
@@ -323,7 +320,6 @@ Public Class BesLodSQL
         mRoutineName = "Doc_Insert(docBatchId As Integer, doc As Doc)"
         Const ERRORKEY As Integer = -99999
 
-        Const QUOT As String = "'"                              'SQL is expecting literals enclosed in single quotes - I predict confusion!
         Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
 
         'Get Connection string data

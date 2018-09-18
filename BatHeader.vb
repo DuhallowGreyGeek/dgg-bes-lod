@@ -7,6 +7,7 @@ Public Class BatHeader
 
     Private mFileName As String
     Private mCreatedDate As Date
+    Private mDescription As String
 
     Public Sub New(xDocBatch As XmlDocument)
 
@@ -26,6 +27,8 @@ Public Class BatHeader
                             Case "created_date"
                                 mCreatedDate = Date.ParseExact(node.InnerText, "yyyy-MM-dd", System.Globalization.DateTimeFormatInfo.InvariantInfo)
 
+                            Case "description"
+                                mDescription = node.InnerText
                         End Select
 
                     End If
@@ -48,6 +51,12 @@ Public Class BatHeader
     Public ReadOnly Property CreatedDate As Date
         Get
             Return mCreatedDate
+        End Get
+    End Property
+
+    Public ReadOnly Property Description
+        Get
+            Return mDescription
         End Get
     End Property
 
