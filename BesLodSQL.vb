@@ -218,7 +218,6 @@ Public Class BesLodSQL
         'Return True if there is an existing row and False if there isn't
         'There is a unique index on DocBatch.Filename so there will only ever be zero or 1 rows
         mRoutineName = "DocBatch_IsThereExisting(FileName As String)"
-        Const QUOT As String = "'"
 
         Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
 
@@ -229,7 +228,7 @@ Public Class BesLodSQL
 
         'Construct the query string
         Dim queryString As String = "Select * From dbo.DocBatch as bat WHERE "
-        queryString = queryString & "bat.FileName =" & QUOT & FileName & QUOT
+        queryString = queryString & "bat.FileName = @FileName "
 
         'Console.WriteLine(queryString)
 
@@ -237,6 +236,8 @@ Public Class BesLodSQL
             Using sqlConnection As New SqlConnection(conString.ConnectionString)
                 sqlConnection.Open()
                 Using sqlCommand As New SqlCommand(queryString, sqlConnection)
+                    sqlCommand.Parameters.AddWithValue("@FileName", FileName)
+
                     Using reader = sqlCommand.ExecuteReader()
                         If reader.HasRows Then
                             Return True
@@ -266,7 +267,6 @@ Public Class BesLodSQL
         'Return the integer DocBatchId matching the FileName
         'There is a unique index on DocBatch.Filename so there will only ever be zero or 1 rows
         mRoutineName = "DocBatch_IDofRecord(FileName As String)"
-        Const QUOT As String = "'"
         Const ERRORKEY As Integer = -99999
 
         Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
@@ -278,7 +278,7 @@ Public Class BesLodSQL
 
         'Construct the query string
         Dim queryString As String = "Select bat.DocBatchId From dbo.DocBatch as bat WHERE "
-        queryString = queryString & "bat.FileName =" & QUOT & FileName & QUOT
+        queryString = queryString & "bat.FileName = @FileName "
 
         'Console.WriteLine(queryString)
 
@@ -286,6 +286,8 @@ Public Class BesLodSQL
             Using sqlConnection As New SqlConnection(conString.ConnectionString)
                 sqlConnection.Open()
                 Using sqlCommand As New SqlCommand(queryString, sqlConnection)
+                    sqlCommand.Parameters.AddWithValue("@FileName", FileName)
+
                     Using reader = sqlCommand.ExecuteReader()
                         If reader.HasRows Then
                             Do While reader.Read
