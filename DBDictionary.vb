@@ -5,15 +5,36 @@ Public Class DBDictionary
     'Returns the WordId of a word
     'Also contains the function to parse a string into words according to rules.
     Const MODNAME As String = "DBDictionary"
-    Friend mRoutineName As String = ""      'To hold the name of the routine which generates an exception
+    Protected mRoutineName As String = ""      'To hold the name of the routine which generates an exception
+    Protected mDictionary As New Dictionary(Of String, Integer)
+    Protected mTempWordId As Integer = 0
 
-    Sub New()
+    Public Sub New()
         'Setup for the dictionary. May choose to load from the database at start-up.
         'More likely to populate "on-demand"
     End Sub
 
+    Public ReadOnly Property GetWordId(Word As String) As Integer
+        'Return the WordId for the word
+        Get
+            mRoutineName = "GetWordId_Get"
+            Const ERRORKEY As Integer = -99999
+
+            If mDictionary.ContainsKey(Word) Then
+                Return mDictionary.Item(Word)
+            Else
+                mTempWordId = mTempWordId + 1
+                mDictionary.Item(Word) = mTempWordId
+            End If
+
+            Return mTempWordId
+
+        End Get
+    End Property
+
     Public ReadOnly Property ParseString(myString As String) As Collection
         Get
+            mRoutineName = "ParseString_Get"
             'Function which returns a collection of all the words which we've identified,
             'in the order they were encountered and including duplicates.
 
