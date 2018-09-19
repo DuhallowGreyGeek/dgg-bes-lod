@@ -52,7 +52,7 @@ Public Class frmBesLodMain
         myString = myString & "Of course McTavish, MacDonald will be handled, but Mac Donald and Mc Donald will be split. "
         myString = myString & " ... ...... filename.txt and ...filename.txt... "
 
-        myString = "one two three four five FIVE FOUR THREE TWO ONE"
+        'myString = "one two three four five FIVE FOUR THREE TWO ONE"
 
         For Each word In dict.ParseString(myString)
             Console.WriteLine("----------word--------> " & word & " --WordId--> " & dict.GetWordId(word).ToString)
