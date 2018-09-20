@@ -56,6 +56,84 @@ Public Class Usage
 
     End Sub
 
+    Public ReadOnly Property FieldContentsCollection(part As Part, fieldIdent As Integer) As Collection
+        Get
+            'Return the words in the Field referenced (as a collection). 
+            mRoutineName = "FieldContentsCollection(...)"
+            Dim fieldContents As New Collection
+
+            Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+
+            'Get Connection string data
+            conString.DataSource = params.SQLDataSource
+            conString.IntegratedSecurity = params.SQLIntegratedSecurity
+            conString.InitialCatalog = params.SQLInitCatalogDB
+
+            'Construct the query string
+            Dim queryString As String = "Select wuse.WordSeqNum, wuse.WordText From dbo.WordUsage as wuse WHERE "
+            queryString = queryString & "wuse.DocumentId = @DocumentId "
+            queryString = queryString & "AND wuse.PartNum = @PartNum "
+            queryString = queryString & "AND wuse.FieldIdent = @FieldIdent "
+            queryString = queryString & "ORDER BY wuse.WordSeqNum ASC "
+
+            'Console.WriteLine("----> " & queryString)
+
+            Try
+                Using sqlConnection As New SqlConnection(conString.ConnectionString)
+                    sqlConnection.Open()
+                    Using sqlCommand As New SqlCommand(queryString, sqlConnection)
+
+                        'Substitute the parameter into the query command
+                        sqlCommand.Parameters.AddWithValue("@DocumentId", part.DocumentId)
+                        sqlCommand.Parameters.AddWithValue("@PartNum", part.PartNum)
+                        sqlCommand.Parameters.AddWithValue("@FieldIdent", fieldIdent)
+
+                        Using reader = sqlCommand.ExecuteReader()
+                            If reader.HasRows Then
+                                Do While reader.Read
+
+                                    fieldContents.Add(reader.Item("WordText"))
+
+                                Loop
+                            Else
+                                'Empty Field
+                            End If
+                        End Using
+                    End Using
+                    sqlConnection.Close()
+                End Using
+
+                Return fieldContents
+
+            Catch ex As SqlException
+                Call Me.handleSQLException(ex)
+                Return fieldContents
+
+
+            Catch ex As Exception
+                Call Me.handleGeneralException(ex)
+                Return fieldContents
+
+            End Try
+        End Get
+    End Property
+
+    Public ReadOnly Property FieldContentsString(part As Part, fieldIdent As Integer) As String
+        Get
+            'Return the words in the Field referenced (as a string, separated by spaces).
+            mRoutineName = "FieldContentsString(...)"
+            FieldContentsString = ""
+            Dim word As String
+
+            For Each word In Me.FieldContentsCollection(part, fieldIdent)
+                FieldContentsString = FieldContentsString & word & " "
+            Next
+            Return FieldContentsString
+
+        End Get
+    End Property
+
+
     Private Sub handleSQLException(ex As SqlException)
         Console.WriteLine("*** Error *** in Module: " & MODNAME)
         Console.WriteLine("*** Exception *** in routine: " & mRoutineName)

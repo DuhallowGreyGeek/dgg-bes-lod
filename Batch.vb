@@ -73,6 +73,8 @@ Public Class Batch
                         Call usage.Add(curPart, fieldIdent, wordSeqNum, wordid)
 
                     Next
+                    'Dim junk As New Usage
+                    'Console.WriteLine(junk.FieldContentsString(curPart, fieldIdent))
 
                     'Process the Part.Synopsis field
                     fieldIdent = 2 'arbitrarilly calling "Synopsis" = 2
@@ -85,8 +87,9 @@ Public Class Batch
 
                         Dim usage As New Usage
                         Call usage.Add(curPart, fieldIdent, wordSeqNum, wordid)
-
                     Next
+                    'Dim junk2 As New Usage
+                    'Console.WriteLine(junk2.FieldContentsString(curPart, fieldIdent))
 
                 Next
                 Console.WriteLine()

@@ -42,7 +42,7 @@ Public Class frmBesLodMain
         lstLoadProgress.Items.Add("Test Button clicked")
 
         '*** Temporary invoke the ParseString function
-        Dim word As String
+        'Dim word As String
 
         'Data used for testing
         Const APST As String = "'"
@@ -55,10 +55,12 @@ Public Class frmBesLodMain
         'myString = "one two three four five FIVE FOUR THREE TWO ONE"
 
 
-        For Each word In dict.ParseString(myString)
-            Console.WriteLine("----------word--------> " & word & " --WordId--> " & dict.GetWordId(word).ToString)
+        'For Each word In dict.ParseString(myString)
+        'Console.WriteLine("----------word--------> " & word & " --WordId--> " & dict.GetWordId(word).ToString)
 
-        Next
+        'Next
+
+
 
 
 
