@@ -56,6 +56,38 @@ Public Class Batch
                     Call mlodSQL.Part_Insert(curPart)       'Insert into the database
 
                     'Call curPart.Dump() 'Dump contents to console
+
+                    'Add the words referred to in the fields of the current part to the dictionary
+                    'and then persist the Usage information
+
+                    'Process the Part.Subject field
+                    Dim fieldIdent As Integer = 1 'arbitrarilly calling "Subject" = 1
+                    Dim wordSeqNum As Integer = 0
+                    For Each word In dict.ParseString(curPart.Subject)
+                        wordSeqNum = wordSeqNum + 1
+
+                        Dim wordid = dict.GetWordId(word)       'Gets the WordId and maybe adds the word to the dictionary
+                        Console.WriteLine(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
+
+                        Dim usage As New Usage
+                        Call usage.Add(curPart, fieldIdent, wordSeqNum, wordid)
+
+                    Next
+
+                    'Process the Part.Synopsis field
+                    fieldIdent = 2 'arbitrarilly calling "Synopsis" = 2
+                    wordSeqNum = 0
+                    For Each word In dict.ParseString(curPart.Synopsis)
+                        wordSeqNum = wordSeqNum + 1
+
+                        Dim wordid = dict.GetWordId(word)       'Gets the WordId and maybe adds the word to the dictionary
+                        Console.WriteLine(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
+
+                        Dim usage As New Usage
+                        Call usage.Add(curPart, fieldIdent, wordSeqNum, wordid)
+
+                    Next
+
                 Next
                 Console.WriteLine()
 

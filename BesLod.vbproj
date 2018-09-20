@@ -120,6 +120,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="BesParam.vb" />
+    <Compile Include="Usage.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="frmBesLodMain.resx">

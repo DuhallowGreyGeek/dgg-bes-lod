@@ -54,6 +54,7 @@ Public Class frmBesLodMain
 
         'myString = "one two three four five FIVE FOUR THREE TWO ONE"
 
+
         For Each word In dict.ParseString(myString)
             Console.WriteLine("----------word--------> " & word & " --WordId--> " & dict.GetWordId(word).ToString)
 
