@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("BuntWun")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("Hewlett-Packard")> 
-<Assembly: AssemblyProduct("BuntWun")> 
-<Assembly: AssemblyCopyright("Copyright © Hewlett-Packard 2017")> 
+<Assembly: AssemblyTitle("Bessie Document Loader")> 
+<Assembly: AssemblyDescription("Loads batches of structured documents into the Bunter database.")> 
+<Assembly: AssemblyCompany("Duhallow Grey Geek")> 
+<Assembly: AssemblyProduct("Bunter Document Database")> 
+<Assembly: AssemblyCopyright("Copyright © Duhallow Grey Geek 2018")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")> 
 
-<Assembly: AssemblyVersion("1.0.0.0")> 
-<Assembly: AssemblyFileVersion("1.0.0.0")> 
+<Assembly: AssemblyVersion("0.1.0.0")> 
+<Assembly: AssemblyFileVersion("0.1.0.0")> 

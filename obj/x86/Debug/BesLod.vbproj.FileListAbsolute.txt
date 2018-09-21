@@ -28,3 +28,4 @@ C:\Users\user\Documents\BES_20180827\dgg-bes-lod\obj\x86\Debug\BesLod1.xml
 C:\Users\user\Documents\BES_20180827\dgg-bes-lod\obj\x86\Debug\BesLod1.pdb
 C:\Users\user\Documents\BES_20180827\dgg-bes-lod\bin\Debug\BesParms.xml
 C:\Users\user\Documents\BES_20180827\dgg-bes-lod\obj\x86\Debug\BesLod.frmBesLodMain.resources
+C:\Users\user\Documents\BES_20180827\dgg-bes-lod\obj\x86\Debug\BesLod.frmBesLodSplash.resources
