@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!-- Parmeter file for the Bunter family applications -->
+<!-- Not expected to be edited by users -->
+<!-- The elements have to be in EXACTLY the right order and have EXACTLY the right contents!! -->
+    <parameters>
+	    <applicationVersion>appVersion</applicationVersion>
+      <databaseVersion>databaseVersion</databaseVersion>
+      
+      <!-- Settings for the Database connection - Single Database -->
+      <SQLDataSource>LENOVOUSER\SQLEXPRESS</SQLDataSource>
+      <SQLIntegratedSecurity>True</SQLIntegratedSecurity>
+      <SQLInitCatalogDB>BessieDev</SQLInitCatalogDB>
+    </parameters>
+    
+
+    
