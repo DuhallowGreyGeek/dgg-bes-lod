@@ -7,6 +7,18 @@ Public Class frmBesLodMain
     Friend mFileName As String 'The name of the file of documents we are loading
     Friend mDocBatch As Object
 
+    Private Sub frmBesLodMain_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        Me.cmdTest.Visible = False
+        Me.cmdLoadXML.Enabled = False
+        'NB Settings on tool-strip entries for TestSQL and TestXML
+
+        Me.lstLoadProgress.Items.Add("Select the file containing the batch of documents to load")
+        Me.lstLoadProgress.Items.Add("using 'File - Open File' and click 'Load XML'")
+        Me.lstLoadProgress.Items.Add("")
+
+    End Sub
+
     Private Sub DumpToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DumpToolStripMenuItem.Click
         params.Dump()
         MsgBox("Arghhh!")
@@ -28,6 +40,7 @@ Public Class frmBesLodMain
 
             mFileName = loadFileName
             lstLoadProgress.Items.Add("File selected ---> " & shortFileName)
+            Me.cmdLoadXML.Enabled = True
         End If
 
     End Sub
@@ -59,11 +72,6 @@ Public Class frmBesLodMain
         'Console.WriteLine("----------word--------> " & word & " --WordId--> " & dict.GetWordId(word).ToString)
 
         'Next
-
-
-
-
-
         '
     End Sub
 
@@ -71,6 +79,9 @@ Public Class frmBesLodMain
         'Load and process an xml file containing several documents
 
         Dim batchFileName As String = "C:\Users\user\Documents\Bessie_20180824\BesTestLoad_03.xml"
+        'Use the proper file
+        batchFileName = mFileName
+
         Me.statStatusStrip.Text = "Processing: " & batchFileName
 
         Dim docBatch As New Batch(batchFileName)
@@ -80,6 +91,7 @@ Public Class frmBesLodMain
 
 
         'Then clean up ready for the next file
+        Me.cmdLoadXML.Enabled = False
     End Sub
 
     Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
@@ -118,4 +130,5 @@ Public Class frmBesLodMain
         End If
     End Sub
 
+    
 End Class

@@ -103,6 +103,7 @@ Partial Class frmBesLodMain
         'TestSQLToolStripMenuItem
         '
         Me.TestSQLToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TestConnectionToolStripMenuItem, Me.SelectToolStripMenuItem, Me.InsertToolStripMenuItem, Me.ExceptionToolStripMenuItem})
+        Me.TestSQLToolStripMenuItem.Enabled = False
         Me.TestSQLToolStripMenuItem.Name = "TestSQLToolStripMenuItem"
         Me.TestSQLToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
         Me.TestSQLToolStripMenuItem.Text = "TestSQL"
@@ -134,6 +135,7 @@ Partial Class frmBesLodMain
         'TestXMLToolStripMenuItem
         '
         Me.TestXMLToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadXMLfileToolStripMenuItem})
+        Me.TestXMLToolStripMenuItem.Enabled = False
         Me.TestXMLToolStripMenuItem.Name = "TestXMLToolStripMenuItem"
         Me.TestXMLToolStripMenuItem.Size = New System.Drawing.Size(64, 20)
         Me.TestXMLToolStripMenuItem.Text = "TestXML"
@@ -141,7 +143,7 @@ Partial Class frmBesLodMain
         'LoadXMLfileToolStripMenuItem
         '
         Me.LoadXMLfileToolStripMenuItem.Name = "LoadXMLfileToolStripMenuItem"
-        Me.LoadXMLfileToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
+        Me.LoadXMLfileToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.LoadXMLfileToolStripMenuItem.Text = "LoadXMLfile"
         '
         'statStatusStrip
