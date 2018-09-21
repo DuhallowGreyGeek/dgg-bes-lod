@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frmBuntWunMain
+Partial Class frmBesLodMain
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -29,19 +29,23 @@ Partial Class frmBuntWunMain
         Me.ParmValuesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ParmsToStringToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DumpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TestSQLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TestConnectionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SelectToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.InsertToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExceptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TestXMLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.LoadXMLfileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.statStatusStrip = New System.Windows.Forms.StatusStrip()
         Me.dlgInputFile = New System.Windows.Forms.OpenFileDialog()
         Me.dlgOutputFile = New System.Windows.Forms.SaveFileDialog()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
         Me.lstLoadProgress = New System.Windows.Forms.ListBox()
-        Me.cmdSQLTest = New System.Windows.Forms.Button()
+        Me.prgLoadProgress = New System.Windows.Forms.ProgressBar()
+        Me.cmdLoadXML = New System.Windows.Forms.Button()
         Me.cmdTest = New System.Windows.Forms.Button()
         Me.cmdClose = New System.Windows.Forms.Button()
-        Me.cmdClear = New System.Windows.Forms.Button()
-        Me.cmdLoadDocs = New System.Windows.Forms.Button()
-        Me.cmdShowFileHeader = New System.Windows.Forms.Button()
         Me.HelpProvider1 = New System.Windows.Forms.HelpProvider()
-        Me.cmdTempSelect = New System.Windows.Forms.Button()
         Me.mnuMenu.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
@@ -51,7 +55,7 @@ Partial Class frmBuntWunMain
         '
         'mnuMenu
         '
-        Me.mnuMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.HelpToolStripMenuItem})
+        Me.mnuMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.HelpToolStripMenuItem, Me.TestSQLToolStripMenuItem, Me.TestXMLToolStripMenuItem})
         Me.mnuMenu.Location = New System.Drawing.Point(0, 0)
         Me.mnuMenu.Name = "mnuMenu"
         Me.mnuMenu.Size = New System.Drawing.Size(538, 24)
@@ -96,6 +100,52 @@ Partial Class frmBuntWunMain
         Me.DumpToolStripMenuItem.Size = New System.Drawing.Size(151, 22)
         Me.DumpToolStripMenuItem.Text = "Dump"
         '
+        'TestSQLToolStripMenuItem
+        '
+        Me.TestSQLToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.TestConnectionToolStripMenuItem, Me.SelectToolStripMenuItem, Me.InsertToolStripMenuItem, Me.ExceptionToolStripMenuItem})
+        Me.TestSQLToolStripMenuItem.Enabled = False
+        Me.TestSQLToolStripMenuItem.Name = "TestSQLToolStripMenuItem"
+        Me.TestSQLToolStripMenuItem.Size = New System.Drawing.Size(61, 20)
+        Me.TestSQLToolStripMenuItem.Text = "TestSQL"
+        '
+        'TestConnectionToolStripMenuItem
+        '
+        Me.TestConnectionToolStripMenuItem.Name = "TestConnectionToolStripMenuItem"
+        Me.TestConnectionToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.TestConnectionToolStripMenuItem.Text = "Test Connection"
+        '
+        'SelectToolStripMenuItem
+        '
+        Me.SelectToolStripMenuItem.Name = "SelectToolStripMenuItem"
+        Me.SelectToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.SelectToolStripMenuItem.Text = "Select"
+        '
+        'InsertToolStripMenuItem
+        '
+        Me.InsertToolStripMenuItem.Name = "InsertToolStripMenuItem"
+        Me.InsertToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.InsertToolStripMenuItem.Text = "Insert"
+        '
+        'ExceptionToolStripMenuItem
+        '
+        Me.ExceptionToolStripMenuItem.Name = "ExceptionToolStripMenuItem"
+        Me.ExceptionToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.ExceptionToolStripMenuItem.Text = "Exception"
+        '
+        'TestXMLToolStripMenuItem
+        '
+        Me.TestXMLToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LoadXMLfileToolStripMenuItem})
+        Me.TestXMLToolStripMenuItem.Enabled = False
+        Me.TestXMLToolStripMenuItem.Name = "TestXMLToolStripMenuItem"
+        Me.TestXMLToolStripMenuItem.Size = New System.Drawing.Size(64, 20)
+        Me.TestXMLToolStripMenuItem.Text = "TestXML"
+        '
+        'LoadXMLfileToolStripMenuItem
+        '
+        Me.LoadXMLfileToolStripMenuItem.Name = "LoadXMLfileToolStripMenuItem"
+        Me.LoadXMLfileToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.LoadXMLfileToolStripMenuItem.Text = "LoadXMLfile"
+        '
         'statStatusStrip
         '
         Me.statStatusStrip.Location = New System.Drawing.Point(0, 240)
@@ -121,13 +171,10 @@ Partial Class frmBuntWunMain
         '
         'SplitContainer1.Panel2
         '
-        Me.SplitContainer1.Panel2.Controls.Add(Me.cmdTempSelect)
-        Me.SplitContainer1.Panel2.Controls.Add(Me.cmdSQLTest)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.prgLoadProgress)
+        Me.SplitContainer1.Panel2.Controls.Add(Me.cmdLoadXML)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdTest)
         Me.SplitContainer1.Panel2.Controls.Add(Me.cmdClose)
-        Me.SplitContainer1.Panel2.Controls.Add(Me.cmdClear)
-        Me.SplitContainer1.Panel2.Controls.Add(Me.cmdLoadDocs)
-        Me.SplitContainer1.Panel2.Controls.Add(Me.cmdShowFileHeader)
         Me.SplitContainer1.Size = New System.Drawing.Size(538, 216)
         Me.SplitContainer1.SplitterDistance = 149
         Me.SplitContainer1.TabIndex = 2
@@ -141,18 +188,26 @@ Partial Class frmBuntWunMain
         Me.lstLoadProgress.Size = New System.Drawing.Size(538, 149)
         Me.lstLoadProgress.TabIndex = 0
         '
-        'cmdSQLTest
+        'prgLoadProgress
         '
-        Me.cmdSQLTest.Location = New System.Drawing.Point(451, 34)
-        Me.cmdSQLTest.Name = "cmdSQLTest"
-        Me.cmdSQLTest.Size = New System.Drawing.Size(75, 23)
-        Me.cmdSQLTest.TabIndex = 5
-        Me.cmdSQLTest.Text = "SQLTest"
-        Me.cmdSQLTest.UseVisualStyleBackColor = True
+        Me.prgLoadProgress.Dock = System.Windows.Forms.DockStyle.Bottom
+        Me.prgLoadProgress.Location = New System.Drawing.Point(0, 40)
+        Me.prgLoadProgress.Name = "prgLoadProgress"
+        Me.prgLoadProgress.Size = New System.Drawing.Size(538, 23)
+        Me.prgLoadProgress.TabIndex = 8
+        '
+        'cmdLoadXML
+        '
+        Me.cmdLoadXML.Location = New System.Drawing.Point(3, 4)
+        Me.cmdLoadXML.Name = "cmdLoadXML"
+        Me.cmdLoadXML.Size = New System.Drawing.Size(75, 23)
+        Me.cmdLoadXML.TabIndex = 7
+        Me.cmdLoadXML.Text = "LoadXML"
+        Me.cmdLoadXML.UseVisualStyleBackColor = True
         '
         'cmdTest
         '
-        Me.cmdTest.Location = New System.Drawing.Point(451, 4)
+        Me.cmdTest.Location = New System.Drawing.Point(287, 4)
         Me.cmdTest.Name = "cmdTest"
         Me.cmdTest.Size = New System.Drawing.Size(75, 23)
         Me.cmdTest.TabIndex = 4
@@ -161,50 +216,14 @@ Partial Class frmBuntWunMain
         '
         'cmdClose
         '
-        Me.cmdClose.Location = New System.Drawing.Point(359, 3)
+        Me.cmdClose.Location = New System.Drawing.Point(109, 2)
         Me.cmdClose.Name = "cmdClose"
-        Me.cmdClose.Size = New System.Drawing.Size(75, 40)
+        Me.cmdClose.Size = New System.Drawing.Size(75, 23)
         Me.cmdClose.TabIndex = 3
         Me.cmdClose.Text = "Close"
         Me.cmdClose.UseVisualStyleBackColor = True
         '
-        'cmdClear
-        '
-        Me.cmdClear.Location = New System.Drawing.Point(252, 3)
-        Me.cmdClear.Name = "cmdClear"
-        Me.cmdClear.Size = New System.Drawing.Size(75, 40)
-        Me.cmdClear.TabIndex = 2
-        Me.cmdClear.Text = "Temp-Update"
-        Me.cmdClear.UseVisualStyleBackColor = True
-        '
-        'cmdLoadDocs
-        '
-        Me.cmdLoadDocs.Location = New System.Drawing.Point(140, 4)
-        Me.cmdLoadDocs.Name = "cmdLoadDocs"
-        Me.cmdLoadDocs.Size = New System.Drawing.Size(75, 23)
-        Me.cmdLoadDocs.TabIndex = 1
-        Me.cmdLoadDocs.Text = "Load Docs"
-        Me.cmdLoadDocs.UseVisualStyleBackColor = True
-        '
-        'cmdShowFileHeader
-        '
-        Me.cmdShowFileHeader.Location = New System.Drawing.Point(30, 4)
-        Me.cmdShowFileHeader.Name = "cmdShowFileHeader"
-        Me.cmdShowFileHeader.Size = New System.Drawing.Size(75, 39)
-        Me.cmdShowFileHeader.TabIndex = 0
-        Me.cmdShowFileHeader.Text = "Show Header"
-        Me.cmdShowFileHeader.UseVisualStyleBackColor = True
-        '
-        'cmdTempSelect
-        '
-        Me.cmdTempSelect.Location = New System.Drawing.Point(140, 33)
-        Me.cmdTempSelect.Name = "cmdTempSelect"
-        Me.cmdTempSelect.Size = New System.Drawing.Size(75, 23)
-        Me.cmdTempSelect.TabIndex = 6
-        Me.cmdTempSelect.Text = "Select 2"
-        Me.cmdTempSelect.UseVisualStyleBackColor = True
-        '
-        'frmBuntWunMain
+        'frmBesLodMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
@@ -213,7 +232,7 @@ Partial Class frmBuntWunMain
         Me.Controls.Add(Me.statStatusStrip)
         Me.Controls.Add(Me.mnuMenu)
         Me.MainMenuStrip = Me.mnuMenu
-        Me.Name = "frmBuntWunMain"
+        Me.Name = "frmBesLodMain"
         Me.Text = "Bessie - Load Document Database"
         Me.mnuMenu.ResumeLayout(False)
         Me.mnuMenu.PerformLayout()
@@ -237,13 +256,17 @@ Partial Class frmBuntWunMain
     Friend WithEvents OpenToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
     Friend WithEvents lstLoadProgress As System.Windows.Forms.ListBox
-    Friend WithEvents cmdShowFileHeader As System.Windows.Forms.Button
     Friend WithEvents cmdClose As System.Windows.Forms.Button
-    Friend WithEvents cmdClear As System.Windows.Forms.Button
-    Friend WithEvents cmdLoadDocs As System.Windows.Forms.Button
     Friend WithEvents cmdTest As System.Windows.Forms.Button
     Friend WithEvents HelpProvider1 As System.Windows.Forms.HelpProvider
-    Friend WithEvents cmdSQLTest As System.Windows.Forms.Button
-    Friend WithEvents cmdTempSelect As System.Windows.Forms.Button
+    Friend WithEvents cmdLoadXML As System.Windows.Forms.Button
+    Friend WithEvents TestSQLToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents SelectToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents InsertToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ExceptionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents TestXMLToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents LoadXMLfileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents prgLoadProgress As System.Windows.Forms.ProgressBar
+    Friend WithEvents TestConnectionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class
