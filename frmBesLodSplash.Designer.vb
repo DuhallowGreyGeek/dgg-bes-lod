@@ -106,6 +106,9 @@ Partial Class frmBesLodSplash
         Me.ApplicationTitle.Text = "Application Title"
         Me.ApplicationTitle.TextAlign = System.Drawing.ContentAlignment.BottomLeft
         '
+        'timTimer1
+        '
+        '
         'frmBesLodSplash
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
