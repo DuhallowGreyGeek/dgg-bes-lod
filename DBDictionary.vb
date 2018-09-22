@@ -65,6 +65,8 @@ Public Class DBDictionary
 
             'Console.WriteLine(queryString)
 
+            Dim wordId As Integer
+
             Try
                 Using sqlConnection As New SqlConnection(conString.ConnectionString)
                     sqlConnection.Open()
@@ -75,10 +77,14 @@ Public Class DBDictionary
                             If reader.HasRows Then
                                 Do While reader.Read
 
-                                    Return reader.Item("WordId")
+                                    wordId = reader.Item("WordId")
+
+                                    sqlConnection.Close()
+                                    Return wordId
 
                                 Loop
                             Else
+                                sqlConnection.Close()
                                 Return ERRORKEY
                             End If
                         End Using
@@ -129,8 +135,10 @@ Public Class DBDictionary
 
                         Using reader = sqlCommand.ExecuteReader()
                             If reader.HasRows Then
+                                sqlConnection.Close()
                                 Return True
                             Else
+                                sqlConnection.Close()
                                 Return False
                             End If
                         End Using
