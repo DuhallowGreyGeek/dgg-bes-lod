@@ -35,6 +35,7 @@ Public Class BesLodSQL
 
             mySqlCommand.Connection.Open()
             MsgBox("Number rows affected = " & mySqlCommand.ExecuteNonQuery().ToString)
+            mySqlCommand.Connection.Close()
 
         Catch ex As SqlException
             Call Me.handleSQLException(ex)
@@ -148,6 +149,7 @@ Public Class BesLodSQL
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
             'MsgBox("Number DocBatch rows affected = " & iRows.ToString)
+            sqlCommand.Connection.Close()
 
         Catch ex As SqlException
             Call Me.handleSQLException(ex)
@@ -320,7 +322,6 @@ Public Class BesLodSQL
         End If
 
 
-
         Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
 
         'Now substitute the values into the command
@@ -340,6 +341,7 @@ Public Class BesLodSQL
 
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
             'MsgBox("Number Doc rows inserted = " & iRows.ToString)
+            sqlCommand.Connection.Close()
 
             'Now get the DocId of the Document we just added Doc_Insert
             Return mlodSQL.Doc_IDofRecord(doc.FileName)
@@ -459,6 +461,7 @@ Public Class BesLodSQL
 
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
             'MsgBox("Number Part rows inserted = " & iRows.ToString)
+            sqlCommand.Connection.Close()
 
             If part.Synopsis.Length > 0 Then 'If there is a synopsis to write, then write it!
                 'Console.WriteLine("--Synopsis--- " & part.Synopsis.Length.ToString & " ----> " & part.Synopsis.ToString)
@@ -510,6 +513,7 @@ Public Class BesLodSQL
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
             'MsgBox("Number Synopsis rows inserted = " & iRows.ToString)
+            sqlCommand.Connection.Close()
 
         Catch ex As SqlException
             Call Me.handleSQLException(ex)

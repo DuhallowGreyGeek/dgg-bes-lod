@@ -239,6 +239,7 @@ Public Class DBDictionary
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
             'MsgBox("Number DocBatch rows affected = " & iRows.ToString)
+            sqlCommand.Connection.Close()
 
         Catch ex As SqlException
             Call Me.handleSQLException(ex)

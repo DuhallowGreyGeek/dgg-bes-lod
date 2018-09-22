@@ -47,6 +47,7 @@ Public Class Usage
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
             'MsgBox("Number Usage rows affected = " & iRows.ToString)
+            sqlConnection.Close()
 
         Catch ex As SqlException
             Call Me.handleSQLException(ex)
