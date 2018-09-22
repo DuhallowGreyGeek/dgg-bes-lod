@@ -13,76 +13,7 @@ Public Class BesLodSQL
 
     End Sub
 
-    Public Sub augTable_insert()
-        Const QUOT As String = "'"                              'SQL is expecting literals enclosed in single quotes - I predict confusion!
-        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
-
-        'Get Connection string data
-        conString.DataSource = params.SQLDataSource
-        conString.IntegratedSecurity = params.SQLIntegratedSecurity
-        conString.InitialCatalog = params.SQLInitCatalogDB
-
-        Console.WriteLine(conString.ConnectionString)
-
-        Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
-
-        Dim dateString As String = QUOT & Now.ToString("yyyy/MM/dd HH:mm:ss.fff") & QUOT   'Using a string purely to get an updating string
-
-        Dim queryString As String = "INSERT INTO dbo.TestAugTable (AugId, DateTimeString) VALUES(9999," & dateString & " )"
-        'Dim queryString As String = "INSERT INTO dbo.TestAugTable (AugId) VALUES(9999)"
-
-        Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
-
-        Try
-            Dim numRows As Integer = 0
-
-            sqlCommand.Connection.Open()
-            MsgBox("Number rows affected = " & sqlCommand.ExecuteNonQuery().ToString)
-
-        Catch ex As SqlException
-
-            Call Me.handleSQLException(ex)
-
-        End Try
-
-    End Sub
-    Public Sub augTable_select()
-        'Dim mParams As New BesParam 'Will declaring the parameters object locally fix my problem?
-
-        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
-
-        'Get Connection string data
-        conString.DataSource = params.SQLDataSource
-        conString.IntegratedSecurity = params.SQLIntegratedSecurity
-        conString.InitialCatalog = params.SQLInitCatalogDB
-
-        Try
-            Using sqlConnection As New SqlConnection(conString.ConnectionString)
-                sqlConnection.Open()
-                Using sqlCommand As New SqlCommand("Select * From dbo.TestAugTable", sqlConnection)
-                    Using reader = sqlCommand.ExecuteReader()
-                        If reader.HasRows Then
-                            Do While reader.Read
-
-                                frmMain.lstLoadProgress.Items.Add("--- " & reader.Item("AugId").ToString() & " --- " & reader.Item("DatetimeString").ToString())
-
-                            Loop
-                        End If
-                    End Using
-                End Using
-                sqlConnection.Close()
-            End Using
-
-        Catch ex As SqlException
-            Call Me.handleSQLException(ex)
-
-        Catch ex As Exception
-            Call Me.handleGeneralException(ex)
-
-        End Try
-
-
-    End Sub
+    
     Public Sub augTable_fail()
         'Dim mParams As New BesParam 'Will declaring the parameters object locally fix my problem? 
         Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
@@ -192,13 +123,24 @@ Public Class BesLodSQL
 
         'Console.WriteLine(queryString)
 
+        'Truncate input if required
+        Const STRLEN As Integer = 255 'The maximum length of string allowed for field in DB
+        Dim descString As String
+
+        If BatHeader.Description.ToString.Length > STRLEN Then
+            descString = Left(BatHeader.Description, STRLEN)
+            Call MsgBox("Input data truncated at: " & STRLEN.ToString, MsgBoxStyle.Information)
+        Else
+            descString = BatHeader.Description
+        End If
+
         Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
 
         'Now substitute the values into the command
         sqlCommand.Parameters.AddWithValue("@FileName", BatHeader.FileName)
         sqlCommand.Parameters.AddWithValue("@DateCreated", BatHeader.CreatedDate.ToString("yyyy/MM/dd"))
         sqlCommand.Parameters.AddWithValue("@dateString", Now.ToString("yyyy/MM/dd HH:mm:ss.fff"))
-        sqlCommand.Parameters.AddWithValue("@Description", BatHeader.Description)
+        sqlCommand.Parameters.AddWithValue("@Description", descString)
 
         Try
             Dim numRows As Integer = 0
@@ -345,13 +287,47 @@ Public Class BesLodSQL
 
         'Console.WriteLine(queryString)
 
+        'Truncate input if required
+        Const STRLEN As Integer = 50 'The maximum length of string allowed for field in DB
+        Dim titleString As String
+
+        If doc.DocTitle.ToString.Length > STRLEN Then
+            titleString = Left(doc.DocTitle, STRLEN)
+            Call MsgBox("Input data truncated at: " & STRLEN.ToString, MsgBoxStyle.Information)
+        Else
+            titleString = doc.DocTitle
+        End If
+
+        'Truncate Label
+        Const FNAMLEN As Integer = 50 'The maximum length of string allowed in field in DB
+        Dim labelString As String
+
+        If doc.FileName.ToString.Length > FNAMLEN Then
+            labelString = Left(doc.FileName, FNAMLEN)
+            Call MsgBox("Input data truncated at: " & STRLEN.ToString, MsgBoxStyle.Information)
+        Else
+            labelString = doc.FileName
+        End If
+
+        'Truncate FileName
+        Dim fnameString As String
+
+        If doc.FileName.ToString.Length > FNAMLEN Then
+            fnameString = Left(doc.FileName, FNAMLEN)
+            Call MsgBox("Input data truncated at: " & STRLEN.ToString, MsgBoxStyle.Information)
+        Else
+            fnameString = doc.FileName
+        End If
+
+
+
         Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
 
         'Now substitute the values into the command
-        sqlCommand.Parameters.AddWithValue("@DocumentLabel", doc.FileName)
-        sqlCommand.Parameters.AddWithValue("@FileName", doc.FileName)
+        sqlCommand.Parameters.AddWithValue("@DocumentLabel", labelString)
+        sqlCommand.Parameters.AddWithValue("@FileName", fnameString)
         sqlCommand.Parameters.AddWithValue("@Path", doc.FilePath)
-        sqlCommand.Parameters.AddWithValue("@Title", doc.DocTitle)
+        sqlCommand.Parameters.AddWithValue("@Title", titleString)
         sqlCommand.Parameters.AddWithValue("@DateOnDoc", doc.DocDate.ToString("yyyy/MM/dd"))
         sqlCommand.Parameters.AddWithValue("@DocBatchId", docBatchId)
 

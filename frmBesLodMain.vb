@@ -94,17 +94,6 @@ Public Class frmBesLodMain
         Me.cmdLoadXML.Enabled = False
     End Sub
 
-    Private Sub SelectToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SelectToolStripMenuItem.Click
-        'Temporary function to test "SELECT" from the database
-        Call mlodSQL.augTable_select()
-    End Sub
-
-    Private Sub InsertToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InsertToolStripMenuItem.Click
-        'Temporarilly using this to run an INSERT or an UPDATE
-
-        Call mlodSQL.augTable_insert()
-    End Sub
-
     Private Sub ExceptionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExceptionToolStripMenuItem.Click
         'Force SQL Exception
 

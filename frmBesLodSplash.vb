@@ -24,14 +24,20 @@
         '  Version control's designtime text to "Version {0}.{1:00}.{2}.{3}" or something similar.  See
         '  String.Format() in Help for more information.
         '
-        '    Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor, My.Application.Info.Version.Build, My.Application.Info.Version.Revision)
+        Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor, My.Application.Info.Version.Build, My.Application.Info.Version.Revision)
 
-        Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor)
+        'Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor)
 
         'Copyright info
         Copyright.Text = My.Application.Info.Copyright
 
         'My stuff
+        'Console.WriteLine("Major ---> " & My.Application.Info.Version.Major)
+        'Console.WriteLine("Minor ---> " & My.Application.Info.Version.Minor)
+        'Console.WriteLine("Build ---> " & My.Application.Info.Version.Build)
+        'Console.WriteLine("Revision ---> " & My.Application.Info.Version.Revision)
+        'Doesn't seem to be picking up "Revision" - I'm not going to bother with it.
+        '
         timTimer1.Interval = 2000 'Time I want the splash screen to show 2000 milliseconds = 2 seconds
         timTimer1.Start()
 
