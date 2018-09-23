@@ -5,6 +5,11 @@
 
 
     Private Sub frmBesLodSplash_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+        ' *** My Stuff - Don't think I should need to do this, but "Revision" is not picked up from Project properties dialog.
+        ' *** Update this value for each build, to get it shown on the Splash screen (see code at end too)
+        '
+        Dim myRevision As String = 5
+
         'Set up the dialog text at runtime according to the application's assembly information.  
 
         'TODO: Customize the application's assembly information in the "Application" pane of the project 
@@ -24,14 +29,18 @@
         '  Version control's designtime text to "Version {0}.{1:00}.{2}.{3}" or something similar.  See
         '  String.Format() in Help for more information.
         '
-        Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor, My.Application.Info.Version.Build, My.Application.Info.Version.Revision)
+        Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor, My.Application.Info.Version.Build, myRevision)
+
+        'Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor, My.Application.Info.Version.Build, My.Application.Info.Version.Revision)
 
         'Version.Text = System.String.Format(Version.Text, My.Application.Info.Version.Major, My.Application.Info.Version.Minor)
 
         'Copyright info
         Copyright.Text = My.Application.Info.Copyright
 
-        'My stuff
+        ' *** My stuff - I don't think I should need to do this, 
+        ' *** as I don't think I should need to launch the splash screen.
+        ' *** See also seeing of "Revision" at start
         'Console.WriteLine("Major ---> " & My.Application.Info.Version.Major)
         'Console.WriteLine("Minor ---> " & My.Application.Info.Version.Minor)
         'Console.WriteLine("Build ---> " & My.Application.Info.Version.Build)
