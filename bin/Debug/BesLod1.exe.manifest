@@ -43,24 +43,33 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BesLod1.exe" size="437248">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BesLod1.exe" size="437760">
       <assemblyIdentity name="BesLod1" version="0.1.1.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>MH2d7vAOcAj5zJhAGVCCc+zT/nc=</dsig:DigestValue>
+        <dsig:DigestValue>oh9XBuulLpJ2R/1ubUv/2VnhmRs=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="BesParms.xml" size="645">
+  <file name="BesLod1.exe.config" size="2195">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>TgVEiK2gJrUiT/puwA8iH9veiWU=</dsig:DigestValue>
+      <dsig:DigestValue>ppaNmStcLnEYtQaaGHXnuiIV4Zg=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="BesLodParms.xml" size="646">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>SbgGkySlRBcrjD/l6aif3L+O8Zs=</dsig:DigestValue>
     </hash>
   </file>
   <file name="duhallow_logo_55H_3.ico" size="57319">

@@ -14,6 +14,7 @@ Public Class BesParam
     Private mstrSQLIntegratedSecurity As String
     Private mblnSQLIntegratedSecurity As Boolean
     Private mstrSQLInitCatalogDB As String
+    Private mstrFilePathHome As String
 
     Public Sub New()
         Const METHOD As String = "New"
@@ -28,8 +29,12 @@ Public Class BesParam
         settings.IgnoreComments = True
 
         'Dim path As String = "C:\Users\Tom\Documents\Bunter_20170601\BunterApp\BuntWun\BuntParms.xml"
-        Dim path As String = "BesParms.xml"        'Use the parameters file with the executable
-        Dim reader As XmlReader = XmlReader.Create(path, settings)
+        'Dim path As String = "BesLodParms.xml"        'Use the parameters file with the executable
+        Dim path As String = My.Settings.ParmsPath & My.Settings.ParmsFname     'Use parameter file identified in settings.
+
+        'Dim path As String = "C:\Users\user\Documents\BES_20180827\BES_TestData\BesParms.xml"
+
+        Dim reader As XmlReader = XmlReader.Create(Path, settings)
 
         Try
 
@@ -60,12 +65,15 @@ Public Class BesParam
                 reader.ReadStartElement("SQLIntegratedSecurity")
                 mstrSQLIntegratedSecurity = reader.ReadString()
                 '
+                'Console.Write("The content of the SQLIntegratedSecurity element:  ")
+                'Console.WriteLine(mstrSQLIntegratedSecurity)
+                '
                 If mstrSQLIntegratedSecurity.ToUpper.Trim = "TRUE" Then
                     mblnSQLIntegratedSecurity = True
                 ElseIf mstrSQLIntegratedSecurity.ToUpper.Trim = "FALSE" Then
                     mblnSQLIntegratedSecurity = False
                 Else
-                    'Console.Write("SQLIntegratedSecurity Invalid: " & mstrSQLIntegratedSecurity)
+                    Console.Write("SQLIntegratedSecurity Invalid: " & mstrSQLIntegratedSecurity)
                     MsgBox("SQLIntegratedSecurity Invalid: " & mstrSQLIntegratedSecurity)
 
                 End If
@@ -80,7 +88,11 @@ Public Class BesParam
                 'Console.WriteLine(mstrSQLInitCatalogDB)
                 reader.ReadEndElement()
                 '
-
+                reader.ReadStartElement("file-path-home")
+                mstrFilePathHome = reader.ReadString()
+                'Console.Write("The content of the file-path-Home element:  ")
+                'Console.WriteLine(mstrFilePathHome)
+                reader.ReadEndElement()
                 '
                 reader.ReadEndElement()     'Read the end of the <parameters>
             End Using

@@ -53,6 +53,24 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\Users\user\Documents\BES_20180827\BES_TestData\")>  _
+        Public ReadOnly Property ParmsPath() As String
+            Get
+                Return CType(Me("ParmsPath"),String)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("BesLodParms2.xml")>  _
+        Public ReadOnly Property ParmsFname() As String
+            Get
+                Return CType(Me("ParmsFname"),String)
+            End Get
+        End Property
     End Class
 End Namespace
 

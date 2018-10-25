@@ -9,7 +9,7 @@
       <!-- Settings for the Database connection - Single Database -->
       <SQLDataSource>LENOVOUSER\SQLEXPRESS</SQLDataSource>
       <SQLIntegratedSecurity>True</SQLIntegratedSecurity>
-      <SQLInitCatalogDB>BessieDev</SQLInitCatalogDB>
+      <SQLInitCatalogDB>BessieDev2</SQLInitCatalogDB>
     </parameters>
     
 
