@@ -63,13 +63,25 @@ Namespace My
             End Get
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("BesLodParms2.xml")>  _
-        Public ReadOnly Property ParmsFname() As String
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("BesLodDBParms.xml")> _
+        Public ReadOnly Property DBParmsFname() As String
             Get
-                Return CType(Me("ParmsFname"),String)
+                Return CType(Me("DBParmsFname"), String)
             End Get
+        End Property
+
+        <Global.System.Configuration.UserScopedSettingAttribute(), _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
+         Global.System.Configuration.DefaultSettingValueAttribute("BesLodLdrParms.xml")> _
+        Public Property LdrParmsFname() As String
+            Get
+                Return CType(Me("LdrParmsFname"), String)
+            End Get
+            Set(value As String)
+                Me("LdrParmsFname") = value
+            End Set
         End Property
     End Class
 End Namespace

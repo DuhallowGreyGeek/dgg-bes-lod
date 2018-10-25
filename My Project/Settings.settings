@@ -5,8 +5,11 @@
     <Setting Name="ParmsPath" Type="System.String" Scope="Application">
       <Value Profile="(Default)">C:\Users\user\Documents\BES_20180827\BES_TestData\</Value>
     </Setting>
-    <Setting Name="ParmsFname" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">BesLodParms2.xml</Value>
+    <Setting Name="DBParmsFname" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">BesLodDBParms.xml</Value>
+    </Setting>
+    <Setting Name="LdrParmsFname" Type="System.String" Scope="User">
+      <Value Profile="(Default)">BesLodLdrParms.xml</Value>
     </Setting>
   </Settings>
 </SettingsFile>

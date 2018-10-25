@@ -43,24 +43,24 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BesLod1.exe" size="437760">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BesLod1.exe" size="438784">
       <assemblyIdentity name="BesLod1" version="0.1.1.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>oh9XBuulLpJ2R/1ubUv/2VnhmRs=</dsig:DigestValue>
+        <dsig:DigestValue>etm5VDl/P2k5nPuMH/0CA4MlGlc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="BesLod1.exe.config" size="2195">
+  <file name="BesLod1.exe.config" size="2879">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>ppaNmStcLnEYtQaaGHXnuiIV4Zg=</dsig:DigestValue>
+      <dsig:DigestValue>RnTFX3XvyZRCRH/E0kgH/8aSJ1c=</dsig:DigestValue>
     </hash>
   </file>
   <file name="BesLodParms.xml" size="646">

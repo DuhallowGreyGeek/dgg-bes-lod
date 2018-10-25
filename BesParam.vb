@@ -10,16 +10,29 @@ Public Class BesParam
 
     Private mstrApplicationVersion As String
     Private mstrDatabaseVersion As String
+    '
     Private mstrSQLDataSource As String
     Private mstrSQLIntegratedSecurity As String
     Private mblnSQLIntegratedSecurity As Boolean
     Private mstrSQLInitCatalogDB As String
     Private mstrFilePathHome As String
+    '
+    Dim mstrLoaderParm As String
 
     Public Sub New()
-        Const METHOD As String = "New"
+        'Const METHOD As String = "New"
+        'Dim e As New System.EventArgs
+
+        Call ReadDBParms()      'Read the Database Parameters
+        Call ReadLoaderParms()  'Read the parameters for the Loader process
+    End Sub
+
+    
+    Private Sub ReadDBParms()
+        Const METHOD As String = "ReadDBParms"
         Dim e As New System.EventArgs
 
+        'Settings specifying the database to be used
         ' Read an existing XML parameter file
         ' Elements must be present in exactly the order I ask for them
 
@@ -28,13 +41,10 @@ Public Class BesParam
         settings.IgnoreWhitespace = True
         settings.IgnoreComments = True
 
-        'Dim path As String = "C:\Users\Tom\Documents\Bunter_20170601\BunterApp\BuntWun\BuntParms.xml"
-        'Dim path As String = "BesLodParms.xml"        'Use the parameters file with the executable
-        Dim path As String = My.Settings.ParmsPath & My.Settings.ParmsFname     'Use parameter file identified in settings.
+        'Use parameter file identified in settings.
+        Dim path As String = My.Settings.ParmsPath & My.Settings.DBParmsFname
 
-        'Dim path As String = "C:\Users\user\Documents\BES_20180827\BES_TestData\BesParms.xml"
-
-        Dim reader As XmlReader = XmlReader.Create(Path, settings)
+        Dim reader As XmlReader = XmlReader.Create(path, settings)
 
         Try
 
@@ -101,6 +111,47 @@ Public Class BesParam
         End Try
 
     End Sub
+
+    Private Sub ReadLoaderParms()
+        Const METHOD As String = "ReadLoaderParms"
+        Dim e As New System.EventArgs
+
+        'Settings specifying the database to be used
+        ' Read an existing XML parameter file
+        ' Elements must be present in exactly the order I ask for them
+
+        Dim settings As New XmlReaderSettings()
+        settings.ConformanceLevel = ConformanceLevel.Fragment
+        settings.IgnoreWhitespace = True
+        settings.IgnoreComments = True
+
+        'Use parameter file identified in settings.
+        Dim path As String = My.Settings.ParmsPath & My.Settings.LdrParmsFname
+
+        Dim reader As XmlReader = XmlReader.Create(path, settings)
+
+        Try
+
+            Using readerr As XmlReader = XmlReader.Create(path)
+                ' Parse the XML document.  ReadString is used to 
+                ' read the text content of the elements.
+                reader.Read()
+                reader.ReadStartElement("parameters")
+                '
+                reader.ReadStartElement("loaderParm")
+                mstrLoaderParm = reader.ReadString()
+                Console.Write("The content of the loaderParm element:  ")
+                Console.WriteLine(mstrLoaderParm)
+                reader.ReadEndElement()
+                '
+                reader.ReadEndElement()     'Read the end of the <parameters>
+            End Using
+        Catch exp As Exception
+            Console.WriteLine(THISCLASS & "." & METHOD & " The process failed: {0}", e.ToString())
+        End Try
+
+    End Sub
+
 
     Public ReadOnly Property ApplicationVersion As String
         Get
