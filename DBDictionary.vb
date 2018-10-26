@@ -176,10 +176,10 @@ Public Class DBDictionary
             'This will subsequently come from a system wide parameter.
             'A parameter will be used so that I can adjust the characters used without recompiling the program
 
-            'Line ends will always cause a word-split.
-            Const LINEEND As String = vbCr & vbCrLf
+            'Line ends and tabs will always cause a word-split.
+            Const HARDSPLIT As String = vbCr & vbCrLf & vbTab
             '
-            Dim splitChars As String = "\/@;:?!, " & LINEEND  'Allow imbedded full-stops to preserve file names (maybe)
+            Dim splitChars As String = "\/@;:?!, " & HARDSPLIT  'Allow imbedded full-stops to preserve file names (maybe)
 
 
             'Do the actual split

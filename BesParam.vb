@@ -17,10 +17,12 @@ Public Class BesParam
     Private mstrSQLInitCatalogDB As String
     Private mstrFilePathHome As String
     '
-    Dim mstrLoaderParm As String
+    Private mstrWordSplitChars As String        'Characters which will cause a split between words
+    Private mstrWordPermChars As String         'Characters which are permitted within words
+    Private mstrWordRemoveTermChars As String   'Characters which are removed from beginning and end of words
 
     Public Sub New()
-        'Const METHOD As String = "New"
+        Const METHOD As String = "New"
         'Dim e As New System.EventArgs
 
         Call ReadDBParms()      'Read the Database Parameters
@@ -138,10 +140,22 @@ Public Class BesParam
                 reader.Read()
                 reader.ReadStartElement("parameters")
                 '
-                reader.ReadStartElement("loaderParm")
-                mstrLoaderParm = reader.ReadString()
-                Console.Write("The content of the loaderParm element:  ")
-                Console.WriteLine(mstrLoaderParm)
+                reader.ReadStartElement("word-split-chars")
+                mstrWordSplitChars = reader.ReadString()
+                Console.Write("The content of the mstrWordSplitChars element:  ")
+                Console.WriteLine(mstrWordSplitChars)
+                reader.ReadEndElement()
+                '
+                reader.ReadStartElement("word-perm-chars")
+                mstrWordPermChars = reader.ReadString()
+                Console.Write("The content of the mstrWordPermChars element:  ")
+                Console.WriteLine(mstrWordPermChars)
+                reader.ReadEndElement()
+                '
+                reader.ReadStartElement("word-remove-term-chars")
+                mstrWordRemoveTermChars = reader.ReadString()
+                Console.Write("The content of the mstrWordRemoveTermChars element:  ")
+                Console.WriteLine(mstrWordRemoveTermChars)
                 reader.ReadEndElement()
                 '
                 reader.ReadEndElement()     'Read the end of the <parameters>
@@ -182,6 +196,24 @@ Public Class BesParam
             Return mstrSQLInitCatalogDB
         End Get
 
+    End Property
+
+    Public ReadOnly Property WordSplitChars As String
+        Get
+            Return mstrWordSplitChars
+        End Get
+    End Property
+
+    Public ReadOnly Property WordPermChars As String
+        Get
+            Return mstrWordPermChars
+        End Get
+    End Property
+
+    Public ReadOnly Property WordRemoveTermChars As String
+        Get
+            Return mstrWordRemoveTermChars
+        End Get
     End Property
 
     Public Sub Dump()
