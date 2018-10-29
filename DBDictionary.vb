@@ -179,8 +179,8 @@ Public Class DBDictionary
             'Line ends and tabs will always cause a word-split.
             Const HARDSPLIT As String = vbCr & vbCrLf & vbTab
             '
-            Dim splitChars As String = "\/@;:?!, " & HARDSPLIT  'Allow imbedded full-stops to preserve file names (maybe)
-
+            'Dim splitChars As String = "\/@;:?!, " & HARDSPLIT  'Allow imbedded full-stops to preserve file names (maybe)
+            Dim splitChars As String = params.WordSplitChars & HARDSPLIT  'Allow imbedded full-stops to preserve file names (maybe)
 
             'Do the actual split
             Dim words = myString.Split(splitChars.ToCharArray, StringSplitOptions.RemoveEmptyEntries)
@@ -194,9 +194,11 @@ Public Class DBDictionary
             'but it is only done once when the document is loaded.
 
             For Each candidateWord In words
-                candidateWord = Regex.Replace(candidateWord, "[^A-Za-z.']+", String.Empty)
+                'candidateWord = Regex.Replace(candidateWord, "[^A-Za-z.']+", String.Empty)
+                candidateWord = Regex.Replace(candidateWord, params.WordPermChars, String.Empty)
 
-                Dim trimChars As String = ". " 'Characters to remove from the beginning and end of the candidate
+                'Dim trimChars As String = ". " 'Characters to remove from the beginning and end of the candidate
+                Dim trimChars As String = params.WordRemoveTermChars 'Characters to remove from the beginning and end of the candidate
 
                 candidateWord = candidateWord.Trim(trimChars.ToCharArray)
 

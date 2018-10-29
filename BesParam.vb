@@ -100,7 +100,7 @@ Public Class BesParam
                 'Console.WriteLine(mstrSQLInitCatalogDB)
                 reader.ReadEndElement()
                 '
-                reader.ReadStartElement("file-path-home")
+                reader.ReadStartElement("xfile-path-home")
                 mstrFilePathHome = reader.ReadString()
                 'Console.Write("The content of the file-path-Home element:  ")
                 'Console.WriteLine(mstrFilePathHome)
@@ -108,8 +108,8 @@ Public Class BesParam
                 '
                 reader.ReadEndElement()     'Read the end of the <parameters>
             End Using
-        Catch exp As Exception
-            Console.WriteLine(THISCLASS & "." & METHOD & " The process failed: {0}", e.ToString())
+        Catch exp As XmlException
+            Console.WriteLine(THISCLASS & "." & METHOD & " The process failed: {0}", exp.ToString())
         End Try
 
     End Sub
