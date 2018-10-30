@@ -63,25 +63,43 @@ Namespace My
             End Get
         End Property
         
-        <Global.System.Configuration.ApplicationScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("BesLodDBParms.xml")> _
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("BesLodDBParms.xml")>  _
         Public ReadOnly Property DBParmsFname() As String
             Get
-                Return CType(Me("DBParmsFname"), String)
+                Return CType(Me("DBParmsFname"),String)
             End Get
         End Property
-
-        <Global.System.Configuration.UserScopedSettingAttribute(), _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(), _
-         Global.System.Configuration.DefaultSettingValueAttribute("BesLodLdrParms.xml")> _
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("BesLodLdrParms.xml")>  _
         Public Property LdrParmsFname() As String
             Get
-                Return CType(Me("LdrParmsFname"), String)
+                Return CType(Me("LdrParmsFname"),String)
             End Get
-            Set(value As String)
+            Set
                 Me("LdrParmsFname") = value
             End Set
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public ReadOnly Property WordsToConsole() As Boolean
+            Get
+                Return CType(Me("WordsToConsole"),Boolean)
+            End Get
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public ReadOnly Property DocsToConsole() As Boolean
+            Get
+                Return CType(Me("DocsToConsole"),Boolean)
+            End Get
         End Property
     End Class
 End Namespace

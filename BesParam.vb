@@ -100,7 +100,7 @@ Public Class BesParam
                 'Console.WriteLine(mstrSQLInitCatalogDB)
                 reader.ReadEndElement()
                 '
-                reader.ReadStartElement("xfile-path-home")
+                reader.ReadStartElement("file-path-home")
                 mstrFilePathHome = reader.ReadString()
                 'Console.Write("The content of the file-path-Home element:  ")
                 'Console.WriteLine(mstrFilePathHome)

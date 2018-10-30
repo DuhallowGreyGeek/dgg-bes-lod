@@ -24,28 +24,39 @@ Public Class Batch
             Call mlodSQL.DocBatch_Insert(xBatHeader)    'Insert the DocBatch row
             Dim docBatchId As Integer = mlodSQL.DocBatch_IDofRecord(fname)
 
-            Console.WriteLine("---- Current row .DocBatchId = " & docBatchId.ToString)
+            If My.Settings.DocsToConsole Then
+                Console.WriteLine("---- Current row .DocBatchId = " & docBatchId.ToString)
+            End If
 
             'Process each document in the DocBatch
             Dim xDocList As New DocList(xDocBatch)
 
             mNumDocs = xDocList.DocList.Count
-            Console.WriteLine("number of documents ---> " & xDocList.DocList.Count)
+            If My.Settings.DocsToConsole Then
+                Console.WriteLine("number of documents ---> " & xDocList.DocList.Count)
+            End If
+
             prgList.Add("    ---- contains: " & xDocList.DocList.Count & " documents")    'Status message ****
 
             Dim iDocCount As Integer = 0
             For Each doc As Doc In xDocList.DocList
                 iDocCount = iDocCount + 1
-                Console.WriteLine(" --Document # --> " & iDocCount.ToString)
+                If My.Settings.DocsToConsole Then
+                    Console.WriteLine(" --Document # --> " & iDocCount.ToString)
+                End If
+
                 prgList.Add("        ---- Processing document: " & iDocCount.ToString & " of " & xDocList.DocList.Count & " -------")    'Status message ****
 
                 'Call doc.Dump() 'Dump contents to the console
-                Console.WriteLine("---- Invoke the SQL Insert -----")
+                'Console.WriteLine("---- Invoke the SQL Insert -----")
                 Dim DocId As Integer = mlodSQL.Doc_Insert(docBatchId, doc)
-                Console.WriteLine("--- Document.DocId = " & DocId.ToString)
+                If My.Settings.DocsToConsole Then
+                    Console.WriteLine("--- Document.DocId = " & DocId.ToString)
 
-                'Now write the Part to the database ---------------
-                Console.WriteLine("  ------Now the parts---")
+                    'Now write the Part to the database ---------------
+                    Console.WriteLine("  ------Now the parts---")
+                End If
+
 
                 Dim jPartNum As Integer = 0
                 For Each curPart As Part In doc.Parts
@@ -67,7 +78,10 @@ Public Class Batch
                         wordSeqNum = wordSeqNum + 1
 
                         Dim wordid = dict.GetWordId(word)       'Gets the WordId and maybe adds the word to the dictionary
-                        Console.WriteLine(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
+
+                        If My.Settings.WordsToConsole Then
+                            Console.WriteLine(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
+                        End If
 
                         Dim usage As New Usage
                         Call usage.Add(curPart, fieldIdent, wordSeqNum, wordid)
@@ -83,7 +97,10 @@ Public Class Batch
                         wordSeqNum = wordSeqNum + 1
 
                         Dim wordid = dict.GetWordId(word)       'Gets the WordId and maybe adds the word to the dictionary
-                        Console.WriteLine(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
+
+                        If My.Settings.WordsToConsole Then
+                            Console.WriteLine(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
+                        End If
 
                         Dim usage As New Usage
                         Call usage.Add(curPart, fieldIdent, wordSeqNum, wordid)
@@ -92,7 +109,7 @@ Public Class Batch
                     'Console.WriteLine(junk2.FieldContentsString(curPart, fieldIdent))
 
                 Next
-                Console.WriteLine()
+                'Console.WriteLine()
 
             Next
             Console.WriteLine()
