@@ -2,20 +2,28 @@
 Imports System.IO
 
 Public Class Batch
+    Public Event DocLoadStarted(numDocs As Integer) 'File loaded, document processing starting
+    Public Event ProcDocStarted(docNum As Integer)  'Processing of Document num has started
+    Public Event ProcDocFinished(docNum As Integer) 'Processing of Document num has finished
+    Public Event AllDocsProcessed()                 'All documents in this batch have been processed, successfully or not
+
     Private mNumDocs As Integer = 0                 'Number of documents in this batch
     Private mCurDocNum As Integer = 0               'Number of document currently being processed
 
-    Public Sub New(docBatchFname As String)
+    Public Sub New()
+        '
+    End Sub
+
+    Public Sub Load(docBatchFname As String)
         'Process the xml file
 
 
         'Check if we have loaded a DocBatch with this filename before
         Dim fname As String = System.IO.Path.GetFileName(docBatchFname)
-        'Console.WriteLine("-----> " & fname)
+
         Dim prgList As Object = frmMain.lstLoadProgress.Items
 
         If mlodSQL.DocBatch_IsThereExisting(fname) = False Then 'Process the batch
-            prgList.Add("---- Loading DocumentBatch file: " & fname)    'Status message ****
 
             Dim xDocBatch As New XmlDocument
             xDocBatch.Load(docBatchFname) 'Load the document
@@ -36,7 +44,7 @@ Public Class Batch
                 Console.WriteLine("number of documents ---> " & xDocList.DocList.Count)
             End If
 
-            prgList.Add("    ---- contains: " & xDocList.DocList.Count & " documents")    'Status message ****
+            RaiseEvent DocLoadStarted(xDocList.DocList.Count)
 
             Dim iDocCount As Integer = 0
             For Each doc As Doc In xDocList.DocList
@@ -45,7 +53,7 @@ Public Class Batch
                     Console.WriteLine(" --Document # --> " & iDocCount.ToString)
                 End If
 
-                prgList.Add("        ---- Processing document: " & iDocCount.ToString & " of " & xDocList.DocList.Count & " -------")    'Status message ****
+                RaiseEvent ProcDocStarted(iDocCount)
 
                 'Call doc.Dump() 'Dump contents to the console
                 'Console.WriteLine("---- Invoke the SQL Insert -----")
@@ -53,11 +61,10 @@ Public Class Batch
                 If My.Settings.DocsToConsole Then
                     Console.WriteLine("--- Document.DocId = " & DocId.ToString)
 
-                    'Now write the Part to the database ---------------
                     Console.WriteLine("  ------Now the parts---")
                 End If
 
-
+                '----Now write the parts 
                 Dim jPartNum As Integer = 0
                 For Each curPart As Part In doc.Parts
                     'Set the Identifiers in Part
@@ -110,11 +117,13 @@ Public Class Batch
 
                 Next
                 'Console.WriteLine()
+                RaiseEvent ProcDocFinished(iDocCount)
 
             Next
             Console.WriteLine()
             Console.WriteLine("--------- All Documents Processed ----------")
-            prgList.Add("---- All: " & xDocList.DocList.Count & " documents processed ---- ")    'Status message ****
+            'prgList.Add("---- All: " & xDocList.DocList.Count & " xxxx documents processed ---- ")    'Status message ****
+            RaiseEvent AllDocsProcessed()
 
         Else
             'Will eventually prompt giving the possibility of overwriting it but not yet
@@ -140,4 +149,5 @@ Public Class Batch
         Console.WriteLine(" ************* Now all the Documents **************** ")
         Console.WriteLine("           Nothing to Dump Directly             ")
     End Sub
+
 End Class

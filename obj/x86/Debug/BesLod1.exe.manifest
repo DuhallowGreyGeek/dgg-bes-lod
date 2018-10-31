@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BesLod1.exe" size="439808">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="BesLod1.exe" size="443392">
       <assemblyIdentity name="BesLod1" version="0.1.1.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>2iMXhQueafMoZltVi3j9j69AHds=</dsig:DigestValue>
+        <dsig:DigestValue>UhRamvrXE3sTjij4WHoY44PV6d4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

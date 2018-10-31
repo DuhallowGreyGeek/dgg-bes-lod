@@ -37,6 +37,7 @@ Partial Class frmBesLodMain
         Me.TestXMLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LoadXMLfileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.statStatusStrip = New System.Windows.Forms.StatusStrip()
+        Me.statMsg = New System.Windows.Forms.ToolStripStatusLabel()
         Me.dlgInputFile = New System.Windows.Forms.OpenFileDialog()
         Me.dlgOutputFile = New System.Windows.Forms.SaveFileDialog()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
@@ -47,6 +48,7 @@ Partial Class frmBesLodMain
         Me.cmdClose = New System.Windows.Forms.Button()
         Me.HelpProvider1 = New System.Windows.Forms.HelpProvider()
         Me.mnuMenu.SuspendLayout()
+        Me.statStatusStrip.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SplitContainer1.Panel1.SuspendLayout()
         Me.SplitContainer1.Panel2.SuspendLayout()
@@ -143,16 +145,22 @@ Partial Class frmBesLodMain
         'LoadXMLfileToolStripMenuItem
         '
         Me.LoadXMLfileToolStripMenuItem.Name = "LoadXMLfileToolStripMenuItem"
-        Me.LoadXMLfileToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.LoadXMLfileToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.LoadXMLfileToolStripMenuItem.Text = "LoadXMLfile"
         '
         'statStatusStrip
         '
+        Me.statStatusStrip.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.statMsg})
         Me.statStatusStrip.Location = New System.Drawing.Point(0, 240)
         Me.statStatusStrip.Name = "statStatusStrip"
         Me.statStatusStrip.Size = New System.Drawing.Size(538, 22)
         Me.statStatusStrip.TabIndex = 1
-        Me.statStatusStrip.Text = "StatusStrip1"
+        Me.statStatusStrip.Text = "statStatusStrip"
+        '
+        'statMsg
+        '
+        Me.statMsg.Name = "statMsg"
+        Me.statMsg.Size = New System.Drawing.Size(0, 17)
         '
         'dlgInputFile
         '
@@ -236,6 +244,8 @@ Partial Class frmBesLodMain
         Me.Text = "Bessie - Load Document Database"
         Me.mnuMenu.ResumeLayout(False)
         Me.mnuMenu.PerformLayout()
+        Me.statStatusStrip.ResumeLayout(False)
+        Me.statStatusStrip.PerformLayout()
         Me.SplitContainer1.Panel1.ResumeLayout(False)
         Me.SplitContainer1.Panel2.ResumeLayout(False)
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -268,5 +278,6 @@ Partial Class frmBesLodMain
     Friend WithEvents LoadXMLfileToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents prgLoadProgress As System.Windows.Forms.ProgressBar
     Friend WithEvents TestConnectionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents statMsg As System.Windows.Forms.ToolStripStatusLabel
 
 End Class

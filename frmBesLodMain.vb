@@ -4,8 +4,8 @@
 'Imports System.Xml
 
 Public Class frmBesLodMain
-    Friend mFileName As String 'The name of the file of documents we are loading
-    Friend mDocBatch As Object
+    Friend mFileName As String  'The name of the file of documents we are loading
+    Friend WithEvents mDocBatch As Batch   'The document batch we are loading
 
     Private Sub frmBesLodMain_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -17,6 +17,7 @@ Public Class frmBesLodMain
         Me.lstLoadProgress.Items.Add("using 'File - Open File' and click 'Load XML'")
         Me.lstLoadProgress.Items.Add("")
 
+        Me.prgLoadProgress.Minimum = 0      'Set the start of the Progress bar to zero
     End Sub
 
     Private Sub DumpToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DumpToolStripMenuItem.Click
@@ -81,16 +82,17 @@ Public Class frmBesLodMain
         Dim batchFileName As String = "C:\Users\user\Documents\Bessie_20180824\BesTestLoad_03.xml"
         'Use the proper file
         batchFileName = mFileName
+        Dim fname As String = System.IO.Path.GetFileName(mFileName)
 
-        Me.statStatusStrip.Text = "Processing: " & batchFileName
+        Me.statMsg.Text = "Processing: " & fname
 
-        Dim docBatch As New Batch(batchFileName)
-
-        prgLoadProgress.Minimum = 0
-        prgLoadProgress.Maximum = docBatch.NumDocs() + 1
-
+        'Dim docBatch As New Batch(batchFileName)
+        mDocBatch = New Batch()
+        Call mDocBatch.Load(batchFileName)
 
         'Then clean up ready for the next file
+        Me.prgLoadProgress.Maximum = 0
+        Me.statMsg.Text = " "
         Me.cmdLoadXML.Enabled = False
     End Sub
 
@@ -119,5 +121,39 @@ Public Class frmBesLodMain
         End If
     End Sub
 
-    
+    Private Sub FrmBesLodMain_DocLoadStarted(numDocs) Handles mDocBatch.DocLoadStarted
+        'Handle the message that the current batch file has been opened,
+        'and processing of the documents is starting.
+        'Produces status information.
+        Dim fname As String = System.IO.Path.GetFileName(mFileName)
+
+        'Status messages
+        Me.lstLoadProgress.Items.Add("---- Loading DocumentBatch file: " & fname)
+        Me.lstLoadProgress.Items.Add("    ---- contains: " & numDocs.ToString & " documents")
+
+        Me.prgLoadProgress.Maximum = numDocs    'Set maximum value of progress bar 
+    End Sub
+
+    Private Sub FrmBesLodMain_ProcDocStarted(docNum) Handles mDocBatch.ProcDocStarted
+        'Handle the message that Document number docNum has started processing.
+        'Produces status information
+        Me.lstLoadProgress.Items.Add("        ---- Processing document: " & docNum.ToString & " of " & Me.prgLoadProgress.Maximum & " -------")    'Status message ****
+        Application.DoEvents()      '*** This is supposed to be bad form!
+    End Sub
+
+    Private Sub FrmBesLodMain_ProcDocFinished(docNum) Handles mDocBatch.ProcDocFinished
+        'Handle the message that Document number docNum has finished processing.
+        'Updates the progress bar
+        Me.prgLoadProgress.PerformStep()
+        Application.DoEvents()      '*** This is supposed to be bad form!
+    End Sub
+
+    Private Sub FrmBesLodMain_AllDocsProcessed() Handles mDocBatch.AllDocsProcessed
+        'Handle the message that all documents in the current batch have been processed,
+        'successfully or not.
+        'Produces status information.
+        Me.lstLoadProgress.Items.Add("---- All: " & mDocBatch.NumDocs() & " documents processed ---- ")    'Status message ****
+        Me.prgLoadProgress.PerformStep() 'Clean-up
+    End Sub
+
 End Class
