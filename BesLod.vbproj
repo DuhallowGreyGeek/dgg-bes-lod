@@ -114,6 +114,12 @@
     <Compile Include="BesLodMain.vb" />
     <Compile Include="BesLodSQL.vb" />
     <Compile Include="DBDictionary.vb" />
+    <Compile Include="dlgSkipReplace.Designer.vb">
+      <DependentUpon>dlgSkipReplace.vb</DependentUpon>
+    </Compile>
+    <Compile Include="dlgSkipReplace.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DocHeader.vb" />
     <Compile Include="frmBesLodSplash.Designer.vb">
       <DependentUpon>frmBesLodSplash.vb</DependentUpon>
@@ -152,6 +158,9 @@
     <Compile Include="Usage.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="dlgSkipReplace.resx">
+      <DependentUpon>dlgSkipReplace.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmBesLodMain.resx">
       <DependentUpon>frmBesLodMain.vb</DependentUpon>
     </EmbeddedResource>

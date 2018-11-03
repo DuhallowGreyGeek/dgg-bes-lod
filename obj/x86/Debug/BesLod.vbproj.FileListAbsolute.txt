@@ -34,3 +34,4 @@ C:\Users\user\Documents\BES_20180827\dgg-bes-lod\obj\x86\Debug\BesLod1.exe.manif
 C:\Users\user\Documents\BES_20180827\dgg-bes-lod\obj\x86\Debug\BesLod1.application
 C:\Users\user\Documents\BES_20180827\dgg-bes-lod\bin\Debug\BesLod1.exe.config
 C:\Users\user\Documents\BES_20180827\dgg-bes-lod\bin\Debug\BesLodParms.xml
+C:\Users\user\Documents\BES_20180827\dgg-bes-lod\obj\x86\Debug\BesLod.dlgSkipReplace.resources
