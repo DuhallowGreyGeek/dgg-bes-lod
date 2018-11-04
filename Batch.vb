@@ -1,11 +1,15 @@
 ﻿Imports System.Xml
 Imports System.IO
+Imports System.Data.SqlClient
 
 Public Class Batch
     Public Event DocLoadStarted(numDocs As Integer) 'File loaded, document processing starting
     Public Event ProcDocStarted(docNum As Integer)  'Processing of Document num has started
     Public Event ProcDocFinished(docNum As Integer) 'Processing of Document num has finished
     Public Event AllDocsProcessed()                 'All documents in this batch have been processed, successfully or not
+
+    Const MODNAME As String = "Batch"
+    Friend mRoutineName As String = ""      'To hold the name of the routine which generates an exception
 
     Private mNumDocs As Integer = 0                 'Number of documents in this batch
     Private mCurDocNum As Integer = 0               'Number of document currently being processed
@@ -22,7 +26,9 @@ Public Class Batch
 
         Dim prgList As Object = frmMain.lstLoadProgress.Items
 
-        If mlodSQL.DocBatch_IsThereExisting(fname) = False Then 'Process the batch
+        'If mlodSQL.DocBatch_IsThereExisting(fname) = False Then 'Process the batch
+        If IsThereExistingDocBatch(fname) = False Then 'Process the batch
+
             Call ProcessBatch(docBatchFname)
 
         Else
@@ -149,12 +155,84 @@ Public Class Batch
             Return CurrentDocNum
         End Get
     End Property
+
     Public Sub Dump()
         'Dump Contents to Console
         Console.WriteLine(" ************* The Batch Itself **************** ")
         Console.WriteLine("           Nothing to Dump Directly             ")
         Console.WriteLine(" ************* Now all the Documents **************** ")
         Console.WriteLine("           Nothing to Dump Directly             ")
+    End Sub
+
+    Private Function IsThereExistingDocBatch(FileName As String) As Boolean
+        'Return True if there is an existing row and False if there isn't
+        'There is a unique index on DocBatch.Filename so there will only ever be zero or 1 rows
+        mRoutineName = "DocBatch_IsThereExisting(FileName As String)"
+
+        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+
+        'Get Connection string data
+        conString.DataSource = params.SQLDataSource
+        conString.IntegratedSecurity = params.SQLIntegratedSecurity
+        conString.InitialCatalog = params.SQLInitCatalogDB
+
+        'Construct the query string
+        Dim queryString As String = "Select * From dbo.DocBatch as bat WHERE "
+        queryString = queryString & "bat.FileName = @FileName "
+
+        'Console.WriteLine(queryString)
+
+        Try
+            Using sqlConnection As New SqlConnection(conString.ConnectionString)
+                sqlConnection.Open()
+                Using sqlCommand As New SqlCommand(queryString, sqlConnection)
+                    sqlCommand.Parameters.AddWithValue("@FileName", FileName)
+
+                    Using reader = sqlCommand.ExecuteReader()
+                        If reader.HasRows Then
+                            Return True
+                        Else
+                            Return False
+                        End If
+                    End Using
+                End Using
+                sqlConnection.Close()
+            End Using
+
+            'Should never reach this point!
+            Return True 'Which will stop anything bad happening!
+
+        Catch ex As SqlException
+            Call Me.handleSQLException(ex)
+            Return True
+
+        Catch ex As Exception
+            Call Me.handleGeneralException(ex)
+            Return True
+        End Try
+
+    End Function
+
+    Private Sub handleSQLException(ex As SqlException)
+        Console.WriteLine("*** Error *** in Module: " & MODNAME)
+        Console.WriteLine("*** Exception *** in routine: " & mRoutineName)
+
+        Dim i As Integer = 0
+        For i = 0 To ex.Errors.Count - 1
+            Console.WriteLine("Index#: " & i.ToString & vbNewLine & "Error: " & ex.Errors(i).ToString & vbNewLine)
+        Next
+        MsgBox("SQL Exception trapped - Look at the console", MsgBoxStyle.Critical, "Bessie SQL")
+    End Sub
+
+    Private Sub handleGeneralException(ex As Exception)
+        Console.WriteLine("*** Error *** in Module: " & MODNAME)
+        Console.WriteLine("*** Exception *** in routine: " & mRoutineName)
+
+        Console.WriteLine("Error: " & ex.Message.ToString & " is not a valid column" & vbNewLine)
+        Console.WriteLine(ex.ToString & vbNewLine)
+
+        MsgBox("Non-SQL exception - Look at the console", MsgBoxStyle.Critical, "Bessie SQL")
+
     End Sub
 
 End Class

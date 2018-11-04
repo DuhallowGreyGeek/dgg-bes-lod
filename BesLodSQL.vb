@@ -158,54 +158,54 @@ Public Class BesLodSQL
 
     End Sub
 
-    Public Function DocBatch_IsThereExisting(FileName As String) As Boolean
-        'Return True if there is an existing row and False if there isn't
-        'There is a unique index on DocBatch.Filename so there will only ever be zero or 1 rows
-        mRoutineName = "DocBatch_IsThereExisting(FileName As String)"
+    'Public Function DocBatch_IsThereExisting(FileName As String) As Boolean
+    'Return True if there is an existing row and False if there isn't
+    'There is a unique index on DocBatch.Filename so there will only ever be zero or 1 rows
+    '    mRoutineName = "DocBatch_IsThereExisting(FileName As String)"
 
-        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+    'Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
 
-        'Get Connection string data
-        conString.DataSource = params.SQLDataSource
-        conString.IntegratedSecurity = params.SQLIntegratedSecurity
-        conString.InitialCatalog = params.SQLInitCatalogDB
+    'Get Connection string data
+    '   conString.DataSource = params.SQLDataSource
+    '    conString.IntegratedSecurity = params.SQLIntegratedSecurity
+    '    conString.InitialCatalog = params.SQLInitCatalogDB
 
-        'Construct the query string
-        Dim queryString As String = "Select * From dbo.DocBatch as bat WHERE "
-        queryString = queryString & "bat.FileName = @FileName "
+    'Construct the query string
+    'Dim queryString As String = "Select * From dbo.DocBatch as bat WHERE "
+    '   queryString = queryString & "bat.FileName = @FileName "
 
-        'Console.WriteLine(queryString)
+    'Console.WriteLine(queryString)
 
-        Try
-            Using sqlConnection As New SqlConnection(conString.ConnectionString)
-                sqlConnection.Open()
-                Using sqlCommand As New SqlCommand(queryString, sqlConnection)
-                    sqlCommand.Parameters.AddWithValue("@FileName", FileName)
+    '    Try
+    '       Using sqlConnection As New SqlConnection(conString.ConnectionString)
+    '           sqlConnection.Open()
+    '           Using sqlCommand As New SqlCommand(queryString, sqlConnection)
+    '               sqlCommand.Parameters.AddWithValue("@FileName", FileName)
+    '
+    '                Using reader = sqlCommand.ExecuteReader()
+    '                    If reader.HasRows Then
+    '                        Return True
+    '                    Else
+    '                        Return False
+    '                    End If
+    '                End Using
+    '            End Using
+    '            sqlConnection.Close()
+    '        End Using
 
-                    Using reader = sqlCommand.ExecuteReader()
-                        If reader.HasRows Then
-                            Return True
-                        Else
-                            Return False
-                        End If
-                    End Using
-                End Using
-                sqlConnection.Close()
-            End Using
+    'Should never reach this point!
+    '        Return True 'Which will stop anything bad happening!
+    '
+    '    Catch ex As SqlException
+    '        Call Me.handleSQLException(ex)
+    '        Return True
 
-            'Should never reach this point!
-            Return True 'Which will stop anything bad happening!
+    '    Catch ex As Exception
+    '        Call Me.handleGeneralException(ex)
+    '        Return True
+    '    End Try
 
-        Catch ex As SqlException
-            Call Me.handleSQLException(ex)
-            Return True
-
-        Catch ex As Exception
-            Call Me.handleGeneralException(ex)
-            Return True
-        End Try
-
-    End Function
+    'End Function
 
     Public Function DocBatch_IDofRecord(FileName As String) As Integer
         'Return the integer DocBatchId matching the FileName
@@ -525,7 +525,7 @@ Public Class BesLodSQL
 
     Private Sub handleSQLException(ex As SqlException)
         Console.WriteLine("*** Error *** in Module: " & MODNAME)
-        Console.Writeline("*** Exception *** in routine: " & mRoutineName)
+        Console.WriteLine("*** Exception *** in routine: " & mRoutineName)
 
         Dim i As Integer = 0
         For i = 0 To ex.Errors.Count - 1
@@ -536,7 +536,7 @@ Public Class BesLodSQL
 
     Private Sub handleGeneralException(ex As Exception)
         Console.WriteLine("*** Error *** in Module: " & MODNAME)
-        Console.Writeline("*** Exception *** in routine: " & mRoutineName)
+        Console.WriteLine("*** Exception *** in routine: " & mRoutineName)
 
         Console.WriteLine("Error: " & ex.Message.ToString & " is not a valid column" & vbNewLine)
         Console.WriteLine(ex.ToString & vbNewLine)
