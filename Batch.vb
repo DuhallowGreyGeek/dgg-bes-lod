@@ -34,7 +34,7 @@ Public Class Batch
         Else
             'Will eventually prompt giving the possibility of overwriting it but not yet
             prgList.Add("---- Loading DocumentBatch file: " & fname & " FAILED!")
-            Call MsgBox("Duplicate Document (or other serious error)")
+            Call MsgBox("Duplicate Document Batch (or other serious error)")
         End If
 
     End Sub
