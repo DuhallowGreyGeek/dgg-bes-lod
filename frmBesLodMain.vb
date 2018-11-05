@@ -147,9 +147,14 @@ Public Class frmBesLodMain
         Me.lstLoadProgress.Items.Add("        ---- Duplicate Document Batch: " & fname)
     End Sub
 
-    Private Sub FrmBesLodMain_DocBatchDupCancelled(fname) Handles mDocBatch.DocBatchDupCancelled
+    Private Sub FrmBesLodMain_DocBatchDupCancel(fname) Handles mDocBatch.DocBatchDupCancel
         'Handle the message that the user has cancelled loading the duplicate Document Batch
         Me.lstLoadProgress.Items.Add("        ---- Loading Duplicate Document Batch: " & fname & " cancelled by user.")
+    End Sub
+
+    Private Sub FrmBesLodMain_DocBatchDupReplace(fname) Handles mDocBatch.DocBatchDupReplace
+        'Handle the message that the user has chosen to replace the duplicate Document Batch
+        Me.lstLoadProgress.Items.Add("        ---- Replacing Duplicate Document Batch: " & fname)
     End Sub
 
     Private Sub FrmBesLodMain_ProcDocFinished(docNum) Handles mDocBatch.ProcDocFinished

@@ -5,7 +5,8 @@ Imports System.Data.SqlClient
 Public Class Batch
     Public Event DocLoadStarted(numDocs As Integer) 'File loaded, document processing starting
     Public Event DocBatchDuplicate(fname As String) 'Batch with this filename has already been added to DB
-    Public Event DocBatchDupCancelled(fname As String) 'User cancelled loading of this duplicate batch
+    Public Event DocBatchDupCancel(fname As String) 'User cancelled loading of this duplicate batch
+    Public Event DocBatchDupReplace(fname As String) 'User chose to replace duplicate batch
     Public Event ProcDocStarted(docNum As Integer)  'Processing of Document num has started
     Public Event ProcDocFinished(docNum As Integer) 'Processing of Document num has finished
     Public Event AllDocsProcessed()                 'All documents in this batch have been processed, successfully or not
@@ -49,13 +50,17 @@ Public Class Batch
             Select Case result
                 Case MsgBoxResult.Ok
                     'Replace the existing records
-                    Call MsgBox("Replace")
+                    Console.WriteLine("--- User replacing Duplicate Batch: " & fname)
+                    RaiseEvent DocBatchDupReplace(fname)
+
+                    Call Me.RemoveDuplicateBatch(fname)
+                    Call MsgBox("Add new batch with the same name: " & fname)
+
                 Case MsgBoxResult.Cancel
                     'Stop! Keep changes which have already been made but exit process
                     Console.WriteLine("--- User cancelled loading Duplicate Batch: " & fname)
-                    RaiseEvent DocBatchDupCancelled(fname)
+                    RaiseEvent DocBatchDupCancel(fname)
 
-                    'Call MsgBox("Halt")
                 Case Else
                     'Shouldn't happen
                     Call MsgBox("Oops!")
@@ -162,7 +167,7 @@ Public Class Batch
         Next
         Console.WriteLine()
         Console.WriteLine("--------- All Documents Processed ----------")
-        'prgList.Add("---- All: " & xDocList.DocList.Count & " xxxx documents processed ---- ")    'Status message ****
+        '
         RaiseEvent AllDocsProcessed()
 
     End Sub
@@ -234,6 +239,13 @@ Public Class Batch
         End Try
 
     End Function
+
+    Private Sub RemoveDuplicateBatch(fname As String)
+        'A duplicate batch was detected. The user has decided to overwrite it.
+        'Remove the existing DocBatch and the dependent Document, Part and Usage records.
+        Call MsgBox("Remove existing batch: " & fname)
+
+    End Sub
 
     Private Sub handleSQLException(ex As SqlException)
         Console.WriteLine("*** Error *** in Module: " & MODNAME)
