@@ -57,22 +57,4 @@ Public Class dlgSkipReplace
         End Select
     End Sub
 
-    Private Sub Dummy_BatchDuplicate()
-        ' Only here to make moving the invoking code around easy
-        Dim result As MsgBoxResult
-
-        result = MsgBox("Overwrite?", MsgBoxStyle.Exclamation + MsgBoxStyle.OkCancel)
-
-        Select Case result
-            Case MsgBoxResult.Ok
-                'Replace the existing records
-                Call MsgBox("Replace")
-            Case MsgBoxResult.Cancel
-                'Stop! Keep changes which have already been made but exit process
-                Call MsgBox("Halt")
-            Case Else
-                'Shouldn't happen
-                Call MsgBox("Oops!")
-        End Select
-    End Sub
 End Class

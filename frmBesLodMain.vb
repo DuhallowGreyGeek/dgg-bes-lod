@@ -141,6 +141,17 @@ Public Class frmBesLodMain
         Application.DoEvents()      '*** This is supposed to be bad form!
     End Sub
 
+    Private Sub FrmBesLodMain_DocBatchDuplicate(fname) Handles mDocBatch.DocBatchDuplicate
+        'Handle the message that a duplicate Document Batch has been found
+        'Report it. Decision making is done in the DocBatch object.
+        Me.lstLoadProgress.Items.Add("        ---- Duplicate Document Batch: " & fname)
+    End Sub
+
+    Private Sub FrmBesLodMain_DocBatchDupCancelled(fname) Handles mDocBatch.DocBatchDupCancelled
+        'Handle the message that the user has cancelled loading the duplicate Document Batch
+        Me.lstLoadProgress.Items.Add("        ---- Loading Duplicate Document Batch: " & fname & " cancelled by user.")
+    End Sub
+
     Private Sub FrmBesLodMain_ProcDocFinished(docNum) Handles mDocBatch.ProcDocFinished
         'Handle the message that Document number docNum has finished processing.
         'Updates the progress bar
