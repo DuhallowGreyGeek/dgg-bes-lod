@@ -255,11 +255,11 @@ Public Class BesLodSQL
         Const FNAMLEN As Integer = 50 'The maximum length of string allowed in field in DB
         Dim labelString As String
 
-        If doc.FileName.ToString.Length > FNAMLEN Then
-            labelString = Left(doc.FileName, FNAMLEN)
+        If doc.DocLabel.ToString.Length > FNAMLEN Then
+            labelString = Left(doc.DocLabel, FNAMLEN)
             Call MsgBox("Input data truncated at: " & STRLEN.ToString, MsgBoxStyle.Information)
         Else
-            labelString = doc.FileName
+            labelString = doc.DocLabel
         End If
 
         'Truncate FileName
@@ -295,7 +295,7 @@ Public Class BesLodSQL
             sqlCommand.Connection.Close()
 
             'Now get the DocId of the Document we just added Doc_Insert
-            Return mlodSQL.Doc_IDofRecord(doc.FileName)
+            Return mlodSQL.Doc_IDofRecord(doc.DocLabel)
 
         Catch ex As SqlException
             Call Me.handleSQLException(ex)

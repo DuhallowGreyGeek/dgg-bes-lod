@@ -5,6 +5,7 @@ Public Class DocHeader
     'Most of this data is stuff "applied from the outside" to identify or describe the document,
     'rather than the content of the document itself, which is in the (doc_)Parts..
 
+    Private mDocLabel As String
     Private mFilename As String
     Private mDate As Date
     Private mFilePath As String
@@ -17,6 +18,9 @@ Public Class DocHeader
             For Each node As XmlNode In xDocHeader.ChildNodes
                 If node.NodeType = XmlNodeType.Element Then ' Skip comments
                     Select Case node.Name
+                        Case "doc_label"
+                            mDocLabel = node.InnerText
+
                         Case "doc_filename"
                             mFilename = node.InnerText
 
@@ -50,6 +54,12 @@ Public Class DocHeader
         'Call Me.Dump() 'Dump contents to the console
     End Sub
 
+    Public ReadOnly Property DocLabel As String
+        Get
+            Return mDocLabel
+        End Get
+    End Property
+
     Public ReadOnly Property FileName As String
         Get
             Return mFilename
@@ -79,6 +89,7 @@ Public Class DocHeader
 
         Console.WriteLine("    ---- Contents of DocHeader. ----- ")
 
+        Console.WriteLine("        --- .DocLabel ---- " & Me.DocLabel)
         Console.WriteLine("        --- .DocDate ----- " & Me.DocDate.ToString)
         Console.WriteLine("        --- .FileName ---- " & Me.FileName)
         Console.WriteLine("        --- .FilePath ---- " & Me.FilePath)
