@@ -7,6 +7,7 @@ Public Class Batch
     Public Event DocBatchDuplicate(fname As String) 'Batch with this filename has already been added to DB
     Public Event DocBatchDupCancel(fname As String) 'User cancelled loading of this duplicate batch
     Public Event DocBatchDupReplace(fname As String) 'User chose to replace duplicate batch
+    Public Event DocumentDupCancel(docNum As Integer, DocLabel As String) 'Use cancelled loading batch following dup doc
     Public Event ProcDocStarted(docNum As Integer)  'Processing of Document num has started
     Public Event ProcDocFinished(docNum As Integer) 'Processing of Document num has finished
     Public Event AllDocsProcessed()                 'All documents in this batch have been processed, successfully or not
@@ -130,7 +131,10 @@ Public Class Batch
                         Call MsgBox("Skip")
                     Case Windows.Forms.DialogResult.Abort
                         'Stop! Keep changes which have already been made but exit process
-                        Call MsgBox("Halt")
+                        Console.WriteLine("--- User cancelled processing @ Document: " & iDocCount & ": " & doc.DocLabel)
+                        RaiseEvent DocumentDupCancel(iDocCount, doc.DocLabel)
+                        Exit For
+                        '
                     Case Else
                         'Shouldn't happen
                         Console.WriteLine("--- Unxepected Response handling duplicate Document: " & doc.DocLabel)

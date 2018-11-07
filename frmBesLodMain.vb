@@ -164,6 +164,13 @@ Public Class frmBesLodMain
         Application.DoEvents()      '*** This is supposed to be bad form!
     End Sub
 
+    Private Sub FrmBesLodMain_DocumentDupCancel(docNum, docLabel) Handles mDocBatch.DocumentDupCancel
+        'Handle the message that User has cancelled processing this batch because a duplicate Document has been encountered.
+        Me.prgLoadProgress.Maximum = 0
+        Me.lstLoadProgress.Items.Add("        ---- User cancelled batch @ Document: " & docNum & ": " & docLabel)
+        Me.statMsg.Text = "User cancelled batch following duplicate document"
+    End Sub
+
     Private Sub FrmBesLodMain_AllDocsProcessed() Handles mDocBatch.AllDocsProcessed
         'Handle the message that all documents in the current batch have been processed,
         'successfully or not.
