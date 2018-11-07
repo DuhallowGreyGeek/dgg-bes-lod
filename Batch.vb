@@ -138,66 +138,10 @@ Public Class Batch
                 End Select
             Else                                                    'There is no existing document - get on and add it.
 
-                'Console.WriteLine("---- Invoke the SQL Insert -----")
-                Dim DocId As Integer = mlodSQL.Doc_Insert(docBatchId, doc)
-                If My.Settings.DocsToConsole Then
-                    Console.WriteLine("--- Document.DocId = " & DocId.ToString)
-
-                    Console.WriteLine("  ------Now the parts---")
-                End If
-
-                '----Now write the parts 
-                Dim jPartNum As Integer = 0
-                For Each curPart As Part In doc.Parts
-                    'Set the Identifiers in Part
-                    jPartNum = jPartNum + 1
-                    curPart.DocumentId = DocId
-                    curPart.PartNum = jPartNum
-                    Call mlodSQL.Part_Insert(curPart)       'Insert into the database
-
-                    'Call curPart.Dump() 'Dump contents to console
-
-                    'Add the words referred to in the fields of the current part to the dictionary
-                    'and then persist the Usage information
-
-                    'Process the Part.Subject field
-                    Dim fieldIdent As Integer = 1 'arbitrarilly calling "Subject" = 1
-                    Dim wordSeqNum As Integer = 0
-                    For Each word In dict.ParseString(curPart.Subject)
-                        wordSeqNum = wordSeqNum + 1
-
-                        Dim wordid = dict.GetWordId(word)       'Gets the WordId and maybe adds the word to the dictionary
-
-                        If My.Settings.WordsToConsole Then
-                            Console.WriteLine(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
-                        End If
-
-                        Dim usage As New Usage
-                        Call usage.Add(curPart, fieldIdent, wordSeqNum, wordid)
-
-                    Next
-
-                    'Process the Part.Synopsis field
-                    fieldIdent = 2 'arbitrarilly calling "Synopsis" = 2
-                    wordSeqNum = 0
-                    For Each word In dict.ParseString(curPart.Synopsis)
-                        wordSeqNum = wordSeqNum + 1
-
-                        Dim wordid = dict.GetWordId(word)       'Gets the WordId and maybe adds the word to the dictionary
-
-                        If My.Settings.WordsToConsole Then
-                            Console.WriteLine(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
-                        End If
-
-                        Dim usage As New Usage
-                        Call usage.Add(curPart, fieldIdent, wordSeqNum, wordid)
-                    Next
-
-                Next
+                Call AddDocAndDependents(docBatchId, doc)
+                '
+                RaiseEvent ProcDocFinished(iDocCount)
             End If
-            'Console.WriteLine()
-            RaiseEvent ProcDocFinished(iDocCount)
-
         Next
         Console.WriteLine()
         Console.WriteLine("--------- All Documents Processed ----------")
@@ -326,7 +270,72 @@ Public Class Batch
     Private Sub RemoveDuplicateBatch(fname As String)
         'A duplicate batch was detected. The user has decided to overwrite it.
         'Remove the existing DocBatch and the dependent Document, Part and Usage records.
+        mRoutineName = "RemoveDuplicateBatch(fname As String)"
         Call MsgBox("Remove existing batch: " & fname)
+
+    End Sub
+
+    Private Sub AddDocAndDependents(docBatchId As Integer, doc As Doc)
+        'Add a Document and the associated dependent records: Part, Synopis
+        mRoutineName = "AddDocAndDependents(docBatchId As Integer, doc As Doc)"
+
+        'Console.WriteLine("---- Invoke the SQL Insert -----")
+        Dim DocId As Integer = mlodSQL.Doc_Insert(docBatchId, doc)
+        If My.Settings.DocsToConsole Then
+            Console.WriteLine("--- Document.DocId = " & DocId.ToString)
+            Console.WriteLine("  ------Now the parts---")
+        End If
+
+        '----Now write the parts 
+        Dim jPartNum As Integer = 0
+        For Each curPart As Part In doc.Parts
+            'Set the Identifiers in Part
+            jPartNum = jPartNum + 1
+            curPart.DocumentId = DocId
+            curPart.PartNum = jPartNum
+            Call mlodSQL.Part_Insert(curPart)       'Insert into the database
+
+            'Call curPart.Dump() 'Dump contents to console
+
+            'Add the words referred to in the fields of the current part to the dictionary
+            'and then persist the Usage information
+
+            'Process the Part.Subject field
+            Dim fieldIdent As Integer = 1 'arbitrarilly calling "Subject" = 1
+            Dim wordSeqNum As Integer = 0
+            For Each word In dict.ParseString(curPart.Subject)
+                wordSeqNum = wordSeqNum + 1
+
+                Dim wordid = dict.GetWordId(word)       'Gets the WordId and maybe adds the word to the dictionary
+
+                If My.Settings.WordsToConsole Then
+                    Console.WriteLine(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
+                End If
+
+                Dim usage As New Usage
+                Call usage.Add(curPart, fieldIdent, wordSeqNum, wordid)
+
+            Next
+
+            'Process the Part.Synopsis field
+            fieldIdent = 2 'arbitrarilly calling "Synopsis" = 2
+            wordSeqNum = 0
+            For Each word In dict.ParseString(curPart.Synopsis)
+                wordSeqNum = wordSeqNum + 1
+
+                Dim wordid = dict.GetWordId(word)       'Gets the WordId and maybe adds the word to the dictionary
+
+                If My.Settings.WordsToConsole Then
+                    Console.WriteLine(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
+                End If
+
+                Dim usage As New Usage
+                Call usage.Add(curPart, fieldIdent, wordSeqNum, wordid)
+            Next
+
+        Next
+
+        '----------------------------
 
     End Sub
 

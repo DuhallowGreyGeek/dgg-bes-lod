@@ -169,6 +169,8 @@ Public Class frmBesLodMain
         'successfully or not.
         'Produces status information.
         Me.lstLoadProgress.Items.Add("---- All: " & mDocBatch.NumDocs() & " documents processed ---- ")    'Status message ****
+        Me.statMsg.Text = "All: " & mDocBatch.NumDocs() & " documents processed ---- "
+
         Me.prgLoadProgress.PerformStep() 'Clean-up
     End Sub
 
