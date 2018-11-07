@@ -128,7 +128,9 @@ Public Class Batch
                         Call MsgBox("Replace")
                     Case Windows.Forms.DialogResult.Ignore
                         'Skip the new record and retain the existing records
-                        Call MsgBox("Skip")
+                        Console.WriteLine("--- User skipped Document: " & iDocCount & ": " & doc.DocLabel)
+                        Continue For
+                        '
                     Case Windows.Forms.DialogResult.Abort
                         'Stop! Keep changes which have already been made but exit process
                         Console.WriteLine("--- User cancelled processing @ Document: " & iDocCount & ": " & doc.DocLabel)
