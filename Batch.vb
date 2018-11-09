@@ -410,6 +410,49 @@ Public Class Batch
 
     End Function
 
+    Public Function DeleteDoc(DocumentId As Integer) As Integer
+        'Delete a Document identified by its DocumentId key. Return the number of documents deleted.
+        'Used as part of deleting a DocBatch or prior to replacing a duplicate document.
+        'Normally used after we have found a duplicate, so not finding something will throw an exception.
+        mRoutineName = "DeleteDoc(DocumentId As Integer)"
+
+        Const ERRORROWCOUNT As Integer = -9999
+
+        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+
+        'Get Connection string data
+        conString.DataSource = params.SQLDataSource
+        conString.IntegratedSecurity = params.SQLIntegratedSecurity
+        conString.InitialCatalog = params.SQLInitCatalogDB
+        Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
+
+        Dim queryString As String = "DELETE FROM dbo.Document "
+        queryString = queryString & "WHERE DocumentId = @DocumentId "
+
+        'Console.WriteLine(queryString)
+
+        Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
+
+        'Now substitute the values into the command
+        sqlCommand.Parameters.AddWithValue("@DocumentId", DocumentId)
+
+        Try
+            Dim numRows As Integer = 0
+
+            sqlCommand.Connection.Open()
+            Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
+            MsgBox("Number DocBatch rows affected = " & iRows.ToString)
+            Return iRows
+            sqlCommand.Connection.Close()
+
+        Catch ex As SqlException
+            Call Me.handleSQLException(ex)
+
+            Return ERRORROWCOUNT
+        End Try
+        Return ERRORROWCOUNT
+    End Function
+
     Private Sub handleSQLException(ex As SqlException)
         Console.WriteLine("*** Error *** in Module: " & MODNAME)
         Console.WriteLine("*** Exception *** in routine: " & mRoutineName)

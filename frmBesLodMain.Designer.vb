@@ -36,6 +36,8 @@ Partial Class frmBesLodMain
         Me.ExceptionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TestXMLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.LoadXMLfileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.TestDuplicatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.GetDocIdToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.statStatusStrip = New System.Windows.Forms.StatusStrip()
         Me.statMsg = New System.Windows.Forms.ToolStripStatusLabel()
         Me.dlgInputFile = New System.Windows.Forms.OpenFileDialog()
@@ -47,8 +49,7 @@ Partial Class frmBesLodMain
         Me.cmdTest = New System.Windows.Forms.Button()
         Me.cmdClose = New System.Windows.Forms.Button()
         Me.HelpProvider1 = New System.Windows.Forms.HelpProvider()
-        Me.TestDuplicatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GetDocIdToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DeleteDocToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuMenu.SuspendLayout()
         Me.statStatusStrip.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -147,8 +148,21 @@ Partial Class frmBesLodMain
         'LoadXMLfileToolStripMenuItem
         '
         Me.LoadXMLfileToolStripMenuItem.Name = "LoadXMLfileToolStripMenuItem"
-        Me.LoadXMLfileToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.LoadXMLfileToolStripMenuItem.Size = New System.Drawing.Size(140, 22)
         Me.LoadXMLfileToolStripMenuItem.Text = "LoadXMLfile"
+        '
+        'TestDuplicatesToolStripMenuItem
+        '
+        Me.TestDuplicatesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GetDocIdToolStripMenuItem, Me.DeleteDocToolStripMenuItem})
+        Me.TestDuplicatesToolStripMenuItem.Name = "TestDuplicatesToolStripMenuItem"
+        Me.TestDuplicatesToolStripMenuItem.Size = New System.Drawing.Size(95, 20)
+        Me.TestDuplicatesToolStripMenuItem.Text = "TestDuplicates"
+        '
+        'GetDocIdToolStripMenuItem
+        '
+        Me.GetDocIdToolStripMenuItem.Name = "GetDocIdToolStripMenuItem"
+        Me.GetDocIdToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.GetDocIdToolStripMenuItem.Text = "GetDocId"
         '
         'statStatusStrip
         '
@@ -233,18 +247,11 @@ Partial Class frmBesLodMain
         Me.cmdClose.Text = "Close"
         Me.cmdClose.UseVisualStyleBackColor = True
         '
-        'TestDuplicatesToolStripMenuItem
+        'DeleteDocToolStripMenuItem
         '
-        Me.TestDuplicatesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GetDocIdToolStripMenuItem})
-        Me.TestDuplicatesToolStripMenuItem.Name = "TestDuplicatesToolStripMenuItem"
-        Me.TestDuplicatesToolStripMenuItem.Size = New System.Drawing.Size(95, 20)
-        Me.TestDuplicatesToolStripMenuItem.Text = "TestDuplicates"
-        '
-        'GetDocIdToolStripMenuItem
-        '
-        Me.GetDocIdToolStripMenuItem.Name = "GetDocIdToolStripMenuItem"
-        Me.GetDocIdToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
-        Me.GetDocIdToolStripMenuItem.Text = "GetDocId"
+        Me.DeleteDocToolStripMenuItem.Name = "DeleteDocToolStripMenuItem"
+        Me.DeleteDocToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DeleteDocToolStripMenuItem.Text = "DeleteDoc"
         '
         'frmBesLodMain
         '
@@ -296,5 +303,6 @@ Partial Class frmBesLodMain
     Friend WithEvents statMsg As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents TestDuplicatesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents GetDocIdToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DeleteDocToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

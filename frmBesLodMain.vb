@@ -188,4 +188,26 @@ Public Class frmBesLodMain
 
         MsgBox("GetDocumentId( " & testDocLabel & " ) ---> " & mDocBatch.GetDocId(testDocLabel).ToString)
     End Sub
+
+    Private Sub DeleteDocToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteDocToolStripMenuItem.Click
+        mDocBatch = New Batch
+
+
+        Dim testDocIdString As String = InputBox("Enter the DocumentId", "Delete a Document based on DocumentId", "9999")
+        Dim testDocId As Integer = -9999
+
+        If Integer.TryParse(testDocIdString, testDocId) Then
+            Dim numDocsDeleted As Integer = mDocBatch.DeleteDoc(testDocId)
+            If numDocsDeleted = 1 Then
+                MsgBox("Document.DocumentId: " & testDocId.ToString & " deleted!")
+            Else
+                MsgBox("Document.DocumentId: " & testDocId.ToString & " deletion FAILED! Look at console.")
+            End If
+        Else
+            MsgBox("Invalid DocumentId: " & testDocIdString)
+        End If
+
+
+            'MsgBox("GetDocumentId( " & testDocLabel & " ) ---> " & mDocBatch.GetDocId(testDocLabel).ToString)
+    End Sub
 End Class
