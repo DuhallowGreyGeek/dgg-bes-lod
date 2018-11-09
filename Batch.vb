@@ -441,7 +441,50 @@ Public Class Batch
 
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
-            MsgBox("Number DocBatch rows affected = " & iRows.ToString)
+            'MsgBox("Number Document rows affected = " & iRows.ToString)
+            Return iRows
+            sqlCommand.Connection.Close()
+
+        Catch ex As SqlException
+            Call Me.handleSQLException(ex)
+
+            Return ERRORROWCOUNT
+        End Try
+        Return ERRORROWCOUNT
+    End Function
+
+    Public Function DeleteDocUsages(DocumentId As Integer) As Integer
+        'Delete all the Usage (Word Usage) records associated with a Document. 
+        'Return the number of Usage records deleted. This could be any number from 0 (probably an empty document) upwards.
+        'Used as part of deleting a DocBatch or prior to replacing a duplicate document.
+        mRoutineName = "DeleteDocUsages(DocumentId As Integer)"
+
+        Const ERRORROWCOUNT As Integer = -9999
+
+        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+
+        'Get Connection string data
+        conString.DataSource = params.SQLDataSource
+        conString.IntegratedSecurity = params.SQLIntegratedSecurity
+        conString.InitialCatalog = params.SQLInitCatalogDB
+        Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
+
+        Dim queryString As String = "DELETE FROM dbo.Usage "
+        queryString = queryString & "WHERE DocumentId = @DocumentId "
+
+        'Console.WriteLine(queryString)
+
+        Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
+
+        'Now substitute the values into the command
+        sqlCommand.Parameters.AddWithValue("@DocumentId", DocumentId)
+
+        Try
+            Dim numRows As Integer = 0
+
+            sqlCommand.Connection.Open()
+            Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
+            MsgBox("Number Usage rows affected = " & iRows.ToString)
             Return iRows
             sqlCommand.Connection.Close()
 

@@ -50,6 +50,7 @@ Partial Class frmBesLodMain
         Me.cmdClose = New System.Windows.Forms.Button()
         Me.HelpProvider1 = New System.Windows.Forms.HelpProvider()
         Me.DeleteDocToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DeleteDocUsagesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuMenu.SuspendLayout()
         Me.statStatusStrip.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -153,7 +154,7 @@ Partial Class frmBesLodMain
         '
         'TestDuplicatesToolStripMenuItem
         '
-        Me.TestDuplicatesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GetDocIdToolStripMenuItem, Me.DeleteDocToolStripMenuItem})
+        Me.TestDuplicatesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GetDocIdToolStripMenuItem, Me.DeleteDocToolStripMenuItem, Me.DeleteDocUsagesToolStripMenuItem})
         Me.TestDuplicatesToolStripMenuItem.Name = "TestDuplicatesToolStripMenuItem"
         Me.TestDuplicatesToolStripMenuItem.Size = New System.Drawing.Size(95, 20)
         Me.TestDuplicatesToolStripMenuItem.Text = "TestDuplicates"
@@ -253,6 +254,12 @@ Partial Class frmBesLodMain
         Me.DeleteDocToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.DeleteDocToolStripMenuItem.Text = "DeleteDoc"
         '
+        'DeleteDocUsagesToolStripMenuItem
+        '
+        Me.DeleteDocUsagesToolStripMenuItem.Name = "DeleteDocUsagesToolStripMenuItem"
+        Me.DeleteDocUsagesToolStripMenuItem.Size = New System.Drawing.Size(165, 22)
+        Me.DeleteDocUsagesToolStripMenuItem.Text = "DeleteDocUsages"
+        '
         'frmBesLodMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -304,5 +311,6 @@ Partial Class frmBesLodMain
     Friend WithEvents TestDuplicatesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents GetDocIdToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DeleteDocToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents DeleteDocUsagesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

@@ -207,7 +207,24 @@ Public Class frmBesLodMain
             MsgBox("Invalid DocumentId: " & testDocIdString)
         End If
 
+    End Sub
 
-            'MsgBox("GetDocumentId( " & testDocLabel & " ) ---> " & mDocBatch.GetDocId(testDocLabel).ToString)
+    Private Sub DeleteDocUsagesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteDocUsagesToolStripMenuItem.Click
+        mDocBatch = New Batch
+
+        Dim testDocIdString As String = InputBox("Enter the DocumentId", "Delete all the Usage records for a Document based on DocumentId", "9999")
+        Dim testDocId As Integer = -9999
+
+        If Integer.TryParse(testDocIdString, testDocId) Then
+            Dim numUsagesDeleted As Integer = mDocBatch.DeleteDocUsages(testDocId)
+            If numUsagesDeleted >= 0 Then
+                MsgBox("Document.DocumentId: " & testDocId.ToString & " Number Usage records deleted: " & numUsagesDeleted.ToString)
+            Else
+                MsgBox("Document.DocumentId: " & testDocId.ToString & " Usage deletion FAILED! Look at console.")
+            End If
+        Else
+            MsgBox("Invalid DocumentId: " & testDocIdString)
+        End If
+
     End Sub
 End Class
