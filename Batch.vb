@@ -125,7 +125,10 @@ Public Class Batch
                 Select Case result
                     Case Windows.Forms.DialogResult.OK
                         'Replace the existing records
-                        Call MsgBox("Replace")
+                        Console.WriteLine("--- User Replaced Document: " & iDocCount & ": " & doc.DocLabel)
+                        Call RemoveDocAndDependents(doc.DocLabel)
+                        '*******
+                        '
                     Case Windows.Forms.DialogResult.Ignore
                         'Skip the new record and retain the existing records
                         Console.WriteLine("--- User skipped Document: " & iDocCount & ": " & doc.DocLabel)
@@ -341,9 +344,71 @@ Public Class Batch
 
         Next
 
-        '----------------------------
+    End Sub
+
+    Public Sub RemoveDocAndDependents(DocLabel As String)
+        'Delete a Document and the dependents: Part, Synopsis and Usage from the database
+        'Used as part of deleting a DocBatch or prior to replacing a duplicate document.
+        mRoutineName = "RemoveDocAndDependents(DocLabel As String)"
+
 
     End Sub
+
+    Public Function GetDocId(DocLabel As String) As Integer
+        'Get the DocId corresponding to a DocLabel. 
+        'Used as part of deleting a DocBatch or prior to replacing a duplicate document.
+        'Normally used after we have found a duplicate, so not finding something will throw an exception.
+        mRoutineName = "GetDocId(DocLabel As String)"
+
+        Const ERRORKEY As Integer = -9999
+
+        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+
+        'Get Connection string data
+        conString.DataSource = params.SQLDataSource
+        conString.IntegratedSecurity = params.SQLIntegratedSecurity
+        conString.InitialCatalog = params.SQLInitCatalogDB
+
+        'Construct the query string
+        Dim queryString As String = "Select doc.DocumentId From dbo.Document as doc WHERE "
+        queryString = queryString & "doc.DocumentLabel = @DocLabel "
+
+        Console.WriteLine(queryString)
+
+        Try
+            Using sqlConnection As New SqlConnection(conString.ConnectionString)
+                sqlConnection.Open()
+                Using sqlCommand As New SqlCommand(queryString, sqlConnection)
+                    sqlCommand.Parameters.AddWithValue("@DocLabel", DocLabel)
+
+                    Using reader = sqlCommand.ExecuteReader()
+                        If reader.HasRows Then
+                            Do While reader.Read
+                                Return reader.Item("DocumentId")
+                            Loop
+                        Else
+                            Throw New Exception("Document.DocLabel: " & DocLabel & " not found!")
+                        End If
+                    End Using
+                End Using
+                sqlConnection.Close()
+            End Using
+
+            'Should never reach this point!
+            Return ERRORKEY 'Which will stop anything bad happening!
+
+        Catch ex As SqlException
+            Call Me.handleSQLException(ex)
+            Return ERRORKEY
+
+        Catch ex As Exception
+            Call Me.handleGeneralException(ex)
+            Return ERRORKEY
+        End Try
+
+        Return ERRORKEY
+
+    End Function
 
     Private Sub handleSQLException(ex As SqlException)
         Console.WriteLine("*** Error *** in Module: " & MODNAME)
@@ -360,7 +425,7 @@ Public Class Batch
         Console.WriteLine("*** Error *** in Module: " & MODNAME)
         Console.WriteLine("*** Exception *** in routine: " & mRoutineName)
 
-        Console.WriteLine("Error: " & ex.Message.ToString & " is not a valid column" & vbNewLine)
+        Console.WriteLine("Error: " & ex.Message.ToString & vbNewLine)
         Console.WriteLine(ex.ToString & vbNewLine)
 
         MsgBox("Non-SQL exception - Look at the console", MsgBoxStyle.Critical, "Bessie SQL")

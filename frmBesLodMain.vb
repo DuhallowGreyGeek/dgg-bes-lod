@@ -181,4 +181,11 @@ Public Class frmBesLodMain
         Me.prgLoadProgress.PerformStep() 'Clean-up
     End Sub
 
+    Private Sub GetDocIdToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles GetDocIdToolStripMenuItem.Click
+        mDocBatch = New Batch
+
+        Dim testDocLabel As String = InputBox("Enter the Document Label", "Get the DocumentId for a Label", "ALPH X_9999")
+
+        MsgBox("GetDocumentId( " & testDocLabel & " ) ---> " & mDocBatch.GetDocId(testDocLabel).ToString)
+    End Sub
 End Class
