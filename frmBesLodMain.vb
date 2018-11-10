@@ -246,4 +246,23 @@ Public Class frmBesLodMain
         End If
 
     End Sub
+
+    Private Sub DeleteDocPartsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteDocPartsToolStripMenuItem.Click
+        mDocBatch = New Batch
+
+        Dim testDocIdString As String = InputBox("Enter the DocumentId", "Delete all the Part records for a Document based on DocumentId", "9999")
+        Dim testDocId As Integer = -9999
+
+        If Integer.TryParse(testDocIdString, testDocId) Then
+            Dim numSynopsesDeleted As Integer = mDocBatch.DeleteParts(testDocId)
+            If numSynopsesDeleted >= 0 Then
+                MsgBox("Document.DocumentId: " & testDocId.ToString & " Number Part records deleted: " & numSynopsesDeleted.ToString)
+            Else
+                MsgBox("Document.DocumentId: " & testDocId.ToString & " Part deletion FAILED! Look at console.")
+            End If
+        Else
+            MsgBox("Invalid DocumentId: " & testDocIdString)
+        End If
+
+    End Sub
 End Class
