@@ -265,4 +265,18 @@ Public Class frmBesLodMain
         End If
 
     End Sub
+
+    Private Sub RemoveDocAndDependentsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveDocAndDependentsToolStripMenuItem.Click
+        mDocBatch = New Batch
+
+        Dim testDocLabel As String = InputBox("Enter the Document Label", "Delete a Document and all its dependent records based on DocLabel", "Label")
+
+        Dim numDocsDeleted As Integer = mDocBatch.RemoveDocAndDependents(testDocLabel)
+        If numDocsDeleted >= 0 Then
+            MsgBox("Document.DocumentId: " & testDocLabel & " Number Documents removed: " & numDocsDeleted.ToString)
+        Else
+            MsgBox("Document.DocumentId: " & testDocLabel & " Document removal FAILED! Look at console.")
+        End If
+
+    End Sub
 End Class

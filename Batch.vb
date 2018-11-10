@@ -346,13 +346,37 @@ Public Class Batch
 
     End Sub
 
-    Public Sub RemoveDocAndDependents(DocLabel As String)
+    Public Function RemoveDocAndDependents(DocLabel As String) As Integer
         'Delete a Document and the dependents: Part, Synopsis and Usage from the database
         'Used as part of deleting a DocBatch or prior to replacing a duplicate document.
         mRoutineName = "RemoveDocAndDependents(DocLabel As String)"
 
+        Dim iRows As Integer = 0 'Number of Documents which have been deleted (should be 0 or 1)
 
-    End Sub
+        Try
+            MsgBox("Deleting All the records associated with Document: " & DocLabel)
+            'Any failures result in an exception being thrown
+            Dim DocumentId As Integer = Me.GetDocId(DocLabel)
+            '
+            Dim numUsagesDeleted As Integer = Me.DeleteDocUsages(DocumentId)
+            Dim numSynopsesDeleted As Integer = Me.DeleteDocSynopses(DocumentId)
+            Dim numPartsDeleted As Integer = Me.DeleteParts(DocumentId)
+            '
+            iRows = Me.DeleteDoc(DocumentId)    'Finally delete the Document itself
+
+            Call MsgBox("--Deleted: " & DocumentId.ToString & " Rows: " & iRows.ToString)
+
+            Return iRows
+
+        Catch ex As SqlException
+            Return iRows
+
+        Catch ex As Exception
+            Return iRows
+
+        End Try
+
+    End Function
 
     Public Function GetDocId(DocLabel As String) As Integer
         'Get the DocId corresponding to a DocLabel. 
@@ -373,7 +397,7 @@ Public Class Batch
         Dim queryString As String = "Select doc.DocumentId From dbo.Document as doc WHERE "
         queryString = queryString & "doc.DocumentLabel = @DocLabel "
 
-        Console.WriteLine(queryString)
+        'Console.WriteLine(queryString)
 
         Try
             Using sqlConnection As New SqlConnection(conString.ConnectionString)
@@ -484,7 +508,7 @@ Public Class Batch
 
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
-            MsgBox("Number Usage rows affected = " & iRows.ToString)
+            'MsgBox("Number Usage rows affected = " & iRows.ToString)
             Return iRows
             sqlCommand.Connection.Close()
 
@@ -572,7 +596,7 @@ Public Class Batch
 
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
-            MsgBox("Number Part rows affected = " & iRows.ToString)
+            'MsgBox("Number Part rows affected = " & iRows.ToString)
             Return iRows
             sqlCommand.Connection.Close()
 

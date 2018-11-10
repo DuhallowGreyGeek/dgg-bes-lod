@@ -53,6 +53,7 @@ Partial Class frmBesLodMain
         Me.DeleteDocUsagesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteDocSynopsesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DeleteDocPartsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RemoveDocAndDependentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.mnuMenu.SuspendLayout()
         Me.statStatusStrip.SuspendLayout()
         CType(Me.SplitContainer1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -156,7 +157,7 @@ Partial Class frmBesLodMain
         '
         'TestDuplicatesToolStripMenuItem
         '
-        Me.TestDuplicatesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GetDocIdToolStripMenuItem, Me.DeleteDocToolStripMenuItem, Me.DeleteDocUsagesToolStripMenuItem, Me.DeleteDocSynopsesToolStripMenuItem, Me.DeleteDocPartsToolStripMenuItem})
+        Me.TestDuplicatesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GetDocIdToolStripMenuItem, Me.DeleteDocToolStripMenuItem, Me.DeleteDocUsagesToolStripMenuItem, Me.DeleteDocSynopsesToolStripMenuItem, Me.DeleteDocPartsToolStripMenuItem, Me.RemoveDocAndDependentsToolStripMenuItem})
         Me.TestDuplicatesToolStripMenuItem.Name = "TestDuplicatesToolStripMenuItem"
         Me.TestDuplicatesToolStripMenuItem.Size = New System.Drawing.Size(95, 20)
         Me.TestDuplicatesToolStripMenuItem.Text = "TestDuplicates"
@@ -274,6 +275,12 @@ Partial Class frmBesLodMain
         Me.DeleteDocPartsToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
         Me.DeleteDocPartsToolStripMenuItem.Text = "DeleteDocParts"
         '
+        'RemoveDocAndDependentsToolStripMenuItem
+        '
+        Me.RemoveDocAndDependentsToolStripMenuItem.Name = "RemoveDocAndDependentsToolStripMenuItem"
+        Me.RemoveDocAndDependentsToolStripMenuItem.Size = New System.Drawing.Size(223, 22)
+        Me.RemoveDocAndDependentsToolStripMenuItem.Text = "RemoveDocAndDependents"
+        '
         'frmBesLodMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -328,5 +335,6 @@ Partial Class frmBesLodMain
     Friend WithEvents DeleteDocUsagesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DeleteDocSynopsesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DeleteDocPartsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents RemoveDocAndDependentsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class
