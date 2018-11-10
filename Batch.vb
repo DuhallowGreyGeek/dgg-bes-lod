@@ -496,6 +496,50 @@ Public Class Batch
         Return ERRORROWCOUNT
     End Function
 
+    Public Function DeleteDocSynopses(DocumentId As Integer) As Integer
+        'Delete all the DocSynopis records associated with a Document. 
+        'Return the number of DocSynopsis records deleted. This could be any number from 0 (probably an empty document) upwards.
+        'Normally there will be one Synopsis record per Part. Documents usually have a minimum of 1 part.
+        'Used as part of deleting a DocBatch or prior to replacing a duplicate document.
+        mRoutineName = "DeleteDocSynopses(DocumentId As Integer)"
+
+        Const ERRORROWCOUNT As Integer = -9999
+
+        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+
+        'Get Connection string data
+        conString.DataSource = params.SQLDataSource
+        conString.IntegratedSecurity = params.SQLIntegratedSecurity
+        conString.InitialCatalog = params.SQLInitCatalogDB
+        Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
+
+        Dim queryString As String = "DELETE FROM dbo.DocSynopsis "
+        queryString = queryString & "WHERE DocumentId = @DocumentId "
+
+        'Console.WriteLine(queryString)
+
+        Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
+
+        'Now substitute the values into the command
+        sqlCommand.Parameters.AddWithValue("@DocumentId", DocumentId)
+
+        Try
+            Dim numRows As Integer = 0
+
+            sqlCommand.Connection.Open()
+            Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
+            'MsgBox("Number Usage rows affected = " & iRows.ToString)
+            Return iRows
+            sqlCommand.Connection.Close()
+
+        Catch ex As SqlException
+            Call Me.handleSQLException(ex)
+
+            Return ERRORROWCOUNT
+        End Try
+        Return ERRORROWCOUNT
+    End Function
+
     Private Sub handleSQLException(ex As SqlException)
         Console.WriteLine("*** Error *** in Module: " & MODNAME)
         Console.WriteLine("*** Exception *** in routine: " & mRoutineName)
