@@ -127,7 +127,9 @@ Public Class Batch
                         'Replace the existing records
                         Console.WriteLine("--- User Replaced Document: " & iDocCount & ": " & doc.DocLabel)
                         Call RemoveDocAndDependents(doc.DocLabel)
-                        '*******
+                        Call AddDocAndDependents(docBatchId, doc)
+                        '
+                        RaiseEvent ProcDocFinished(iDocCount)
                         '
                     Case Windows.Forms.DialogResult.Ignore
                         'Skip the new record and retain the existing records
@@ -354,7 +356,7 @@ Public Class Batch
         Dim iRows As Integer = 0 'Number of Documents which have been deleted (should be 0 or 1)
 
         Try
-            MsgBox("Deleting All the records associated with Document: " & DocLabel)
+            'MsgBox("Deleting All the records associated with Document: " & DocLabel)
             'Any failures result in an exception being thrown
             Dim DocumentId As Integer = Me.GetDocId(DocLabel)
             '
@@ -363,8 +365,7 @@ Public Class Batch
             Dim numPartsDeleted As Integer = Me.DeleteParts(DocumentId)
             '
             iRows = Me.DeleteDoc(DocumentId)    'Finally delete the Document itself
-
-            Call MsgBox("--Deleted: " & DocumentId.ToString & " Rows: " & iRows.ToString)
+            'Call MsgBox("--Deleted: " & DocumentId.ToString & " Rows: " & iRows.ToString)
 
             Return iRows
 
