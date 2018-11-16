@@ -51,15 +51,19 @@ Public Class Batch
             Select Case result
                 Case MsgBoxResult.Ok
                     'Replace the existing records
-                    Console.WriteLine("--- User replacing Duplicate Batch: " & fname)
+                    If My.Settings.DocsToConsole Then
+                        Console.WriteLine("--- User replacing Duplicate Batch: " & fname)
+                    End If
                     RaiseEvent DocBatchDupReplace(fname)
 
                     Call Me.RemoveDuplicateBatch(fname)
-                    Call MsgBox("Add new batch with the same name: " & fname)
+                    Call ProcessBatch(docBatchFname) 'Finally process the new batch
 
                 Case MsgBoxResult.Cancel
                     'Stop! Keep changes which have already been made but exit process
-                    Console.WriteLine("--- User cancelled loading Duplicate Batch: " & fname)
+                    If My.Settings.DocsToConsole Then
+                        Console.WriteLine("--- User cancelled loading Duplicate Batch: " & fname)
+                    End If
                     RaiseEvent DocBatchDupCancel(fname)
 
                 Case Else
@@ -105,9 +109,6 @@ Public Class Batch
             End If
 
             RaiseEvent ProcDocStarted(iDocCount)
-
-            'Call doc.Dump() 'Dump contents to the console
-            'Console.WriteLine("Document: " & doc.DocLabel & " exists? True/False --> " & Me.IsThereExistingDocument(doc.DocLabel))
 
             'Check if a Document with this DocLabel exists.
             If Me.IsThereExistingDocument(doc.DocLabel) Then        'There is an existing document - Ask the user what they want to do with it.
@@ -282,7 +283,15 @@ Public Class Batch
         'A duplicate batch was detected. The user has decided to overwrite it.
         'Remove the existing DocBatch and the dependent Document, Part and Usage records.
         mRoutineName = "RemoveDuplicateBatch(fname As String)"
-        Call MsgBox("Remove existing batch: " & fname)
+        Console.WriteLine("*** RemovingBatch---> " & fname)
+        Dim DocBatchId As Integer = mlodSQL.DocBatch_IDofRecord(fname)
+
+        For Each DocumentLabel In Me.ListDocumentsInBatch(DocBatchId)
+            Console.WriteLine("   ----> " & DocumentLabel)
+            Call RemoveDocAndDependents(DocumentLabel)
+        Next
+
+        Call Me.DeleteBatch(DocBatchId)
 
     End Sub
 
@@ -565,6 +574,57 @@ Public Class Batch
         Return ERRORROWCOUNT
     End Function
 
+    Private Function ListDocumentsInBatch(DocBatchId As Integer) As Collection
+        'Return a collection of the DocumentLabelss of all the Documents in a Batch
+        Dim DocumentLabelsCollection As New Collection
+
+        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+
+        'Get Connection string data
+        conString.DataSource = params.SQLDataSource
+        conString.IntegratedSecurity = params.SQLIntegratedSecurity
+        conString.InitialCatalog = params.SQLInitCatalogDB
+
+        'Construct the query string
+        Dim queryString As String = "SELECT DISTINCT doc.DocumentLabel From dbo.Document as doc WHERE "
+        queryString = queryString & "doc.DocBatchId = @DocBatchId "
+
+        'Console.WriteLine(queryString)
+
+        Try
+            Using sqlConnection As New SqlConnection(conString.ConnectionString)
+                sqlConnection.Open()
+                Using sqlCommand As New SqlCommand(queryString, sqlConnection)
+                    sqlCommand.Parameters.AddWithValue("@DocBatchId", DocBatchId)
+
+                    Using reader = sqlCommand.ExecuteReader()
+                        If reader.HasRows Then
+                            Do While reader.Read
+                                DocumentLabelsCollection.Add(reader.Item("DocumentLabel"))
+                            Loop
+                        End If
+                    End Using
+                End Using
+                sqlConnection.Close()
+                Return DocumentLabelsCollection
+            End Using
+
+            'Should never reach this point!
+
+            Call DocumentLabelsCollection.Clear()
+            Return DocumentLabelsCollection 'Which will stop anything bad happening!
+
+        Catch ex As SqlException
+            Call Me.handleSQLException(ex)
+
+        Catch ex As Exception
+            Call Me.handleGeneralException(ex)
+
+        End Try
+
+        Return DocumentLabelsCollection
+    End Function
+
     Public Function DeleteParts(DocumentId As Integer) As Integer
         'Delete all the Part records associated with a Document. 
         'Return the number of Part records deleted. This could be any number from 0 (probably an empty document) upwards.
@@ -608,6 +668,44 @@ Public Class Batch
         End Try
         Return ERRORROWCOUNT
     End Function
+
+    Private Sub DeleteBatch(DocBatchId As Integer)
+        'Delete the DocumentBatch record for a DocBatchId 
+        'There is a unique index on DocBatchId, so there 0 or 1.
+        'Used as part of deleting a DocBatch or prior to replacing a duplicate batch.
+        mRoutineName = "DeleteBatch(DocBatchId As Integer)"
+
+        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
+
+        'Get Connection string data
+        conString.DataSource = params.SQLDataSource
+        conString.IntegratedSecurity = params.SQLIntegratedSecurity
+        conString.InitialCatalog = params.SQLInitCatalogDB
+        Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
+
+        Dim queryString As String = "DELETE FROM dbo.DocBatch "
+        queryString = queryString & "WHERE DocBatchId = @DocBatchId "
+
+        'Console.WriteLine(queryString)
+
+        Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
+
+        'Now substitute the values into the command
+        sqlCommand.Parameters.AddWithValue("@DocBatchId", DocBatchId)
+
+        Try
+
+            sqlCommand.Connection.Open()
+            Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
+            'MsgBox("Number Part rows affected = " & iRows.ToString)
+            sqlCommand.Connection.Close()
+
+        Catch ex As SqlException
+            Call Me.handleSQLException(ex)
+
+        End Try
+
+    End Sub
 
     Private Sub handleSQLException(ex As SqlException)
         Console.WriteLine("*** Error *** in Module: " & MODNAME)
