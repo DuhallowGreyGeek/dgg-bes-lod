@@ -8,7 +8,7 @@
         ' *** My Stuff - Don't think I should need to do this, but "Revision" is not picked up from Project properties dialog.
         ' *** Update this value for each build, to get it shown on the Splash screen (see code at end too)
         '
-        Dim myRevision As String = 5
+        Dim myRevision As String = 1
 
         'Set up the dialog text at runtime according to the application's assembly information.  
 

@@ -30,8 +30,8 @@
     <ProductName>Bessie Doc Loader</ProductName>
     <PublisherName>DGG Bunter Text Search</PublisherName>
     <SuiteName>Bunter Document Search</SuiteName>
-    <ApplicationRevision>5</ApplicationRevision>
-    <ApplicationVersion>0.1.1.%2a</ApplicationVersion>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>0.2.1.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>

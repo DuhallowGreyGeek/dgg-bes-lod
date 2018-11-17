@@ -3,8 +3,8 @@
 <!-- Not expected to be edited by users -->
 <!-- The elements have to be in EXACTLY the right order and have EXACTLY the right contents!! -->
     <parameters>
-	    <applicationVersion>appVersion</applicationVersion>
-      <databaseVersion>databaseVersion</databaseVersion>
+	    <applicationVersion>Release: 0-2-1</applicationVersion>
+      <databaseVersion>Release: 0-2-1</databaseVersion>
       
       <!-- Settings for the Database connection - Single Database -->
       <SQLDataSource>LENOVOUSER\SQLEXPRESS</SQLDataSource>
