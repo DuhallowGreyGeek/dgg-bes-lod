@@ -65,6 +65,8 @@ Public Class DBDictionary
 
             'Console.WriteLine(queryString)
 
+            Dim wordId As Integer
+
             Try
                 Using sqlConnection As New SqlConnection(conString.ConnectionString)
                     sqlConnection.Open()
@@ -75,10 +77,14 @@ Public Class DBDictionary
                             If reader.HasRows Then
                                 Do While reader.Read
 
-                                    Return reader.Item("WordId")
+                                    wordId = reader.Item("WordId")
+
+                                    sqlConnection.Close()
+                                    Return wordId
 
                                 Loop
                             Else
+                                sqlConnection.Close()
                                 Return ERRORKEY
                             End If
                         End Using
@@ -129,8 +135,10 @@ Public Class DBDictionary
 
                         Using reader = sqlCommand.ExecuteReader()
                             If reader.HasRows Then
+                                sqlConnection.Close()
                                 Return True
                             Else
+                                sqlConnection.Close()
                                 Return False
                             End If
                         End Using
@@ -168,11 +176,11 @@ Public Class DBDictionary
             'This will subsequently come from a system wide parameter.
             'A parameter will be used so that I can adjust the characters used without recompiling the program
 
-            'Line ends will always cause a word-split.
-            Const LINEEND As String = vbCr & vbCrLf
+            'Line ends and tabs will always cause a word-split.
+            Const HARDSPLIT As String = vbCr & vbCrLf & vbTab
             '
-            Dim splitChars As String = "\/@;:?!, " & LINEEND  'Allow imbedded full-stops to preserve file names (maybe)
-
+            'Dim splitChars As String = "\/@;:?!, " & HARDSPLIT  'Allow imbedded full-stops to preserve file names (maybe)
+            Dim splitChars As String = params.WordSplitChars & HARDSPLIT  'Allow imbedded full-stops to preserve file names (maybe)
 
             'Do the actual split
             Dim words = myString.Split(splitChars.ToCharArray, StringSplitOptions.RemoveEmptyEntries)
@@ -186,9 +194,11 @@ Public Class DBDictionary
             'but it is only done once when the document is loaded.
 
             For Each candidateWord In words
-                candidateWord = Regex.Replace(candidateWord, "[^A-Za-z.']+", String.Empty)
+                'candidateWord = Regex.Replace(candidateWord, "[^A-Za-z.']+", String.Empty)
+                candidateWord = Regex.Replace(candidateWord, params.WordPermChars, String.Empty)
 
-                Dim trimChars As String = ". " 'Characters to remove from the beginning and end of the candidate
+                'Dim trimChars As String = ". " 'Characters to remove from the beginning and end of the candidate
+                Dim trimChars As String = params.WordRemoveTermChars 'Characters to remove from the beginning and end of the candidate
 
                 candidateWord = candidateWord.Trim(trimChars.ToCharArray)
 
@@ -231,6 +241,7 @@ Public Class DBDictionary
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
             'MsgBox("Number DocBatch rows affected = " & iRows.ToString)
+            sqlCommand.Connection.Close()
 
         Catch ex As SqlException
             Call Me.handleSQLException(ex)

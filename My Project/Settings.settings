@@ -1,7 +1,21 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" UseMySettingsClassName="true">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="ParmsPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">C:\Users\user\Documents\BES_20180827\BES_TestData\</Value>
+    </Setting>
+    <Setting Name="DBParmsFname" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">BesLodDBParms.xml</Value>
+    </Setting>
+    <Setting Name="LdrParmsFname" Type="System.String" Scope="User">
+      <Value Profile="(Default)">BesLodLdrParms.xml</Value>
+    </Setting>
+    <Setting Name="WordsToConsole" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="DocsToConsole" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

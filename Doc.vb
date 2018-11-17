@@ -4,6 +4,7 @@ Public Class Doc
     'The Document class. This represents the physical document a user would recognise.
     'A lot of the work like "Reviews" or "Chapters" is handled by the Part object.
 
+    Private mDocLabel As String
     Private mFilename As String
     Private mPath As String
     Private mDate As Date
@@ -26,6 +27,7 @@ Public Class Doc
                             Dim xBodyHeader As XmlElement = xDocBody.GetElementsByTagName("doc_header").Item(i)
                             Dim curBodyHeader As New DocHeader(xBodyHeader)
 
+                            mDocLabel = curBodyHeader.DocLabel
                             mFilename = curBodyHeader.FileName
                             mPath = curBodyHeader.FilePath
                             mDate = curBodyHeader.DocDate
@@ -59,6 +61,12 @@ Public Class Doc
         'Call Me.Dump() 'Dump the contents to the console
 
     End Sub
+
+    Public ReadOnly Property DocLabel As String
+        Get
+            Return mDocLabel
+        End Get
+    End Property
 
     Public ReadOnly Property FileName As String
         Get
@@ -99,6 +107,7 @@ Public Class Doc
 
         Console.WriteLine("    ---- Contents of Doc. ----- ")
 
+        Console.WriteLine("        --- .DocLabel ---- " & Me.DocLabel)
         Console.WriteLine("        --- .DocDate ----- " & Me.DocDate)
         Console.WriteLine("        --- .FileName ---- " & Me.FileName)
         Console.WriteLine("        --- .FilePath ---- " & Me.FilePath)
