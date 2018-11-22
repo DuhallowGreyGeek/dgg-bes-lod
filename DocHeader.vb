@@ -38,17 +38,6 @@ Public Class DocHeader
                 End If
             Next
 
-
-            'If xDocHeaderProp.Attributes.Count > 0 Then
-            'Console.WriteLine(" has: " & xDocHeaderProp.Attributes.Count.ToString & " attributes: ")
-
-            'Dim j As Integer
-            'For j = 0 To xDocHeaderProp.Attributes.Count - 1
-            'Console.Write("    attribute: " & j.ToString & ": ")
-            'Console.Write(xDocHeaderProp.Attributes.Item(j).Name.ToString)
-            'Console.WriteLine(" = " & xDocHeaderProp.Attributes.Item(j).Value.ToString)
-            'Next
-
         End If
 
         'Call Me.Dump() 'Dump contents to the console
