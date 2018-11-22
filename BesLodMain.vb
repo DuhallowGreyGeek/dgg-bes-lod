@@ -4,6 +4,7 @@
     Public params As New BesParam   'Declare the parameters object
     Public mlodSQL As New BesLodSQL 'The SQL function *** Consolidating the SQL in one place like this was a BAD idea!
     Public dict As New DBDictionary 'The dictionary containing the "vocabulary"
+    Public util As New DGGUtilities 'Simple utilities
 
     Public frmMain As New frmBesLodMain
 
@@ -12,7 +13,7 @@
         'Probably means I'm not doing it right!
         Dim frmSplash As New frmBesLodSplash
         frmSplash.ShowDialog()
-
+        
         'Show the Main screen
         frmMain.ShowDialog()
 

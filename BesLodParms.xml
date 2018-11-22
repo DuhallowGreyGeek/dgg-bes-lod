@@ -3,13 +3,13 @@
 <!-- Not expected to be edited by users -->
 <!-- The elements have to be in EXACTLY the right order and have EXACTLY the right contents!! -->
     <parameters>
-	    <applicationVersion>Release: 0-2-1</applicationVersion>
-      <databaseVersion>Release: 0-2-1</databaseVersion>
+	    <applicationVersion>Release: 0-2-2</applicationVersion>
+      <databaseVersion>Release: 0-2-2</databaseVersion>
       
       <!-- Settings for the Database connection - Single Database -->
       <SQLDataSource>LENOVOUSER\SQLEXPRESS</SQLDataSource>
       <SQLIntegratedSecurity>True</SQLIntegratedSecurity>
-      <SQLInitCatalogDB>BessieDev2</SQLInitCatalogDB>
+      <SQLInitCatalogDB>BessieDev3</SQLInitCatalogDB>
     </parameters>
     
 

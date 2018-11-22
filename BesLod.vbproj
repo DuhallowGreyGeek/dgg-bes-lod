@@ -114,6 +114,7 @@
     <Compile Include="BesLodMain.vb" />
     <Compile Include="BesLodSQL.vb" />
     <Compile Include="DBDictionary.vb" />
+    <Compile Include="DGGUtilities.vb" />
     <Compile Include="dlgSkipReplace.Designer.vb">
       <DependentUpon>dlgSkipReplace.vb</DependentUpon>
     </Compile>
