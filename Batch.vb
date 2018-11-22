@@ -27,7 +27,6 @@ Public Class Batch
 
         'Check if we have loaded a DocBatch with this filename before
         Dim fname As String = System.IO.Path.GetFileName(docBatchFname)
-
         Dim prgList As Object = frmMain.lstLoadProgress.Items
 
         If IsThereExistingDocBatch(fname) = False Then 'Process the batch
@@ -40,7 +39,7 @@ Public Class Batch
             'This may be a mistake. Report it and ask the user what they want to do about it.
 
             RaiseEvent DocBatchDuplicate(fname)
-            Console.WriteLine("--- Duplicate Batch: " & fname & " detected.")
+            util.WriteConsMsg("--- Duplicate Batch: " & fname & " detected.")
 
             Dim prompt As String = "A document batch with the filename: " & fname & " has already been added to the database."
             prompt = prompt & vbCrLf & "Do you want to overwrite it?"
@@ -51,9 +50,7 @@ Public Class Batch
             Select Case result
                 Case MsgBoxResult.Ok
                     'Replace the existing records
-                    If My.Settings.DocsToConsole Then
-                        Console.WriteLine("--- User replacing Duplicate Batch: " & fname)
-                    End If
+                    util.WriteConsMsg("--- User replacing Duplicate Batch: " & fname)
                     RaiseEvent DocBatchDupReplace(fname)
 
                     Call Me.RemoveDuplicateBatch(fname)
@@ -61,9 +58,7 @@ Public Class Batch
 
                 Case MsgBoxResult.Cancel
                     'Stop! Keep changes which have already been made but exit process
-                    If My.Settings.DocsToConsole Then
-                        Console.WriteLine("--- User cancelled loading Duplicate Batch: " & fname)
-                    End If
+                    util.WriteConsMsg("--- User cancelled loading Duplicate Batch: " & fname)
                     RaiseEvent DocBatchDupCancel(fname)
 
                 Case Else
@@ -82,32 +77,24 @@ Public Class Batch
 
         Dim xDocBatch As New XmlDocument
         xDocBatch.Load(docBatchFname) 'Load the document
-        Dim xBatHeader As New BatHeader(xDocBatch)
 
+        Dim xBatHeader As New BatHeader(xDocBatch)
         Call mlodSQL.DocBatch_Insert(xBatHeader)    'Insert the DocBatch row
         Dim docBatchId As Integer = mlodSQL.DocBatch_IDofRecord(fname)
 
-        If My.Settings.DocsToConsole Then
-            Console.WriteLine("---- Current row .DocBatchId = " & docBatchId.ToString)
-        End If
+        util.WriteConsMsg("---- Current row .DocBatchId = " & docBatchId.ToString)
 
         'Process each document in the DocBatch
         Dim xDocList As New DocList(xDocBatch)
 
         mNumDocs = xDocList.DocList.Count
-        If My.Settings.DocsToConsole Then
-            Console.WriteLine("number of documents ---> " & xDocList.DocList.Count)
-        End If
-
+        util.WriteConsMsg("number of documents ---> " & xDocList.DocList.Count)
         RaiseEvent DocLoadStarted(xDocList.DocList.Count)
 
         Dim iDocCount As Integer = 0
         For Each doc As Doc In xDocList.DocList
             iDocCount = iDocCount + 1
-            If My.Settings.DocsToConsole Then
-                Console.WriteLine(" --Document # --> " & iDocCount.ToString)
-            End If
-
+            util.WriteConsMsg(" --Document # --> " & iDocCount.ToString)
             RaiseEvent ProcDocStarted(iDocCount)
 
             'Check if a Document with this DocLabel exists.
@@ -126,7 +113,8 @@ Public Class Batch
                 Select Case result
                     Case Windows.Forms.DialogResult.OK
                         'Replace the existing records
-                        Console.WriteLine("--- User Replaced Document: " & iDocCount & ": " & doc.DocLabel)
+                        util.WriteConsMsg("--- User Replaced Document: " & iDocCount & ": " & doc.DocLabel)
+
                         Call RemoveDocAndDependents(doc.DocLabel)
                         Call AddDocAndDependents(docBatchId, doc)
                         '
@@ -134,12 +122,12 @@ Public Class Batch
                         '
                     Case Windows.Forms.DialogResult.Ignore
                         'Skip the new record and retain the existing records
-                        Console.WriteLine("--- User skipped Document: " & iDocCount & ": " & doc.DocLabel)
+                        util.WriteConsMsg("--- User skipped Document: " & iDocCount & ": " & doc.DocLabel)
                         Continue For
                         '
                     Case Windows.Forms.DialogResult.Abort
                         'Stop! Keep changes which have already been made but exit process
-                        Console.WriteLine("--- User cancelled processing @ Document: " & iDocCount & ": " & doc.DocLabel)
+                        util.WriteConsMsg("--- User cancelled processing @ Document: " & iDocCount & ": " & doc.DocLabel)
                         RaiseEvent DocumentDupCancel(iDocCount, doc.DocLabel)
                         Exit For
                         '
@@ -151,7 +139,6 @@ Public Class Batch
             Else                                                    'There is no existing document - get on and add it.
 
                 Call AddDocAndDependents(docBatchId, doc)
-                '
                 RaiseEvent ProcDocFinished(iDocCount)
             End If
         Next
@@ -283,11 +270,13 @@ Public Class Batch
         'A duplicate batch was detected. The user has decided to overwrite it.
         'Remove the existing DocBatch and the dependent Document, Part and Usage records.
         mRoutineName = "RemoveDuplicateBatch(fname As String)"
-        Console.WriteLine("*** RemovingBatch---> " & fname)
+        util.WriteConsMsg("*** RemovingBatch---> " & fname)
+
         Dim DocBatchId As Integer = mlodSQL.DocBatch_IDofRecord(fname)
 
         For Each DocumentLabel In Me.ListDocumentsInBatch(DocBatchId)
-            Console.WriteLine("   ----> " & DocumentLabel)
+            util.WriteConsMsg("   ----> " & DocumentLabel)
+
             Call RemoveDocAndDependents(DocumentLabel)
         Next
 
@@ -301,10 +290,8 @@ Public Class Batch
 
         'Console.WriteLine("---- Invoke the SQL Insert -----")
         Dim DocId As Integer = mlodSQL.Doc_Insert(docBatchId, doc)
-        If My.Settings.DocsToConsole Then
-            Console.WriteLine("--- Document.DocId = " & DocId.ToString)
-            Console.WriteLine("  ------Now the parts---")
-        End If
+        util.WriteConsMsg("--- Document.DocId = " & DocId.ToString)
+        util.WriteConsMsg("  ------Now the parts---")
 
         '----Now write the parts 
         Dim jPartNum As Integer = 0
@@ -314,8 +301,6 @@ Public Class Batch
             curPart.DocumentId = DocId
             curPart.PartNum = jPartNum
             Call mlodSQL.Part_Insert(curPart)       'Insert into the database
-
-            'Call curPart.Dump() 'Dump contents to console
 
             'Add the words referred to in the fields of the current part to the dictionary
             'and then persist the Usage information
@@ -328,9 +313,7 @@ Public Class Batch
 
                 Dim wordid = dict.GetWordId(word)       'Gets the WordId and maybe adds the word to the dictionary
 
-                If My.Settings.WordsToConsole Then
-                    Console.WriteLine(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
-                End If
+                util.WriteConsWords(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
 
                 Dim usage As New Usage
                 Call usage.Add(curPart, fieldIdent, wordSeqNum, wordid)
@@ -345,9 +328,7 @@ Public Class Batch
 
                 Dim wordid = dict.GetWordId(word)       'Gets the WordId and maybe adds the word to the dictionary
 
-                If My.Settings.WordsToConsole Then
-                    Console.WriteLine(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
-                End If
+                util.WriteConsWords(" word seq -- " & wordSeqNum.ToString & " --> " & word & " id => " & wordid)
 
                 Dim usage As New Usage
                 Call usage.Add(curPart, fieldIdent, wordSeqNum, wordid)
@@ -374,7 +355,6 @@ Public Class Batch
             Dim numPartsDeleted As Integer = Me.DeleteParts(DocumentId)
             '
             iRows = Me.DeleteDoc(DocumentId)    'Finally delete the Document itself
-            'Call MsgBox("--Deleted: " & DocumentId.ToString & " Rows: " & iRows.ToString)
 
             Return iRows
 
@@ -475,7 +455,7 @@ Public Class Batch
 
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
-            'MsgBox("Number Document rows affected = " & iRows.ToString)
+            '
             Return iRows
             sqlCommand.Connection.Close()
 
@@ -506,8 +486,6 @@ Public Class Batch
         Dim queryString As String = "DELETE FROM dbo.Usage "
         queryString = queryString & "WHERE DocumentId = @DocumentId "
 
-        'Console.WriteLine(queryString)
-
         Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
 
         'Now substitute the values into the command
@@ -518,7 +496,7 @@ Public Class Batch
 
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
-            'MsgBox("Number Usage rows affected = " & iRows.ToString)
+            '
             Return iRows
             sqlCommand.Connection.Close()
 
@@ -550,8 +528,6 @@ Public Class Batch
         Dim queryString As String = "DELETE FROM dbo.DocSynopsis "
         queryString = queryString & "WHERE DocumentId = @DocumentId "
 
-        'Console.WriteLine(queryString)
-
         Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
 
         'Now substitute the values into the command
@@ -562,7 +538,7 @@ Public Class Batch
 
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
-            'MsgBox("Number Usage rows affected = " & iRows.ToString)
+            '
             Return iRows
             sqlCommand.Connection.Close()
 
@@ -588,8 +564,6 @@ Public Class Batch
         'Construct the query string
         Dim queryString As String = "SELECT DISTINCT doc.DocumentLabel From dbo.Document as doc WHERE "
         queryString = queryString & "doc.DocBatchId = @DocBatchId "
-
-        'Console.WriteLine(queryString)
 
         Try
             Using sqlConnection As New SqlConnection(conString.ConnectionString)
@@ -657,7 +631,7 @@ Public Class Batch
 
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
-            'MsgBox("Number Part rows affected = " & iRows.ToString)
+            '
             Return iRows
             sqlCommand.Connection.Close()
 
@@ -686,8 +660,6 @@ Public Class Batch
         Dim queryString As String = "DELETE FROM dbo.DocBatch "
         queryString = queryString & "WHERE DocBatchId = @DocBatchId "
 
-        'Console.WriteLine(queryString)
-
         Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
 
         'Now substitute the values into the command
@@ -697,7 +669,7 @@ Public Class Batch
 
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
-            'MsgBox("Number Part rows affected = " & iRows.ToString)
+            '
             sqlCommand.Connection.Close()
 
         Catch ex As SqlException

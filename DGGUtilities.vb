@@ -10,4 +10,13 @@
         End If
     End Sub
 
+    Public Sub WriteConsWords(msg As String)
+        'Depending on the value of the setting, write a Words messages to the Console.
+        'Hardly worth doing except that it takes the "ifs" out of the main code.
+
+        If My.Settings.WordsToConsole Then
+            Console.WriteLine(msg)
+        End If
+    End Sub
+
 End Class
