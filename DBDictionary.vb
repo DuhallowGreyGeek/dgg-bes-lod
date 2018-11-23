@@ -63,8 +63,6 @@ Public Class DBDictionary
             Dim queryString As String = "Select wrd.WordId From dbo.DictWord as wrd WHERE "
             queryString = queryString & "wrd.WordText = @word "
 
-            'Console.WriteLine(queryString)
-
             Dim wordId As Integer
 
             Try
@@ -124,8 +122,6 @@ Public Class DBDictionary
             'Construct the query string
             Dim queryString As String = "Select wrd.WordId From dbo.DictWord as wrd WHERE "
             queryString = queryString & "wrd.WordText = @word "
-
-            'Console.WriteLine(queryString)
 
             Try
                 Using sqlConnection As New SqlConnection(conString.ConnectionString)
@@ -227,8 +223,6 @@ Public Class DBDictionary
         Dim queryString As String = "INSERT INTO dbo.DictWord (WordText) VALUES( "
         queryString = queryString & "@WordText "
         queryString = queryString & " )"
-
-        'Console.WriteLine(queryString)
 
         Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
 
