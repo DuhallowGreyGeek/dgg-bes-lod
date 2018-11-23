@@ -13,38 +13,7 @@ Public Class BesLodSQL
 
     End Sub
 
-    
-    Public Sub augTable_fail()
-        'Dim mParams As New BesParam 'Will declaring the parameters object locally fix my problem? 
-        Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
-
-        'Get Connection string data
-        conString.DataSource = params.SQLDataSource
-        conString.IntegratedSecurity = params.SQLIntegratedSecurity
-        conString.InitialCatalog = params.SQLInitCatalogDB
-
-        Console.WriteLine(conString.ConnectionString)
-        Dim connection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
-
-        Dim queryString As String = "EXECUTE NonExistantStoredProcedure"
-
-        Dim mySqlCommand = New SqlCommand(queryString, connection)
-
-        Try
-            Dim numRows As Integer = 0
-
-            mySqlCommand.Connection.Open()
-            MsgBox("Number rows affected = " & mySqlCommand.ExecuteNonQuery().ToString)
-            mySqlCommand.Connection.Close()
-
-        Catch ex As SqlException
-            Call Me.handleSQLException(ex)
-        End Try
-
-    End Sub
-
     Public Function SysStateVals_Select_OK() As Boolean
-        'Call MsgBox("SysStateVals_Select")
         'Get the values in the SystemStateValues table as a test of the DB Connection
         'Return True if OK (even if warnings) otherwise return False
         mRoutineName = "SysStateVals_Select_OK()"
@@ -122,8 +91,6 @@ Public Class BesLodSQL
         queryString = queryString & "@FileName, @DateCreated, @dateString, @Description"
         queryString = queryString & " )"
 
-        'Console.WriteLine(queryString)
-
         'Truncate input if required
         Const STRLEN As Integer = 255 'The maximum length of string allowed for field in DB
         Dim descString As String
@@ -174,8 +141,6 @@ Public Class BesLodSQL
         'Construct the query string
         Dim queryString As String = "Select bat.DocBatchId From dbo.DocBatch as bat WHERE "
         queryString = queryString & "bat.FileName = @FileName "
-
-        'Console.WriteLine(queryString)
 
         Try
             Using sqlConnection As New SqlConnection(conString.ConnectionString)
@@ -238,8 +203,6 @@ Public Class BesLodSQL
         queryString = queryString & " @DocumentLabel, @FileName, @Path, @Title, @DateOnDoc, @DocBatchId "
         queryString = queryString & " )"
 
-        'Console.WriteLine(queryString)
-
         'Truncate input if required
         Const STRLEN As Integer = 50 'The maximum length of string allowed for field in DB
         Dim titleString As String
@@ -283,8 +246,6 @@ Public Class BesLodSQL
         sqlCommand.Parameters.AddWithValue("@DateOnDoc", doc.DocDate.ToString("yyyy/MM/dd"))
         sqlCommand.Parameters.AddWithValue("@DocBatchId", docBatchId)
 
-        'Console.WriteLine("--sqlCommand--> " & sqlCommand.CommandText)
-
         Try
             Dim numRows As Integer = 0
 
@@ -322,8 +283,6 @@ Public Class BesLodSQL
         'Construct the query string
         Dim queryString As String = "Select doc.DocumentId From dbo.Document as doc WHERE "
         queryString = queryString & "doc.DocumentLabel = @DocumentLabel"
-
-        'Console.WriteLine("----> " & queryString)
 
         Try
             Using sqlConnection As New SqlConnection(conString.ConnectionString)
@@ -367,8 +326,6 @@ Public Class BesLodSQL
         'Label (and FileName) is an external identifier. It will have a unique index.
         mRoutineName = "Part_Insert(part As Part)"
 
-        'part.Dump() 'Dump the contents to the console
-
         Const QUOT As String = "'"                              'SQL is expecting literals enclosed in single quotes - I predict confusion!
         Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
 
@@ -379,9 +336,6 @@ Public Class BesLodSQL
         Dim sqlConnection As New System.Data.SqlClient.SqlConnection(conString.ConnectionString)
 
         'The *parameters* for the Document row being added
-        'Dim DateCreated As String = QUOT & BatHeader.CreatedDate.ToString("yyyy/MM/dd") & QUOT   '--- BatchDateCreated, 
-
-
         Dim dateString As String = QUOT & Now.ToString("yyyy/MM/dd HH:mm:ss.fff") & QUOT   'Using a string purely to get an updating string
 
         'Build the query command structure
@@ -390,8 +344,6 @@ Public Class BesLodSQL
         queryString = queryString & " VALUES( "
         queryString = queryString & " @DocumentID, @PartNum, @DocDate, @DocFrom, @DocTo, @DocSubject "
         queryString = queryString & " )"
-
-        'Console.WriteLine(queryString)
 
         Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
 
@@ -403,19 +355,16 @@ Public Class BesLodSQL
         sqlCommand.Parameters.AddWithValue("@DocTo", part.DocTo)
         sqlCommand.Parameters.AddWithValue("@DocSubject", part.Subject)
 
-        'Console.WriteLine("--sqlCommand--> " & sqlCommand.CommandText)
-
         Try
             Dim numRows As Integer = 0
 
             sqlCommand.Connection.Open()
 
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
-            'MsgBox("Number Part rows inserted = " & iRows.ToString)
+
             sqlCommand.Connection.Close()
 
             If part.Synopsis.Length > 0 Then 'If there is a synopsis to write, then write it!
-                'Console.WriteLine("--Synopsis--- " & part.Synopsis.Length.ToString & " ----> " & part.Synopsis.ToString)
                 Call DocSynopsis_Insert(part.DocumentId, part.PartNum, part.Synopsis)
             End If
 
@@ -429,8 +378,6 @@ Public Class BesLodSQL
     Private Sub DocSynopsis_Insert(documentId As Integer, partNum As Integer, synopsis As String)
         'Insert the text into the DocSynopsis table
         mRoutineName = "DocSynopsis_Insert(...)"
-
-        'Console.WriteLine("--Synopsis--- " & synopsis.Length.ToString & " ----> " & synopsis.ToString)
 
         Dim conString As New System.Data.SqlClient.SqlConnectionStringBuilder
 
@@ -447,8 +394,6 @@ Public Class BesLodSQL
         queryString = queryString & " @DocumentID, @PartNum, @Synopsis "
         queryString = queryString & " )"
 
-        'Console.WriteLine(queryString)
-
         Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
 
         'Now substitute the values into the command
@@ -456,14 +401,12 @@ Public Class BesLodSQL
         sqlCommand.Parameters.AddWithValue("@PartNum", partNum)
         sqlCommand.Parameters.AddWithValue("@Synopsis", synopsis)
 
-        'Console.WriteLine("--sqlCommand--> " & sqlCommand.CommandText)
-
         Try
             Dim numRows As Integer = 0
 
             sqlCommand.Connection.Open()
             Dim iRows As Integer = sqlCommand.ExecuteNonQuery()
-            'MsgBox("Number Synopsis rows inserted = " & iRows.ToString)
+
             sqlCommand.Connection.Close()
 
         Catch ex As SqlException

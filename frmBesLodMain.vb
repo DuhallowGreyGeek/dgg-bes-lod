@@ -96,12 +96,6 @@ Public Class frmBesLodMain
         Me.cmdLoadXML.Enabled = False
     End Sub
 
-    Private Sub ExceptionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExceptionToolStripMenuItem.Click
-        'Force SQL Exception
-
-        Call mlodSQL.augTable_fail()
-    End Sub
-
     Private Sub TestConnectionToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestConnectionToolStripMenuItem.Click
         'Function to test the connection to the - Simplest thing which could possibly work!
         If mlodSQL.SysStateVals_Select_OK() Then
