@@ -6,7 +6,6 @@ Public Class PartList
     Protected Friend mPartList As New Collection 'Collection to hold the Document Parts
 
     Public Sub New(xPartList As XmlElement)
-        'Console.WriteLine("    --- Content of the PartList ---> " & xPartList.InnerXml)
 
         If xPartList.HasChildNodes Then
 
