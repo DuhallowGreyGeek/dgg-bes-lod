@@ -50,17 +50,17 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>7aHTnU3w0IfoVbr1Ly4/+7g2hlY=</dsig:DigestValue>
+        <dsig:DigestValue>zOp34fDJNzLk9ZQZCnmb6xZKMTY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="BesLod1.exe.config" size="3132">
+  <file name="BesLod1.exe.config" size="3134">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>1Fl0hDxYM11Jnd62scXZWxGinzU=</dsig:DigestValue>
+      <dsig:DigestValue>+HTdJsWdHlvOLHDemAOWG3i9IdY=</dsig:DigestValue>
     </hash>
   </file>
   <file name="BesLodParms.xml" size="649">

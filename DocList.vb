@@ -29,7 +29,7 @@ Public Class DocList
             End If
         End If
 
-        Call Me.Dump() 'Dump contents to the Console
+        'Call Me.Dump() 'Dump contents to the Console
 
     End Sub
 
