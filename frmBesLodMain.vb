@@ -1,7 +1,4 @@
 ﻿Imports System.IO
-'Following only required while I am testing XML stuff in here
-'Imports System.Text
-'Imports System.Xml
 
 Public Class frmBesLodMain
     Friend mFileName As String  'The name of the file of documents we are loading
@@ -11,19 +8,12 @@ Public Class frmBesLodMain
 
         Me.cmdTest.Visible = False
         Me.cmdLoadXML.Enabled = False
-        'NB Settings on tool-strip entries for TestSQL and TestXML
 
         Me.lstLoadProgress.Items.Add("Select the file containing the batch of documents to load")
         Me.lstLoadProgress.Items.Add("using 'File - Open File' and click 'Load XML'")
         Me.lstLoadProgress.Items.Add("")
 
         Me.prgLoadProgress.Minimum = 0      'Set the start of the Progress bar to zero
-    End Sub
-
-    Private Sub DumpToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles DumpToolStripMenuItem.Click
-        params.Dump()
-        MsgBox("Arghhh!")
-        Console.WriteLine("Write to the console")
     End Sub
 
     Private Sub OpenToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles OpenToolStripMenuItem.Click
@@ -49,31 +39,6 @@ Public Class frmBesLodMain
     Private Sub cmdClose_Click(sender As Object, e As EventArgs) Handles cmdClose.Click
         'Close the application
         Me.Close()
-    End Sub
-
-    Private Sub cmdTest_Click(sender As Object, e As EventArgs) Handles cmdTest.Click
-        'This is a temporary function and button for testing fragments of code.
-        lstLoadProgress.Items.Add("Test Button clicked")
-
-        '*** Temporary invoke the ParseString function
-        'Dim word As String
-
-        'Data used for testing
-        Const APST As String = "'"
-        Dim myString = "Richard of York gave battle in vain!" + vbCrLf + "Peter Piper picked a peck of pickled pepper."
-        myString = myString & ", , , and here is some??? more text after some empty words! "
-        myString = myString & "The dreaded O" & APST & "Brien and O" & APST & "Toole should be handled! "
-        myString = myString & "Of course McTavish, MacDonald will be handled, but Mac Donald and Mc Donald will be split. "
-        myString = myString & " ... ...... filename.txt and ...filename.txt... "
-
-        'myString = "one two three four five FIVE FOUR THREE TWO ONE"
-
-
-        'For Each word In dict.ParseString(myString)
-        'Console.WriteLine("----------word--------> " & word & " --WordId--> " & dict.GetWordId(word).ToString)
-
-        'Next
-        '
     End Sub
 
     Private Sub cmdLoadXML_Click(sender As Object, e As EventArgs) Handles cmdLoadXML.Click
@@ -186,7 +151,6 @@ Public Class frmBesLodMain
     Private Sub DeleteDocToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DeleteDocToolStripMenuItem.Click
         mDocBatch = New Batch
 
-
         Dim testDocIdString As String = InputBox("Enter the DocumentId", "Delete a Document based on DocumentId", "9999")
         Dim testDocId As Integer = -9999
 
@@ -273,4 +237,5 @@ Public Class frmBesLodMain
         End If
 
     End Sub
+
 End Class
