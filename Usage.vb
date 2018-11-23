@@ -30,7 +30,6 @@ Public Class Usage
         queryString = queryString & "@DocumentId, @PartNum, @FieldIdent, @WordSeqNum, @WordId"
         queryString = queryString & " )"
 
-        'Console.WriteLine(queryString)
 
         Dim sqlCommand = New SqlCommand(queryString, sqlConnection)
 
@@ -76,8 +75,6 @@ Public Class Usage
             queryString = queryString & "AND wuse.PartNum = @PartNum "
             queryString = queryString & "AND wuse.FieldIdent = @FieldIdent "
             queryString = queryString & "ORDER BY wuse.WordSeqNum ASC "
-
-            'Console.WriteLine("----> " & queryString)
 
             Try
                 Using sqlConnection As New SqlConnection(conString.ConnectionString)
