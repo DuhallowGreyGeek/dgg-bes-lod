@@ -1,6 +1,7 @@
 ﻿Imports System.Windows.Forms
 
 Public Class dlgSkipReplace
+    'Custom dialog to ask the question "Replace (OK), Skip (Ignore) or Halt?"
 
     Private Sub cmdReplace_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdReplace.Click
         Me.DialogResult = System.Windows.Forms.DialogResult.OK
@@ -29,32 +30,6 @@ Public Class dlgSkipReplace
     Private Sub dlgSkipReplace_Load(sender As Object, e As EventArgs) Handles Me.Load
         Me.MinimizeBox = False
         Me.ControlBox = False
-    End Sub
-
-    Private Sub Dummy_DocDumplicate()
-        ' Only here to make moving the invoking code around easy
-        'Display a dialog like MsgBox returning Skip/Replace/Halt
-        Dim dlg As New dlgSkipReplace
-
-        dlg.Text = "Aargh!"
-        dlg.Message = "I have a message for you!"
-
-        Dim result As System.Windows.Forms.DialogResult = dlg.ShowDialog
-
-        Select Case result
-            Case Windows.Forms.DialogResult.OK
-                'Replace the existing records
-                Call MsgBox("Replace")
-            Case Windows.Forms.DialogResult.Ignore
-                'Skip the new record and retain the existing records
-                Call MsgBox("Skip")
-            Case Windows.Forms.DialogResult.Abort
-                'Stop! Keep changes which have already been made but exit process
-                Call MsgBox("Halt")
-            Case Else
-                'Shouldn't happen
-                Call MsgBox("Oops!")
-        End Select
     End Sub
 
 End Class
