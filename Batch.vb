@@ -53,7 +53,7 @@ Public Class Batch
                     util.WriteConsMsg("--- User replacing Duplicate Batch: " & fname)
                     RaiseEvent DocBatchDupReplace(fname)
 
-                    Call Me.RemoveDuplicateBatch(fname)
+                    Call Me.RemoveBatchAndDependents(fname)
                     Call ProcessBatch(docBatchFname) 'Finally process the new batch
 
                 Case MsgBoxResult.Cancel
@@ -266,10 +266,10 @@ Public Class Batch
 
     End Function
 
-    Private Sub RemoveDuplicateBatch(fname As String)
-        'A duplicate batch was detected. The user has decided to overwrite it.
+    Private Sub RemoveBatchAndDependents(fname As String)
         'Remove the existing DocBatch and the dependent Document, Part and Usage records.
-        mRoutineName = "RemoveDuplicateBatch(fname As String)"
+        'A duplicate batch was detected. The user has decided to overwrite it.
+        mRoutineName = "RemoveBatchAndDependents(fname As String)"
         util.WriteConsMsg("*** RemovingBatch---> " & fname)
 
         Dim DocBatchId As Integer = mlodSQL.DocBatch_IDofRecord(fname)
