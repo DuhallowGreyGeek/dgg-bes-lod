@@ -346,9 +346,32 @@ Public Class Batch
         Dim iRows As Integer = 0 'Number of Documents which have been deleted (should be 0 or 1)
 
         Try
+            Dim DocumentId As Integer = Me.GetDocId(DocLabel)
+
+            iRows = Me.RemoveDocAndDependents(DocumentId)    'Do the deletion based on the DocumentId
+
+            Return iRows
+
+        Catch ex As SqlException
+            Return iRows
+
+        Catch ex As Exception
+            Return iRows
+
+        End Try
+
+    End Function
+
+    Public Function RemoveDocAndDependents(DocumentId As Integer) As Integer
+        'Delete a Document and the dependents: Part, Synopsis and Usage from the database
+        'Used as part of deleting a DocBatch or prior to replacing a duplicate document.
+        mRoutineName = "RemoveDocAndDependents(DocId As Integer)"
+
+        Dim iRows As Integer = 0 'Number of Documents which have been deleted (should be 0 or 1)
+
+        Try
             'MsgBox("Deleting All the records associated with Document: " & DocLabel)
             'Any failures result in an exception being thrown
-            Dim DocumentId As Integer = Me.GetDocId(DocLabel)
             '
             Dim numUsagesDeleted As Integer = Me.DeleteDocUsages(DocumentId)
             Dim numSynopsesDeleted As Integer = Me.DeleteDocSynopses(DocumentId)
@@ -367,7 +390,6 @@ Public Class Batch
         End Try
 
     End Function
-
     Public Function GetDocId(DocLabel As String) As Integer
         'Get the DocId corresponding to a DocLabel. 
         'Used as part of deleting a DocBatch or prior to replacing a duplicate document.
