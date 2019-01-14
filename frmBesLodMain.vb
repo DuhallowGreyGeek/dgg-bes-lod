@@ -236,4 +236,24 @@ Public Class frmBesLodMain
             MsgBox("Document.DocumentId: " & testDocLabel & " Document removal FAILED! Look at console.")
         End If
     End Sub
+
+    Private Sub RemoveByIdToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles RemoveByIdToolStripMenuItem1.Click
+        mDocBatch = New Batch
+
+        Dim testDocIdString As String = InputBox("Enter the DocumentId", "Delete a Document based on DocumentId", "9999")
+        Dim testDocId As Integer = -9999
+
+        If Integer.TryParse(testDocIdString, testDocId) Then
+            Dim numDocsDeleted As Integer = mDocBatch.RemoveDocAndDependents(testDocId)
+            If numDocsDeleted >= 0 Then
+                MsgBox("Document.DocumentId: " & testDocId.ToString & " Number Documents removed: " & numDocsDeleted.ToString)
+            Else
+                MsgBox("Document.DocumentId: " & testDocId.ToString & " Document deletion FAILED! Look at console.")
+            End If
+        Else
+            MsgBox("Invalid DocumentId: " & testDocIdString)
+        End If
+
+
+    End Sub
 End Class
