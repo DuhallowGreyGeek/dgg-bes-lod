@@ -256,4 +256,13 @@ Public Class frmBesLodMain
 
 
     End Sub
+
+    Private Sub RemoveByFileNameToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveByFileNameToolStripMenuItem.Click
+        mDocBatch = New Batch
+
+        Dim batchFName As String = InputBox("Enter the FileName", "Delete all Docs and Batch based on FileName", "FileName")
+
+        Call mDocBatch.RemoveBatchAndDependents(batchFName)
+
+    End Sub
 End Class

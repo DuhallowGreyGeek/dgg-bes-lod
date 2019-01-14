@@ -107,6 +107,7 @@ Partial Class frmBesLodMain
         '
         'RemoveByIdToolStripMenuItem
         '
+        Me.RemoveByIdToolStripMenuItem.Enabled = False
         Me.RemoveByIdToolStripMenuItem.Name = "RemoveByIdToolStripMenuItem"
         Me.RemoveByIdToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.RemoveByIdToolStripMenuItem.Text = "Remove by Id"

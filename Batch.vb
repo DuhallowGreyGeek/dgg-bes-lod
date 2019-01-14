@@ -266,7 +266,7 @@ Public Class Batch
 
     End Function
 
-    Private Sub RemoveBatchAndDependents(fname As String)
+    Public Sub RemoveBatchAndDependents(fname As String)
         'Remove the existing DocBatch and the dependent Document, Part and Usage records.
         'A duplicate batch was detected. The user has decided to overwrite it.
         mRoutineName = "RemoveBatchAndDependents(fname As String)"
