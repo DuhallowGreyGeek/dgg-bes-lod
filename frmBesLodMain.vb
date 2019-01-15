@@ -254,7 +254,6 @@ Public Class frmBesLodMain
             MsgBox("Invalid DocumentId: " & testDocIdString)
         End If
 
-
     End Sub
 
     Private Sub RemoveByFileNameToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveByFileNameToolStripMenuItem.Click
@@ -266,12 +265,40 @@ Public Class frmBesLodMain
 
         Select Case numBatchesDeleted
             Case 0 'Not found
-                MsgBox("Batch.Fname: " & batchFName & " NO Batches removed. Look at console.")
+                MsgBox("Batch.Fname: " & batchFName & " NO Batches removed. Look at console.", MsgBoxStyle.Exclamation, "Remove Doc Batch Result")
             Case 1 'Found
-                MsgBox("Batch.Fname: " & batchFName & " Batches removed: " & numBatchesDeleted.ToString)
+                MsgBox("Batch.Fname: " & batchFName & " Batches removed: " & numBatchesDeleted.ToString, MsgBoxStyle.Information, "Remove Doc Batch Result")
             Case Else 'Really should not happen
-                MsgBox("Batch.Fname: " & batchFName & " Batches removed: " & numBatchesDeleted.ToString & " ERROR! Look at console.")
+                MsgBox("Batch.Fname: " & batchFName & " Batches removed: " & numBatchesDeleted.ToString & " ERROR! Look at console.", MsgBoxStyle.Exclamation, "Remove Doc Batch Result")
         End Select
+
+    End Sub
+
+    Private Sub RemoveByIdToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveByIdToolStripMenuItem.Click
+        mDocBatch = New Batch
+        Dim DocBatchId As Integer = -99999
+
+        Dim DocBatchIdStr As String = InputBox("Enter the DocBatchId", "Delete all Docs and Batch based on DocBatchId", "-99999")
+
+        If Integer.TryParse(DocBatchIdStr, DocBatchId) Then
+            '
+            If DocBatchId >= 0 Then
+                Dim numBatchesDeleted As Integer = mDocBatch.RemoveBatch(DocBatchId)
+
+                Select Case numBatchesDeleted
+                    Case 0 'Not found
+                        MsgBox("Batch.Fname: " & DocBatchId.ToString & " NO Batches removed. Look at console.", MsgBoxStyle.Exclamation, "Remove Doc Batch Result")
+                    Case 1 'Found
+                        MsgBox("Batch.Fname: " & DocBatchId.ToString & " Batches removed: " & numBatchesDeleted.ToString, MsgBoxStyle.Information, "Remove Doc Batch Result")
+                    Case Else 'Really should not happen
+                        MsgBox("Batch.Fname: " & DocBatchId.ToString & " Batches removed: " & numBatchesDeleted.ToString & " ERROR! Look at console.", MsgBoxStyle.Exclamation, "Remove Doc Batch Result")
+                End Select
+            Else
+                MsgBox("Invalid DocBatchId: " & DocBatchIdStr, , "Remove DocBatch")
+            End If
+        Else
+            MsgBox("Invalid DocBatchId: " & DocBatchIdStr, , "Remove DocBatch")
+        End If
 
     End Sub
 End Class

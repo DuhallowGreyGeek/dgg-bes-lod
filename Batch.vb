@@ -286,13 +286,38 @@ Public Class Batch
 
     Public Function RemoveBatch(fname As String) As Integer
         'Remove the existing DocBatch and the dependent Document, Part and Usage records.
+        'Based on Document Batch Filename
         'See other overloaded versions
         mRoutineName = "RemoveBatch(fname As String)"
         util.WriteConsMsg("*** RemovingBatch---> " & fname)
 
         Dim DocBatchId As Integer = mlodSQL.DocBatch_IDofRecord(fname)
 
-        If DocBatchId >= 0 Then
+        If DocBatchId >= 0 Then 'By convention the DocBatchId is > 0 and I use -9999 as a trap value
+
+            For Each DocumentLabel In Me.ListDocumentsInBatch(DocBatchId)
+                util.WriteConsMsg("   ----> " & DocumentLabel)
+
+                Call RemoveDocAndDependents(DocumentLabel)
+            Next
+
+            Call Me.DeleteBatch(DocBatchId)
+            Return 1 'The fname is protected by a unique index so there can only be 1
+
+        Else
+            Return 0 'The fname was not found
+
+        End If
+    End Function
+
+    Public Function RemoveBatch(DocBatchId As Integer) As Integer
+        'Remove the existing DocBatch and the dependent Document, Part and Usage records.
+        'Based on Document Batch DocBatchId primary key identifier
+        'See other overloaded versions
+        mRoutineName = "RemoveBatch(DocBatchId as Integer)"
+        util.WriteConsMsg("*** RemovingBatch---> " & DocBatchId.ToString)
+
+        If DocBatchId >= 0 Then 'By convention the DocBatchId is > 0 and I use -9999 as a trap value
 
             For Each DocumentLabel In Me.ListDocumentsInBatch(DocBatchId)
                 util.WriteConsMsg("   ----> " & DocumentLabel)

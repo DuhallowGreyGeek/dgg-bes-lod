@@ -82,7 +82,7 @@ Partial Class frmBesLodMain
         'OpenToolStripMenuItem
         '
         Me.OpenToolStripMenuItem.Name = "OpenToolStripMenuItem"
-        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(124, 22)
+        Me.OpenToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.OpenToolStripMenuItem.Text = "Open File"
         '
         'EditToolStripMenuItem
@@ -107,7 +107,6 @@ Partial Class frmBesLodMain
         '
         'RemoveByIdToolStripMenuItem
         '
-        Me.RemoveByIdToolStripMenuItem.Enabled = False
         Me.RemoveByIdToolStripMenuItem.Name = "RemoveByIdToolStripMenuItem"
         Me.RemoveByIdToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.RemoveByIdToolStripMenuItem.Text = "Remove by Id"
