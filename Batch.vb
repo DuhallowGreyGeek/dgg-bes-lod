@@ -284,6 +284,31 @@ Public Class Batch
 
     End Sub
 
+    Public Function RemoveBatch(fname As String) As Integer
+        'Remove the existing DocBatch and the dependent Document, Part and Usage records.
+        'See other overloaded versions
+        mRoutineName = "RemoveBatch(fname As String)"
+        util.WriteConsMsg("*** RemovingBatch---> " & fname)
+
+        Dim DocBatchId As Integer = mlodSQL.DocBatch_IDofRecord(fname)
+
+        If DocBatchId >= 0 Then
+
+            For Each DocumentLabel In Me.ListDocumentsInBatch(DocBatchId)
+                util.WriteConsMsg("   ----> " & DocumentLabel)
+
+                Call RemoveDocAndDependents(DocumentLabel)
+            Next
+
+            Call Me.DeleteBatch(DocBatchId)
+            Return 1 'The fname is protected by a unique index so there can only be 1
+
+        Else
+            Return 0 'The fname was not found
+
+        End If
+    End Function
+
     Private Sub AddDocAndDependents(docBatchId As Integer, doc As Doc)
         'Add a Document and the associated dependent records: Part, Synopis
         mRoutineName = "AddDocAndDependents(docBatchId As Integer, doc As Doc)"

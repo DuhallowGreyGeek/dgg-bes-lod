@@ -262,7 +262,16 @@ Public Class frmBesLodMain
 
         Dim batchFName As String = InputBox("Enter the FileName", "Delete all Docs and Batch based on FileName", "FileName")
 
-        Call mDocBatch.RemoveBatchAndDependents(batchFName)
+        Dim numBatchesDeleted As Integer = mDocBatch.RemoveBatch(batchFName)
+
+        Select Case numBatchesDeleted
+            Case 0 'Not found
+                MsgBox("Batch.Fname: " & batchFName & " NO Batches removed. Look at console.")
+            Case 1 'Found
+                MsgBox("Batch.Fname: " & batchFName & " Batches removed: " & numBatchesDeleted.ToString)
+            Case Else 'Really should not happen
+                MsgBox("Batch.Fname: " & batchFName & " Batches removed: " & numBatchesDeleted.ToString & " ERROR! Look at console.")
+        End Select
 
     End Sub
 End Class
