@@ -266,7 +266,7 @@ Public Class Batch
 
     End Function
 
-    Public Sub RemoveBatchAndDependents(fname As String)
+    Private Sub RemoveBatchAndDependents(fname As String)
         'Remove the existing DocBatch and the dependent Document, Part and Usage records.
         'A duplicate batch was detected. The user has decided to overwrite it.
         mRoutineName = "RemoveBatchAndDependents(fname As String)"
@@ -391,6 +391,7 @@ Public Class Batch
     Public Function RemoveDocAndDependents(DocLabel As String) As Integer
         'Delete a Document and the dependents: Part, Synopsis and Usage from the database
         'Used as part of deleting a DocBatch or prior to replacing a duplicate document.
+        'Note the other overloaded version.
         mRoutineName = "RemoveDocAndDependents(DocLabel As String)"
 
         Dim iRows As Integer = 0 'Number of Documents which have been deleted (should be 0 or 1)
@@ -415,6 +416,7 @@ Public Class Batch
     Public Function RemoveDocAndDependents(DocumentId As Integer) As Integer
         'Delete a Document and the dependents: Part, Synopsis and Usage from the database
         'Used as part of deleting a DocBatch or prior to replacing a duplicate document.
+        'Note the other overloaded version.
         mRoutineName = "RemoveDocAndDependents(DocId As Integer)"
 
         Dim iRows As Integer = 0 'Number of Documents which have been deleted (should be 0 or 1)
