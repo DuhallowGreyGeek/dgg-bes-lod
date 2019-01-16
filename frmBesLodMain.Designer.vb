@@ -38,12 +38,6 @@ Partial Class frmBesLodMain
         Me.DumpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TestSQLToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TestConnectionToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TestDuplicatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.GetDocIdToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeleteDocToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeleteDocUsagesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeleteDocSynopsesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DeleteDocPartsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.statStatusStrip = New System.Windows.Forms.StatusStrip()
         Me.statMsg = New System.Windows.Forms.ToolStripStatusLabel()
         Me.dlgInputFile = New System.Windows.Forms.OpenFileDialog()
@@ -65,7 +59,7 @@ Partial Class frmBesLodMain
         '
         'mnuMenu
         '
-        Me.mnuMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.HelpToolStripMenuItem, Me.TestSQLToolStripMenuItem, Me.TestDuplicatesToolStripMenuItem})
+        Me.mnuMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem, Me.EditToolStripMenuItem, Me.HelpToolStripMenuItem, Me.TestSQLToolStripMenuItem})
         Me.mnuMenu.Location = New System.Drawing.Point(0, 0)
         Me.mnuMenu.Name = "mnuMenu"
         Me.mnuMenu.Size = New System.Drawing.Size(538, 24)
@@ -96,7 +90,7 @@ Partial Class frmBesLodMain
         '
         Me.DocBatchToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RemoveByFileNameToolStripMenuItem, Me.RemoveByIdToolStripMenuItem})
         Me.DocBatchToolStripMenuItem.Name = "DocBatchToolStripMenuItem"
-        Me.DocBatchToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DocBatchToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.DocBatchToolStripMenuItem.Text = "Doc Batch"
         '
         'RemoveByFileNameToolStripMenuItem
@@ -115,7 +109,7 @@ Partial Class frmBesLodMain
         '
         Me.DocumentToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.RemoveByLabelToolStripMenuItem, Me.RemoveByIdToolStripMenuItem1})
         Me.DocumentToolStripMenuItem.Name = "DocumentToolStripMenuItem"
-        Me.DocumentToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.DocumentToolStripMenuItem.Size = New System.Drawing.Size(130, 22)
         Me.DocumentToolStripMenuItem.Text = "Document"
         '
         'RemoveByLabelToolStripMenuItem
@@ -168,43 +162,6 @@ Partial Class frmBesLodMain
         Me.TestConnectionToolStripMenuItem.Name = "TestConnectionToolStripMenuItem"
         Me.TestConnectionToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
         Me.TestConnectionToolStripMenuItem.Text = "Test Connection"
-        '
-        'TestDuplicatesToolStripMenuItem
-        '
-        Me.TestDuplicatesToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.GetDocIdToolStripMenuItem, Me.DeleteDocToolStripMenuItem, Me.DeleteDocUsagesToolStripMenuItem, Me.DeleteDocSynopsesToolStripMenuItem, Me.DeleteDocPartsToolStripMenuItem})
-        Me.TestDuplicatesToolStripMenuItem.Name = "TestDuplicatesToolStripMenuItem"
-        Me.TestDuplicatesToolStripMenuItem.Size = New System.Drawing.Size(95, 20)
-        Me.TestDuplicatesToolStripMenuItem.Text = "TestDuplicates"
-        '
-        'GetDocIdToolStripMenuItem
-        '
-        Me.GetDocIdToolStripMenuItem.Name = "GetDocIdToolStripMenuItem"
-        Me.GetDocIdToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
-        Me.GetDocIdToolStripMenuItem.Text = "GetDocId"
-        '
-        'DeleteDocToolStripMenuItem
-        '
-        Me.DeleteDocToolStripMenuItem.Name = "DeleteDocToolStripMenuItem"
-        Me.DeleteDocToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
-        Me.DeleteDocToolStripMenuItem.Text = "DeleteDoc"
-        '
-        'DeleteDocUsagesToolStripMenuItem
-        '
-        Me.DeleteDocUsagesToolStripMenuItem.Name = "DeleteDocUsagesToolStripMenuItem"
-        Me.DeleteDocUsagesToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
-        Me.DeleteDocUsagesToolStripMenuItem.Text = "DeleteDocUsages"
-        '
-        'DeleteDocSynopsesToolStripMenuItem
-        '
-        Me.DeleteDocSynopsesToolStripMenuItem.Name = "DeleteDocSynopsesToolStripMenuItem"
-        Me.DeleteDocSynopsesToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
-        Me.DeleteDocSynopsesToolStripMenuItem.Text = "DeleteDocSynopses"
-        '
-        'DeleteDocPartsToolStripMenuItem
-        '
-        Me.DeleteDocPartsToolStripMenuItem.Name = "DeleteDocPartsToolStripMenuItem"
-        Me.DeleteDocPartsToolStripMenuItem.Size = New System.Drawing.Size(177, 22)
-        Me.DeleteDocPartsToolStripMenuItem.Text = "DeleteDocParts"
         '
         'statStatusStrip
         '
@@ -332,12 +289,6 @@ Partial Class frmBesLodMain
     Friend WithEvents prgLoadProgress As System.Windows.Forms.ProgressBar
     Friend WithEvents TestConnectionToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents statMsg As System.Windows.Forms.ToolStripStatusLabel
-    Friend WithEvents TestDuplicatesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents GetDocIdToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents DeleteDocToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents DeleteDocUsagesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents DeleteDocSynopsesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-    Friend WithEvents DeleteDocPartsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents EditToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents DocBatchToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents RemoveByFileNameToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
